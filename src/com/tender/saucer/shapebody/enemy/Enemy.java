@@ -42,19 +42,4 @@ public abstract class Enemy extends TargetShapeBody
 		
 		return enemy;
 	}
-	
-	public static Enemy[] buildSplitEnemies(SplitEnemy splitEnemy)
-	{
-		Enemy[] enemies = new Enemy[2];
-		enemies[0] = new BasicEnemy(splitEnemy, false);
-		enemies[1] = new BasicEnemy(splitEnemy, true);
-		
-		enemies[0].body.setUserData(new BodyData(enemies[0]));
-		enemies[1].body.setUserData(new BodyData(enemies[1]));
-		
-		Model.instance().actives.add(enemies[0]);
-		Model.instance().actives.add(enemies[1]);
-		
-		return enemies;
-	}
 }

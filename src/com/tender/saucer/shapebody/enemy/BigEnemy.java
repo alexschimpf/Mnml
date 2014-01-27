@@ -3,6 +3,7 @@ package com.tender.saucer.shapebody.enemy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -58,6 +59,7 @@ public class BigEnemy extends BasicEnemy
 		}
 		else if(other instanceof Shot)
 		{
+			shape.setColor(ColorScheme.brighten(shape.getColor(), .2f));
 			health--;
 		}
 		

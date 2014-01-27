@@ -1,8 +1,8 @@
 package com.tender.saucer.shapebody.enemy;
 
-import android.util.Log;
-
+import com.tender.saucer.shapebody.BodyData;
 import com.tender.saucer.stuff.Constants;
+import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.Wave;
 
 public class SplitEnemy extends BasicEnemy 
@@ -26,7 +26,7 @@ public class SplitEnemy extends BasicEnemy
 		}
 		else if(shape.getY() >= splitY)
 		{
-			Enemy[] enemies = Enemy.buildSplitEnemies(this);
+			Enemy[] enemies = buildSplitEnemies(this);
 			for(Enemy enemy : enemies)
 			{
 				enemy.attachToScene();
@@ -38,5 +38,20 @@ public class SplitEnemy extends BasicEnemy
 		}
 		
 		return false;
+	}
+	
+	protected Enemy[] buildSplitEnemies(SplitEnemy splitEnemy)
+	{
+		Enemy[] enemies = new Enemy[2];
+		enemies[0] = new BasicEnemy(splitEnemy, false);
+		enemies[1] = new BasicEnemy(splitEnemy, true);
+		
+		enemies[0].body.setUserData(new BodyData(enemies[0]));
+		enemies[1].body.setUserData(new BodyData(enemies[1]));
+		
+		Model.instance().actives.add(enemies[0]);
+		Model.instance().actives.add(enemies[1]);
+		
+		return enemies;
 	}
 }

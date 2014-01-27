@@ -45,7 +45,6 @@ public class Shot extends DynamicShapeBody
 	public static Shot buildShot(float width, float height, float speed)
 	{	
 		Shot shot = new Shot(width, height, speed);
-		shot.body.setTransform(shot.body.getPosition().x, shot.body.getPosition().y, Model.instance().player.body.getAngle());
 		shot.body.setUserData(new BodyData(shot));
 		
 		Model.instance().actives.add(shot);
