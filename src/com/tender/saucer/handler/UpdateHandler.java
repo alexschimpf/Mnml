@@ -1,14 +1,12 @@
 package com.tender.saucer.handler;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.andengine.engine.handler.IUpdateHandler;
 
 import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.stuff.Constants;
+import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.Wave;
 import com.tender.saucer.wave.WaveIntermission;
@@ -34,7 +32,9 @@ public class UpdateHandler implements IUpdateHandler
 				break;
 			case DONE:
 				model.main.restart();
-				break;			
+				break;	
+			case PAUSED:
+				break;
 		}
 	}
 

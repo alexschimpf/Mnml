@@ -28,7 +28,7 @@ public class WaveIntermission
 		Model model = Model.instance();
 		
 		countdown = new TextSequence(model.waveIntermissionFont, 
-				new String[]{"WAVE " + Wave.level + "\nCOMPLETE", "", "Three.", "Two.", "One."}, new float[]{3000, 500, 1000, 1000, 1000});
+				new String[]{"WAVE " + Wave.level + "\nCOMPLETE", "", "Three", "Two", "One"}, new float[]{3000, 500, 1000, 1000, 1000});
 		startTime = Calendar.getInstance().getTimeInMillis();
 		model.state = GameState.WAVE_INTERMISSION;
 	}

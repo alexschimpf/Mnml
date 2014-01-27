@@ -12,5 +12,6 @@
 - Put constants in their respective classes?
 - use override... not required?
 - Is BodyData's 'remove' necessary?
+- put copyright crap in all files
 
 - Move buildSplitEnemies to SplitEnemy!

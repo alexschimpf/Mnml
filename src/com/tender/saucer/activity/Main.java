@@ -35,6 +35,7 @@ import com.tender.saucer.shapebody.wall.OOBWall;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
+import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 import com.tender.saucer.wave.Wave;
@@ -126,6 +127,19 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		model.camera.setHUD(model.hud);	
 
 		return model.scene;
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(mEngine.isRunning())
+		{
+			mEngine.stop();
+		}
+		else
+		{
+			mEngine.start();
+		}
 	}
 
 	public boolean onSceneTouchEvent(Scene scene, TouchEvent event) 

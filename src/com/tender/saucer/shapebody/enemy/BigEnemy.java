@@ -59,8 +59,12 @@ public class BigEnemy extends BasicEnemy
 		}
 		else if(other instanceof Shot)
 		{
-			shape.setColor(ColorScheme.brighten(shape.getColor(), .2f));
 			health--;
+			
+			if(health > 0)
+			{
+				shape.setColor(ColorScheme.brighten(shape.getColor(), .2f));	
+			}
 		}
 		
 		if(health <= 0)

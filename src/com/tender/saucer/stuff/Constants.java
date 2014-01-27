@@ -33,7 +33,8 @@ public class Constants
 	public static final float PENALTY_PROBABILITY = .05f;
 	
 	public static final float ENEMY_BASIC_LEVEL = 1;
-	public static final float ENEMY_BIG_LEVEL = 4;
+	public static final float ENEMY_BIG_LEVEL = 3;
+	public static final float ENEMY_MORPH_LEVEL = 5;
 	public static final float ENEMY_SPLIT_LEVEL = 7;
 	
 	public static final float WAVE_INTERMISSION_DURATION = 6500;

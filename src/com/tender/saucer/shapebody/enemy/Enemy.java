@@ -31,7 +31,11 @@ public abstract class Enemy extends TargetShapeBody
 		{
 			enemy = new BigEnemy();
 		}
-		else 
+		else if(choice == 2)
+		{
+			enemy = new MorphEnemy();
+		}
+		else
 		{
 			enemy = new SplitEnemy();
 		}
