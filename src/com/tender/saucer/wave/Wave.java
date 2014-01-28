@@ -83,11 +83,11 @@ public class Wave
 	
 	private static int getNumEnemyTypes()
 	{
-		int count = 1;
-		
+		int count = 1;	
 		count += (level >= Constants.ENEMY_BIG_LEVEL) ? 1 : 0;
 		count += (level >= Constants.ENEMY_MORPH_LEVEL) ? 1 : 0;
 		count += (level >= Constants.ENEMY_SPLIT_LEVEL) ? 1 : 0;
+		count += (level >= Constants.ENEMY_BOUNCE_LEVEL) ? 1 : 0;
 		
 		return count;
 	}

@@ -19,9 +19,13 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.text.Editable;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.badlogic.gdx.math.Vector2;
 import com.tender.saucer.background.Background;
@@ -56,6 +60,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		
 		model.main = this;		
 		model.camera = new ZoomCamera(0, 0, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+		
+		showLevelChoiceDialog();
 
 		final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), model.camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
@@ -173,5 +179,37 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 	    overridePendingTransition(0, 0);
 	    startActivity(intent);
+	}
+	
+	public void showLevelChoiceDialog()
+	{
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Choose starting level");
+		alert.setMessage("Choose the starting level, asshole.");
+
+		final EditText input = new EditText(this);
+		alert.setView(input);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog, int button) 
+			{
+				Editable level = input.getText();
+				Wave.level = Integer.parseInt(level.toString()) - 1;
+				Model.instance().state = GameState.WAVE_INTERMISSION;
+			}
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() 
+		{			
+			public void onClick(DialogInterface dialog, int whichButton) 
+		    {
+				Wave.level = 0;
+				Model.instance().state = GameState.WAVE_INTERMISSION;
+		    }
+		});
+
+		alert.show();
 	}
 }

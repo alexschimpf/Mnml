@@ -35,9 +35,13 @@ public abstract class Enemy extends TargetShapeBody
 		{
 			enemy = new MorphEnemy();
 		}
-		else
+		else if(choice == 3)
 		{
 			enemy = new SplitEnemy();
+		}
+		else 
+		{
+			enemy = new BounceEnemy();
 		}
 
 		enemy.body.setUserData(new BodyData(enemy));

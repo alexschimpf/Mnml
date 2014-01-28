@@ -17,12 +17,12 @@ public class MorphEnemy extends BasicEnemy
 		
 		origSize = shape.getWidth();
 		sineArg = 0;
-		dSize = origSize / 2; //(float)Math.max(origSize / 3, Math.random() * origSize);
+		dSize = origSize / 2;
 	}
 
 	public boolean update() 
 	{
-		sineArg += .1;
+		sineArg += .05;
 		
 		if(health <= 0)
 		{
@@ -33,7 +33,6 @@ public class MorphEnemy extends BasicEnemy
 		{
 			float size = origSize + (FloatMath.sin(sineArg) * dSize);
 			shape.setSize(size, size);
-			Log.e("schimpf", "" + size);
 		}
 		
 		return false;

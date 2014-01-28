@@ -43,7 +43,7 @@ public class Model
 	private Model() 
 	{
 		actives = new LinkedList<IUpdate>();
-		state = GameState.WAVE_INTERMISSION;
+		state = GameState.PAUSED;
 	}
 	
 	public static void reset()

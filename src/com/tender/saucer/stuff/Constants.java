@@ -36,6 +36,7 @@ public class Constants
 	public static final float ENEMY_BIG_LEVEL = 3;
 	public static final float ENEMY_MORPH_LEVEL = 5;
 	public static final float ENEMY_SPLIT_LEVEL = 7;
+	public static final float ENEMY_BOUNCE_LEVEL = 9;
 	
 	public static final float WAVE_INTERMISSION_DURATION = 6500;
 

@@ -14,8 +14,13 @@ import com.tender.saucer.wave.WaveIntermission;
 public class UpdateHandler implements IUpdateHandler
 {
 	public void onUpdate(float secondsElapsed) 
-	{
+	{		
 		Model model = Model.instance();
+		
+		if(model.state == GameState.PAUSED)
+		{
+			return;
+		}
 		
 		update(model.player);
 		update(model.wall);
