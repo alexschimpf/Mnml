@@ -3,6 +3,7 @@ package com.tender.saucer.handler;
 import java.util.LinkedList;
 
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.primitive.Rectangle;
 
 import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.stuff.Constants;
@@ -65,13 +66,13 @@ public class UpdateHandler implements IUpdateHandler
 	{
 		Model.scoreText.setText("" + Model.player.score);
 		
-		String lives = "";
+		float width = 0;
 		for(int i = 0; i < Model.player.health; i++)
 		{
-			lives += "+";
-		}	
-		Model.livesText.setText("" + lives);
-		Model.livesText.setX(Constants.CAMERA_WIDTH - Model.livesText.getWidth() - 20);
+			width += 20;
+		}		
+		Model.lifeBar.setWidth(width);
+		Model.lifeBar.setPosition(Constants.CAMERA_WIDTH - width - 20, (Constants.TOP_BOT_HEIGHT - Model.lifeBar.getHeight()) / 2);
 		
 		Model.waveText.setText("Wave " + Model.waveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);

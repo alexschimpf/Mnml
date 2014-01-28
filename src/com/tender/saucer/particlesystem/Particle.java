@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.ShapeBody;
+import com.tender.saucer.stuff.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -73,7 +74,8 @@ public class Particle implements IUpdate
 		}
 		
 		rect.setX(rect.getX() + vx);
-		rect.setY(rect.getY() + vy);	
+		rect.setY(rect.getY() + vy);		
+		rect.setAlpha(Math.max(0, rect.getAlpha() - .009f));
 		
 		return false;
 	}

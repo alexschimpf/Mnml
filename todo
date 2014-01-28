@@ -1,11 +1,12 @@
 - powerups
 - achievements
 - leveling up - gives you more life
-- life bar
 - bosses
 - outlined rectangles
 - waves change more than just build cooldown
+- bonus rounds (after shooting a bonus powerup...)
 
 - Use 'final'
 - Put constants in their respective classes?
-- put copyright crap in all files
+
+- Alpha fading particles

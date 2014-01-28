@@ -42,8 +42,8 @@ public class Model
 	public static StrokeFont hudFont;
 	public static StrokeFont waveIntermissionFont;
 	public static Text scoreText;
-	public static Text livesText;
 	public static Text waveText;
+	public static Rectangle lifeBar;
 	public static LinkedList<IUpdate> actives;	
 	public static WaveMachine waveMachine;
 	public static WaveIntermission waveIntermission;
