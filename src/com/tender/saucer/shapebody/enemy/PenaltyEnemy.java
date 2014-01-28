@@ -28,19 +28,19 @@ public class PenaltyEnemy extends BasicEnemy
 		{
 			lastFlashTime = currTime;
 			
-			if(shape.getColor().equals(ColorScheme.instance().enemy))
+			if(shape.getColor().equals(ColorScheme.enemy))
 			{
 				shape.setColor(Color.WHITE);
 			}
 			else
 			{
-				shape.setColor(ColorScheme.instance().enemy);
+				shape.setColor(ColorScheme.enemy);
 			}
 		}
 		
 		if(health <= 0)
 		{
-			Model.instance().waveMachine.currNumEnemiesLeft--;
+			Model.waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		

@@ -19,11 +19,9 @@ public class SplitEnemy extends BasicEnemy
 
 	public boolean update() 
 	{
-		Model model = Model.instance();
-		
 		if(health <= 0)
 		{
-			model.waveMachine.currNumEnemiesLeft--;
+			Model.waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		else if(shape.getY() >= splitY)
@@ -35,7 +33,7 @@ public class SplitEnemy extends BasicEnemy
 				enemy.setInMotion();
 			}
 			
-			model.waveMachine.currNumEnemiesLeft++;
+			Model.waveMachine.currNumEnemiesLeft++;
 			return true;
 		}
 		
@@ -51,8 +49,8 @@ public class SplitEnemy extends BasicEnemy
 		enemies[0].body.setUserData(new BodyData(enemies[0]));
 		enemies[1].body.setUserData(new BodyData(enemies[1]));
 		
-		Model.instance().actives.add(enemies[0]);
-		Model.instance().actives.add(enemies[1]);
+		Model.actives.add(enemies[0]);
+		Model.actives.add(enemies[1]);
 		
 		return enemies;
 	}

@@ -16,7 +16,7 @@ public abstract class Enemy extends TargetShapeBody
 	
 	public static Enemy buildRandomEnemy()
 	{	
-		int choice = (int)(Math.random() * Model.instance().waveMachine.currNumEnemyTypes);
+		int choice = (int)(Math.random() * Model.waveMachine.currNumEnemyTypes);
 		
 		Enemy enemy;
 		if(Math.random() < Constants.PENALTY_PROBABILITY)
@@ -46,7 +46,7 @@ public abstract class Enemy extends TargetShapeBody
 
 		enemy.body.setUserData(new BodyData(enemy));
 		
-		Model.instance().actives.add(enemy);
+		Model.actives.add(enemy);
 		
 		return enemy;
 	}

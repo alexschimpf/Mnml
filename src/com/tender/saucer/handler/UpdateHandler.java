@@ -15,25 +15,23 @@ public class UpdateHandler implements IUpdateHandler
 {
 	public void onUpdate(float secondsElapsed) 
 	{		
-		Model model = Model.instance();
-		
-		switch(model.state)
+		switch(Model.state)
 		{
 			case WAVE_RUNNING:	
-				update(model.waveMachine);			
+				update(Model.waveMachine);			
 				break;
 			case WAVE_INTERMISSION:
-				update(model.waveIntermission);
+				update(Model.waveIntermission);
 				break;
 			case PAUSED:
 				return;
 			case DONE:
-				model.main.restart();
+				Model.main.restart();
 				break;	
 		}
 		
-		update(model.player);
-		update(model.wall);
+		update(Model.player);
+		update(Model.wall);
 		updateActives();
 		updateHUDText();
 	}
@@ -44,36 +42,32 @@ public class UpdateHandler implements IUpdateHandler
 	
 	private void updateActives()
 	{
-		Model model = Model.instance();
-		
 		@SuppressWarnings("unchecked")
-		LinkedList<IUpdate> activesClone = (LinkedList<IUpdate>)model.actives.clone();
+		LinkedList<IUpdate> activesClone = (LinkedList<IUpdate>)Model.actives.clone();
 		for(IUpdate active : activesClone)
 		{	
 			if(active.update())
 			{
 				active.done();
-				model.actives.remove(active);
+				Model.actives.remove(active);
 			}
 		}
 	}
 	
 	private void updateHUDText()
 	{
-		Model model = Model.instance();
-		
-		model.scoreText.setText("" + model.player.score);
+		Model.scoreText.setText("" + Model.player.score);
 		
 		String lives = "";
-		for(int i = 0; i < model.player.health; i++)
+		for(int i = 0; i < Model.player.health; i++)
 		{
 			lives += "+";
 		}	
-		model.livesText.setText("" + lives);
-		model.livesText.setX(Constants.CAMERA_WIDTH - model.livesText.getWidth() - 20);
+		Model.livesText.setText("" + lives);
+		Model.livesText.setX(Constants.CAMERA_WIDTH - Model.livesText.getWidth() - 20);
 		
-		model.waveText.setText("Wave " + model.waveMachine.level);
-		model.waveText.setX((Constants.CAMERA_WIDTH - model.waveText.getWidth()) / 2);
+		Model.waveText.setText("Wave " + Model.waveMachine.level);
+		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);
 	}
 	
 	private void update(IUpdate entity)

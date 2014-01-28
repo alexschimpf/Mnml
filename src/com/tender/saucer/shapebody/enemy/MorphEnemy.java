@@ -27,7 +27,7 @@ public class MorphEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			Model.instance().waveMachine.currNumEnemiesLeft--;
+			Model.waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		else

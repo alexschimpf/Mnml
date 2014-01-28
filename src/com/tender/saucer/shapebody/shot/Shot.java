@@ -22,24 +22,23 @@ public class Shot extends DynamicShapeBody
 	public float damage = 1;
 	
 	private Shot(float width, float height, float speed) 
-	{
-		Model model = Model.instance();		
-		Player player = model.player;
+	{	
+		Player player = Model.player;
 		
 		this.speed = speed;
 
 		float x = player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (width / 2);
 		float y = player.shape.getY() - height;		
-		shape = new Rectangle(x, y, width, height, model.main.getVertexBufferObjectManager());
+		shape = new Rectangle(x, y, width, height, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
 		fixDef.filter.categoryBits = Constants.SHOT_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.OOB_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.DynamicBody, fixDef);	
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);	
 		body.setBullet(true);
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
 	public static Shot buildShot(float width, float height, float speed)
@@ -47,7 +46,7 @@ public class Shot extends DynamicShapeBody
 		Shot shot = new Shot(width, height, speed);
 		shot.body.setUserData(new BodyData(shot));
 		
-		Model.instance().actives.add(shot);
+		Model.actives.add(shot);
 		
 		return shot;
 	}
@@ -66,7 +65,7 @@ public class Shot extends DynamicShapeBody
 	{
 		if(other instanceof PenaltyEnemy)
 		{
-			Model.instance().player.applyPenalty();
+			Model.player.applyPenalty();
 			((BodyData)body.getUserData()).remove = true;
 		}
 		else

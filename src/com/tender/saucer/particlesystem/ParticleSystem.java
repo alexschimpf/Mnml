@@ -29,14 +29,14 @@ public class ParticleSystem implements IUpdate
 	{
 		ParticleSystem ps = new ParticleSystem(shapeBody, Constants.NUM_PARTICLES_PER_SYSTEM);
 		ps.attachToScene();
-		Model.instance().actives.add(ps);
+		Model.actives.add(ps);
 	}
 	
 	public static void init(ShapeBody shapeBody, int numParticles)
 	{
 		ParticleSystem ps = new ParticleSystem(shapeBody, numParticles);
 		ps.attachToScene();
-		Model.instance().actives.add(ps);
+		Model.actives.add(ps);
 	}
 
 	public boolean update() 

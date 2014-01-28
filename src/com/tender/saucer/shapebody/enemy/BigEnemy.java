@@ -14,6 +14,7 @@ import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.shot.Shot;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.ColorScheme;
+import com.tender.saucer.stuff.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
@@ -22,8 +23,6 @@ public class BigEnemy extends BasicEnemy
 {
 	protected BigEnemy()
 	{
-		Model model = Model.instance();
-		
 		health = 2;
 		speed = 3 + (float)(Math.random() * 2);
 		
@@ -33,17 +32,17 @@ public class BigEnemy extends BasicEnemy
 		
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
-		shape = new Rectangle(x, y, size, size, model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.darken(ColorScheme.instance().enemy, .2f));
+		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
+		shape.setColor(ColorUtilities.darken(ColorScheme.enemy, .2f));
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
 		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.OOB_BITMASK | Constants.WALL_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.DynamicBody, fixDef);
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 	
 	@Override
@@ -63,7 +62,7 @@ public class BigEnemy extends BasicEnemy
 			
 			if(health > 0)
 			{
-				shape.setColor(ColorScheme.brighten(shape.getColor(), .2f));	
+				shape.setColor(ColorUtilities.brighten(shape.getColor(), .2f));	
 			}
 		}
 		

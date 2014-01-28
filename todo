@@ -8,7 +8,6 @@
 - waves change more than just build cooldown
 
 - use 'final'
-- BEST WAY TO IMPLEMENT THE SIMPLETON PATTERN - All static or instace()?
 - Put constants in their respective classes?
 - use override... not required?
 - Is BodyData's 'remove' necessary?

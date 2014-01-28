@@ -47,7 +47,7 @@ public class WaveMachine implements IUpdate
 		numBuildsLeft = currNumEnemiesLeft;
 		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
 		
-		Model.instance().state = GameState.WAVE_RUNNING;
+		Model.state = GameState.WAVE_RUNNING;
 	}
 	
 	public boolean update()
@@ -72,8 +72,8 @@ public class WaveMachine implements IUpdate
 	
 	public void done()
 	{
-		Model.instance().state = GameState.WAVE_INTERMISSION;
-		Model.instance().waveIntermission.beginNextIntermission();
+		Model.state = GameState.WAVE_INTERMISSION;
+		Model.waveIntermission.beginNextIntermission();
 	}
 	
 	private Enemy tryBuildRandomEnemy()

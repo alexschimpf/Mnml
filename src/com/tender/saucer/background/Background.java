@@ -22,13 +22,13 @@ public class Background
 	public Background() 
 	{	
 		rect = new Rectangle(0, Constants.TOP_BOT_HEIGHT, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT - (Constants.TOP_BOT_HEIGHT * 2), 
-				Model.instance().main.getVertexBufferObjectManager());
-		rect.setColor(ColorScheme.instance().background);
+				Model.main.getVertexBufferObjectManager());
+		rect.setColor(ColorScheme.background);
 	}
 	
 	public void attachToScene()
 	{
-		Model.instance().scene.attachChild(rect);
+		Model.scene.attachChild(rect);
 	}
 	
 	public void flash()

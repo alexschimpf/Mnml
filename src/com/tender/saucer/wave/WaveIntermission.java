@@ -20,10 +20,8 @@ public class WaveIntermission implements IUpdate
 
 	public void beginNextIntermission()
 	{
-		Model model = Model.instance();
-		
-		countdown = new TextSequence(model.waveIntermissionFont, 
-				new String[]{"WAVE " + model.waveMachine.level + "\nCOMPLETE", "", "Three", "Two", "One"}, new float[]{3000, 500, 1000, 1000, 1000});
+		countdown = new TextSequence(Model.waveIntermissionFont, 
+				new String[]{"WAVE " + Model.waveMachine.level + "\nCOMPLETE", "", "Three", "Two", "One"}, new float[]{3000, 500, 1000, 1000, 1000});
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
@@ -45,7 +43,7 @@ public class WaveIntermission implements IUpdate
 	
 	public void done()
 	{
-		Model.instance().state = GameState.WAVE_RUNNING;
-		Model.instance().waveMachine.beginNextWave();
+		Model.state = GameState.WAVE_RUNNING;
+		Model.waveMachine.beginNextWave();
 	}
 }

@@ -21,9 +21,7 @@ public class TextSequence
 	
 	public TextSequence(Font font, String[] sequence, float[] durations) 
 	{
-		Model model = Model.instance();
-
-		text = new Text(0, 0, font, "", 100, model.main.getVertexBufferObjectManager());
+		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
 		text.setHorizontalAlign(HorizontalAlign.CENTER);
 		resetTextPosition();
 		this.sequence = sequence;
@@ -41,7 +39,7 @@ public class TextSequence
 		
 		text.setText(sequence[currFrame]);
 		resetTextPosition();
-		Model.instance().hud.attachChild(text);
+		Model.hud.attachChild(text);
 		
 		TimerHandler timer = new TimerHandler(durations[currFrame] / 1000, new ITimerCallback()
 		{
@@ -51,11 +49,11 @@ public class TextSequence
 							
 				if(currFrame > sequence.length)
 				{
-					Model.instance().scene.unregisterUpdateHandler(timerHandler);
+					Model.scene.unregisterUpdateHandler(timerHandler);
 				}
 				else if(currFrame == sequence.length)
 				{
-					Model.instance().hud.detachChild(text);
+					Model.hud.detachChild(text);
 				}
 				else
 				{
@@ -67,7 +65,7 @@ public class TextSequence
 			}			
 		});		
 		
-		Model.instance().scene.registerUpdateHandler(timer);
+		Model.scene.registerUpdateHandler(timer);
 	}
 	
 	private void resetTextPosition()

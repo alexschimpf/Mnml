@@ -20,20 +20,18 @@ public class OOBWall extends ShapeBody implements ICollide
 	
 	public OOBWall(boolean left) 
 	{
-		Model model = Model.instance();	
-		
 		float x = left ? -OOBWall.WIDTH : Constants.CAMERA_WIDTH;				
-		shape = new Rectangle(x, 0, OOBWall.WIDTH, Constants.CAMERA_HEIGHT, model.main.getVertexBufferObjectManager());
+		shape = new Rectangle(x, 0, OOBWall.WIDTH, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setVisible(false);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, .5f, 0);
 		fixDef.filter.categoryBits = Constants.OOB_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SHOT_BITMASK;
 		
-		Body body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.KinematicBody, fixDef);	
+		Body body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);	
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true)); 
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true)); 
 	}
 	
 	public void collide(ICollide other)

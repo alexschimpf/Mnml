@@ -26,9 +26,7 @@ public class Particle implements IUpdate
 	
 	private Particle(Color color, float x, float y) 
 	{
-		Model model = Model.instance();
-		
-		rect = new Rectangle(x, y, Constants.PARTICLE_WIDTH, Constants.PARTICLE_HEIGHT, model.main.getVertexBufferObjectManager()); 
+		rect = new Rectangle(x, y, Constants.PARTICLE_WIDTH, Constants.PARTICLE_HEIGHT, Model.main.getVertexBufferObjectManager()); 
 		
 		if(color == null)
 		{
@@ -75,11 +73,11 @@ public class Particle implements IUpdate
 
 	public void done() 
 	{
-		Model.instance().scene.detachChild(rect);
+		Model.scene.detachChild(rect);
 	}
 	
 	public void attachToScene()
 	{
-		Model.instance().scene.attachChild(rect);
+		Model.scene.attachChild(rect);
 	}
 }

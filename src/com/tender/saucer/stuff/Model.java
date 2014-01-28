@@ -21,49 +21,36 @@ import com.tender.saucer.wave.WaveMachine;
 
 public class Model 
 {
-	private static Model instance;
-	
-	public Main main;
-	public PhysicsWorld world;
-	public Scene scene;
-	public ZoomCamera camera;
-	public HUD hud;
-	public Player player;
-	public Wall wall;
-	public OOBWall oobLeft;
-	public OOBWall oobRight;
-	public Rectangle hudRect;
-	public Background background;
-	public StrokeFont hudFont;
-	public StrokeFont waveIntermissionFont;
-	public Text scoreText;
-	public Text livesText;
-	public Text waveText;
-	public LinkedList<IUpdate> actives;	
-	public WaveMachine waveMachine;
-	public WaveIntermission waveIntermission;
-	public GameState state;
+	public static Main main;
+	public static PhysicsWorld world;
+	public static Scene scene;
+	public static ZoomCamera camera;
+	public static HUD hud;
+	public static Player player;
+	public static Wall wall;
+	public static OOBWall oobLeft;
+	public static OOBWall oobRight;
+	public static Rectangle hudRect;
+	public static Background background;
+	public static StrokeFont hudFont;
+	public static StrokeFont waveIntermissionFont;
+	public static Text scoreText;
+	public static Text livesText;
+	public static Text waveText;
+	public static LinkedList<IUpdate> actives;	
+	public static WaveMachine waveMachine;
+	public static WaveIntermission waveIntermission;
+	public static GameState state;
 
 	private Model() 
+	{
+	}
+	
+	public static void init()
 	{
 		actives = new LinkedList<IUpdate>();
 		waveMachine = new WaveMachine();
 		waveIntermission = new WaveIntermission();
 		state = GameState.PAUSED;
-	}
-	
-	public static void reset()
-	{
-		instance = null;
-	}
-	
-	public static Model instance()
-	{
-		if(instance == null)
-		{
-			instance = new Model();
-		}
-		
-		return instance;
 	}
 }

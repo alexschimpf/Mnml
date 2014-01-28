@@ -16,14 +16,13 @@ public abstract class ShapeBody
 	
 	public void attachToScene()
 	{
-		Model.instance().scene.attachChild(shape);
+		Model.scene.attachChild(shape);
 	}
 	
 	protected void recycle()
 	{ 
-		Model model = Model.instance();		
-		model.world.unregisterPhysicsConnector(model.world.getPhysicsConnectorManager().findPhysicsConnectorByShape(shape));
-		model.scene.detachChild(shape);						
-		model.world.destroyBody(body);
+		Model.world.unregisterPhysicsConnector(Model.world.getPhysicsConnectorManager().findPhysicsConnectorByShape(shape));
+		Model.scene.detachChild(shape);						
+		Model.world.destroyBody(body);
 	}
 }

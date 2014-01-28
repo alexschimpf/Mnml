@@ -14,39 +14,17 @@ import com.tender.saucer.stuff.Model;
 
 public class Powerup extends TargetShapeBody
 {
-	private static long lastBuildTime = 0;
-	private static float buildCooldown = Constants.DEFAULT_POWERUP_BUILD_COOLDOWN;
-	
 	protected Powerup() 
 	{		
 		// Todo
 	}
-	
-	public static void reset()
-	{
-		lastBuildTime = 0;
-		buildCooldown = Constants.DEFAULT_POWERUP_BUILD_COOLDOWN;
-	}
-	
-	public static Powerup tryBuildRandomPowerup()
-	{
-		long currTime = Calendar.getInstance().getTimeInMillis();
-		long timeElapsed = currTime - lastBuildTime;
-		if(timeElapsed > buildCooldown)
-		{
-			lastBuildTime = currTime;
-			return buildRandomPowerup();
-		}
-		
-		return null;
-	}
-	
+
 	private static Powerup buildRandomPowerup()
 	{
 		Powerup powerup = new Powerup();
 		powerup.body.setUserData(new BodyData(powerup));
 		
-		Model.instance().actives.add(powerup);
+		Model.actives.add(powerup);
 		
 		return powerup;
 	}

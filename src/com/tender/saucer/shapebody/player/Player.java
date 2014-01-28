@@ -40,21 +40,19 @@ public class Player extends ShapeBody implements ICollide, IUpdate
 
 	public Player() 
 	{
-		Model model = Model.instance();
-		
 		float x = (Constants.CAMERA_WIDTH - Constants.DEFAULT_PLAYER_WIDTH) / 2;
 		float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Constants.DEFAULT_PLAYER_HEIGHT;
-		shape = new Rectangle(x, y, Constants.DEFAULT_PLAYER_WIDTH, Constants.DEFAULT_PLAYER_HEIGHT, model.main.getVertexBufferObjectManager());
+		shape = new Rectangle(x, y, Constants.DEFAULT_PLAYER_WIDTH, Constants.DEFAULT_PLAYER_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.PLAYER_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.KinematicBody, fixDef);
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 	
 	public boolean update()
@@ -94,7 +92,7 @@ public class Player extends ShapeBody implements ICollide, IUpdate
 	public void done()
 	{
 		recycle();
-		Model.instance().state = GameState.DONE;
+		Model.state = GameState.DONE;
 	}
 	
 	public void collide(ICollide other)
@@ -106,7 +104,7 @@ public class Player extends ShapeBody implements ICollide, IUpdate
 		else if(other instanceof Enemy)
 		{
 			health--;
-			Model.instance().background.flash();
+			Model.background.flash();
 		}
 		else if(other instanceof Powerup)
 		{
@@ -143,7 +141,7 @@ public class Player extends ShapeBody implements ICollide, IUpdate
 		if(!penalty)
 		{
 			penalty = true;
-			shape.setColor(ColorScheme.instance().enemy);
+			shape.setColor(ColorScheme.enemy);
 			shootCooldown /= Constants.PENALTY_FACTOR;
 		}
 	}

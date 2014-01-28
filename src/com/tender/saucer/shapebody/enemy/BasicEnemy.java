@@ -24,8 +24,6 @@ public class BasicEnemy extends Enemy
 {
 	protected BasicEnemy() 
 	{	
-		Model model = Model.instance();
-		
 		health = 1;
 		speed = 5 + (float)(Math.random() * 5);
 		
@@ -35,23 +33,21 @@ public class BasicEnemy extends Enemy
 		
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
-		shape = new Rectangle(x, y, size, size, model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.instance().enemy);
+		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
+		shape.setColor(ColorScheme.enemy);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
 		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.OOB_BITMASK | Constants.WALL_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.DynamicBody, fixDef);
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 	
 	protected BasicEnemy(SplitEnemy splitEnemy, boolean dirLeft) 
 	{	
-		Model model = Model.instance();
-		
 		health = 1;
 		speed = Math.abs(splitEnemy.speed) / 1.5f;
 		
@@ -63,24 +59,24 @@ public class BasicEnemy extends Enemy
 		float txOffset = dirLeft ? -Constants.CAMERA_WIDTH / 2 : Constants.CAMERA_WIDTH / 2;
 		tx = x + txOffset;
 		
-		shape = new Rectangle(x, y, size, size, model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.instance().enemy);
+		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
+		shape.setColor(ColorScheme.enemy);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
 		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.OOB_BITMASK | Constants.WALL_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.DynamicBody, fixDef);
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
 	public boolean update()
 	{
 		if(health <= 0)
 		{
-			Model.instance().waveMachine.currNumEnemiesLeft--;
+			Model.waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		

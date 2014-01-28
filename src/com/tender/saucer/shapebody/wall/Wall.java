@@ -17,6 +17,7 @@ import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.enemy.PenaltyEnemy;
 import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.stuff.ColorScheme;
+import com.tender.saucer.stuff.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
@@ -27,20 +28,18 @@ public class Wall extends ShapeBody implements ICollide, IUpdate
 	
 	public Wall() 
 	{
-		Model model = Model.instance();		
-			
 		float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT;		
-		shape = new Rectangle(0, y, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT, model.main.getVertexBufferObjectManager());
+		shape = new Rectangle(0, y, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.WALL_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK;
 		
-		body = PhysicsFactory.createBoxBody(model.world, shape, BodyType.KinematicBody, fixDef);	
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);	
 		body.setFixedRotation(true);	
 		body.setUserData(new BodyData(this));
-		model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
 	public boolean update() 
@@ -56,7 +55,7 @@ public class Wall extends ShapeBody implements ICollide, IUpdate
 	public void done()
 	{
 		recycle();
-		Model.instance().state = GameState.DONE;
+		Model.state = GameState.DONE;
 	}
 
 	public void collide(ICollide other) 
@@ -64,10 +63,10 @@ public class Wall extends ShapeBody implements ICollide, IUpdate
 		if((other instanceof Enemy) && !(other instanceof PenaltyEnemy))
 		{
 			health--;
-			Model.instance().background.flash();   
+			Model.background.flash();   
 		}
 		
-		Color darker = ColorScheme.darken(Color.WHITE, 1 - (health / Constants.DEFAULT_WALL_HEALTH));
+		Color darker = ColorUtilities.darken(Color.WHITE, 1 - (health / Constants.DEFAULT_WALL_HEALTH));
 		shape.setColor(darker);
 	}
 }
