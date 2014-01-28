@@ -4,7 +4,7 @@ import com.tender.saucer.shapebody.BodyData;
 import com.tender.saucer.shapebody.TargetShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 
 public abstract class Enemy extends TargetShapeBody
 {	
@@ -16,7 +16,7 @@ public abstract class Enemy extends TargetShapeBody
 	
 	public static Enemy buildRandomEnemy()
 	{	
-		int choice = (int)(Math.random() * Wave.numEnemyTypes);
+		int choice = (int)(Math.random() * Model.instance().waveMachine.currNumEnemyTypes);
 		
 		Enemy enemy;
 		if(Math.random() < Constants.PENALTY_PROBABILITY)

@@ -18,7 +18,7 @@ import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.ColorScheme;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 
 public class BasicEnemy extends Enemy
 {
@@ -80,7 +80,7 @@ public class BasicEnemy extends Enemy
 	{
 		if(health <= 0)
 		{
-			Wave.numEnemiesLeft--;
+			Model.instance().waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		

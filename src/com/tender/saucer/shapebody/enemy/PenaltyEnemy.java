@@ -6,7 +6,8 @@ import org.andengine.util.color.Color;
 
 import com.tender.saucer.shapebody.BodyData;
 import com.tender.saucer.stuff.ColorScheme;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.stuff.Model;
+import com.tender.saucer.wave.WaveMachine;
 
 public class PenaltyEnemy extends BasicEnemy
 {
@@ -39,7 +40,7 @@ public class PenaltyEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			Wave.numEnemiesLeft--;
+			Model.instance().waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		

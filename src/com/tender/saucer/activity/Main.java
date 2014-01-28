@@ -42,7 +42,7 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveIntermission;
 
 public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListener 
@@ -52,8 +52,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Powerup.reset();
 		Model.reset();
 		Textures.reset();
-		Wave.reset();
-		WaveIntermission.reset();
 		ColorScheme.reset();
 		
 		Model model = Model.instance();
@@ -183,6 +181,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	
 	public void showLevelChoiceDialog()
 	{
+		final Model model = Model.instance();
+		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Choose starting level");
@@ -196,8 +196,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 			public void onClick(DialogInterface dialog, int button) 
 			{
 				Editable level = input.getText();
-				Wave.level = Integer.parseInt(level.toString()) - 1;
-				Model.instance().state = GameState.WAVE_INTERMISSION;
+				model.waveMachine = new WaveMachine(Integer.parseInt(level.toString()));
+				beginGame();
 			}
 		});
 
@@ -205,11 +205,17 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{			
 			public void onClick(DialogInterface dialog, int whichButton) 
 		    {
-				Wave.level = 0;
-				Model.instance().state = GameState.WAVE_INTERMISSION;
+				model.waveMachine.level = 1;
+				beginGame();
 		    }
 		});
 
 		alert.show();
+	}
+	
+	private void beginGame()
+	{
+		ColorScheme.repaint();
+		Model.instance().state = GameState.WAVE_RUNNING;
 	}
 }

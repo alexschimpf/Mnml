@@ -8,7 +8,7 @@ import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveIntermission;
 
 public class UpdateHandler implements IUpdateHandler
@@ -17,30 +17,25 @@ public class UpdateHandler implements IUpdateHandler
 	{		
 		Model model = Model.instance();
 		
-		if(model.state == GameState.PAUSED)
+		switch(model.state)
 		{
-			return;
+			case WAVE_RUNNING:	
+				update(model.waveMachine);			
+				break;
+			case WAVE_INTERMISSION:
+				update(model.waveIntermission);
+				break;
+			case PAUSED:
+				return;
+			case DONE:
+				model.main.restart();
+				break;	
 		}
 		
 		update(model.player);
 		update(model.wall);
 		updateActives();
 		updateHUDText();
-		
-		switch(model.state)
-		{
-			case WAVE_INTERMISSION:
-				WaveIntermission.update();
-				break;
-			case RUNNING:	
-				Wave.update();
-				break;
-			case DONE:
-				model.main.restart();
-				break;	
-			case PAUSED:
-				break;
-		}
 	}
 
 	public void reset() 
@@ -49,25 +44,16 @@ public class UpdateHandler implements IUpdateHandler
 	
 	private void updateActives()
 	{
-//			final Iterator<IUpdate> it = Model.instance().actives.listIterator();
-//			while(it.hasNext())
-//			{
-//				IUpdate active = it.next();
-//				if(active.update())
-//				{
-//					active.done();
-//					it.remove();
-//				}
-//			}
-//		
+		Model model = Model.instance();
+		
 		@SuppressWarnings("unchecked")
-		LinkedList<IUpdate> activesClone = (LinkedList<IUpdate>)Model.instance().actives.clone();
+		LinkedList<IUpdate> activesClone = (LinkedList<IUpdate>)model.actives.clone();
 		for(IUpdate active : activesClone)
 		{	
 			if(active.update())
 			{
 				active.done();
-				Model.instance().actives.remove(active);
+				model.actives.remove(active);
 			}
 		}
 	}
@@ -86,7 +72,7 @@ public class UpdateHandler implements IUpdateHandler
 		model.livesText.setText("" + lives);
 		model.livesText.setX(Constants.CAMERA_WIDTH - model.livesText.getWidth() - 20);
 		
-		model.waveText.setText("Wave " + Wave.level);
+		model.waveText.setText("Wave " + model.waveMachine.level);
 		model.waveText.setX((Constants.CAMERA_WIDTH - model.waveText.getWidth()) / 2);
 	}
 	

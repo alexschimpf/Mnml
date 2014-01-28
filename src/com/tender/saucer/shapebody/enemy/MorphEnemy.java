@@ -3,7 +3,8 @@ package com.tender.saucer.shapebody.enemy;
 import android.util.FloatMath;
 import android.util.Log;
 
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.stuff.Model;
+import com.tender.saucer.wave.WaveMachine;
 
 public class MorphEnemy extends BasicEnemy
 {
@@ -26,7 +27,7 @@ public class MorphEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			Wave.numEnemiesLeft--;
+			Model.instance().waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		else

@@ -5,56 +5,56 @@ import java.util.Calendar;
 import android.util.Log;
 
 import com.tender.saucer.handler.UpdateHandler;
+import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 
-public class Wave
+public class WaveMachine implements IUpdate
 {
-	public static int level = 0;	
-	public static int numEnemiesLeft = 0;	
-	public static int numEnemyTypes = 0;
+	public int level = 1;	
+	public int currNumEnemiesLeft = 10;	
+	public int currNumEnemyTypes = 1;
 	
-	private static int numBuildsLeft = 0;
-	private static long lastBuildTime = 0;
-	private static float buildCooldown = Constants.DEFAULT_WAVE_BUILD_COOLDOWN;
+	private int numBuildsLeft = 10;
+	private long lastBuildTime = 0;
+	private float buildCooldown = Constants.DEFAULT_WAVE_BUILD_COOLDOWN;
 	
-	private Wave() 
+	public WaveMachine()
 	{
 	}
 	
-	public static void reset()
+	public WaveMachine(int level) 
 	{
-		level = 0;
-		numEnemiesLeft = 0;
-		numEnemyTypes = 0;
-		numBuildsLeft = 0;
+		this.level = level;
+		currNumEnemyTypes = getCurrNumEnemyTypes();
 		lastBuildTime = 0;
-		buildCooldown = Constants.DEFAULT_WAVE_BUILD_COOLDOWN; 
+		currNumEnemiesLeft = level * 10;
+		numBuildsLeft = currNumEnemiesLeft;
+		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
 	}
-	
-	public static void begin()
+
+	public void beginNextWave()
 	{	
-		level++;
 		ColorScheme.repaint();
-
-		numEnemyTypes = getNumEnemyTypes();
-
+		
+		level++;
+		currNumEnemyTypes = getCurrNumEnemyTypes();
 		lastBuildTime = 0;
-		numEnemiesLeft = level * 10;
-		numBuildsLeft = numEnemiesLeft;
+		currNumEnemiesLeft = level * 10;
+		numBuildsLeft = currNumEnemiesLeft;
 		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
 		
-		Model.instance().state = GameState.RUNNING;
+		Model.instance().state = GameState.WAVE_RUNNING;
 	}
 	
-	public static void update()
+	public boolean update()
 	{
-		if(numEnemiesLeft <= 0)
+		if(currNumEnemiesLeft <= 0)
 		{
-			WaveIntermission.begin();
+			return true;
 		}
 		else 
 		{
@@ -66,9 +66,17 @@ public class Wave
 				enemy.setInMotion();
 			}
 		}
+		
+		return false;
 	}
 	
-	private static Enemy tryBuildRandomEnemy()
+	public void done()
+	{
+		Model.instance().state = GameState.WAVE_INTERMISSION;
+		Model.instance().waveIntermission.beginNextIntermission();
+	}
+	
+	private Enemy tryBuildRandomEnemy()
 	{	
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - lastBuildTime;
@@ -81,7 +89,7 @@ public class Wave
 		return null;
 	}
 	
-	private static int getNumEnemyTypes()
+	private int getCurrNumEnemyTypes()
 	{
 		int count = 1;	
 		count += (level >= Constants.ENEMY_BIG_LEVEL) ? 1 : 0;

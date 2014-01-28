@@ -16,6 +16,8 @@ import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.wall.OOBWall;
 import com.tender.saucer.shapebody.wall.Wall;
+import com.tender.saucer.wave.WaveIntermission;
+import com.tender.saucer.wave.WaveMachine;
 
 public class Model 
 {
@@ -38,11 +40,15 @@ public class Model
 	public Text livesText;
 	public Text waveText;
 	public LinkedList<IUpdate> actives;	
+	public WaveMachine waveMachine;
+	public WaveIntermission waveIntermission;
 	public GameState state;
 
 	private Model() 
 	{
 		actives = new LinkedList<IUpdate>();
+		waveMachine = new WaveMachine();
+		waveIntermission = new WaveIntermission();
 		state = GameState.PAUSED;
 	}
 	

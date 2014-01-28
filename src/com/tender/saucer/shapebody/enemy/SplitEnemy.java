@@ -3,7 +3,7 @@ package com.tender.saucer.shapebody.enemy;
 import com.tender.saucer.shapebody.BodyData;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 
 public class SplitEnemy extends BasicEnemy 
 {
@@ -19,9 +19,11 @@ public class SplitEnemy extends BasicEnemy
 
 	public boolean update() 
 	{
+		Model model = Model.instance();
+		
 		if(health <= 0)
 		{
-			Wave.numEnemiesLeft--;
+			model.waveMachine.currNumEnemiesLeft--;
 			return true;
 		}
 		else if(shape.getY() >= splitY)
@@ -33,7 +35,7 @@ public class SplitEnemy extends BasicEnemy
 				enemy.setInMotion();
 			}
 			
-			Wave.numEnemiesLeft++;
+			model.waveMachine.currNumEnemiesLeft++;
 			return true;
 		}
 		

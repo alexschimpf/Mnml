@@ -24,7 +24,7 @@ import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.wave.Wave;
+import com.tender.saucer.wave.WaveMachine;
 
 public class Player extends ShapeBody implements ICollide, IUpdate
 {
