@@ -2,6 +2,13 @@ package com.tender.saucer.shapebody.enemy;
 
 import com.tender.saucer.stuff.Constants;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class BounceEnemy extends BasicEnemy
 {
 	public BounceEnemy() 

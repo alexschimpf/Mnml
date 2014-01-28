@@ -17,9 +17,17 @@ import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class Shot extends DynamicShapeBody
 {	
-	public float damage = 1;
+	public float damage = 1;	
+	private float health = 1;
 	
 	private Shot(float width, float height, float speed) 
 	{	
@@ -53,7 +61,7 @@ public class Shot extends DynamicShapeBody
 	
 	public boolean update()
 	{
-		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || ((BodyData)body.getUserData()).remove)
+		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || health <= 0)
 		{
 			return true;
 		}
@@ -66,11 +74,8 @@ public class Shot extends DynamicShapeBody
 		if(other instanceof PenaltyEnemy)
 		{
 			Model.player.applyPenalty();
-			((BodyData)body.getUserData()).remove = true;
 		}
-		else
-		{
-			((BodyData)body.getUserData()).remove = true;
-		}
+		
+		health--;
 	}
 }

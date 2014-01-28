@@ -12,6 +12,13 @@ import com.tender.saucer.shapebody.BodyData;
 import com.tender.saucer.shapebody.ICollide;
 import com.tender.saucer.shapebody.ShapeBody;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class CollisionHandler implements ContactListener
 {
 	public void beginContact(Contact contact) 

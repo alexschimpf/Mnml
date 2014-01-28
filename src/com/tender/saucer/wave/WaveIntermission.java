@@ -9,6 +9,13 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class WaveIntermission implements IUpdate
 {
 	private long startTime = 0;

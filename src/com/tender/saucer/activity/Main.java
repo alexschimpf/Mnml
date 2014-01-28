@@ -35,7 +35,7 @@ import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.shapebody.shot.Shot;
-import com.tender.saucer.shapebody.wall.OOBWall;
+import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
@@ -44,6 +44,13 @@ import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveIntermission;
+
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
 
 public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListener 
 {
@@ -115,8 +122,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.player.attachToScene();
 		
 		Model.wall = new Wall();
-		Model.oobLeft = new OOBWall(true);
-		Model.oobRight = new OOBWall(false);
+		Model.oobLeft = new SideWall(true);
+		Model.oobRight = new SideWall(false);
 		Model.hud.attachChild(Model.wall.shape);
 		Model.oobLeft.attachToScene();
 		Model.oobRight.attachToScene();

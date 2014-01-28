@@ -8,6 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 
 import android.util.Log;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class ColorScheme 
 {
 	public static Color background;

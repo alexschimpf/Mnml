@@ -26,6 +26,13 @@ import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class Player extends ShapeBody implements ICollide, IUpdate
 {
 	public float health = Constants.DEFAULT_PLAYER_HEALTH;
@@ -57,7 +64,7 @@ public class Player extends ShapeBody implements ICollide, IUpdate
 	
 	public boolean update()
 	{
-		if(health <= 0 || ((BodyData)body.getUserData()).remove)
+		if(health <= 0)
 		{
 			return true;
 		}

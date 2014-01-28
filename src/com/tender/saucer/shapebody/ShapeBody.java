@@ -5,6 +5,13 @@ import org.andengine.entity.shape.IAreaShape;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public abstract class ShapeBody
 {
 	public IAreaShape shape;

@@ -6,6 +6,13 @@ import android.util.Log;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class MorphEnemy extends BasicEnemy
 {
 	private float origSize;
@@ -21,6 +28,7 @@ public class MorphEnemy extends BasicEnemy
 		dSize = origSize / 2;
 	}
 
+	@Override
 	public boolean update() 
 	{
 		sineArg += .05;

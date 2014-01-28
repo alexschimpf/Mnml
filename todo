@@ -1,4 +1,3 @@
-- ground gets shorter when hit
 - powerups
 - achievements
 - leveling up - gives you more life
@@ -7,10 +6,6 @@
 - outlined rectangles
 - waves change more than just build cooldown
 
-- use 'final'
+- Use 'final'
 - Put constants in their respective classes?
-- use override... not required?
-- Is BodyData's 'remove' necessary?
 - put copyright crap in all files
-
-- Move buildSplitEnemies to SplitEnemy!

@@ -1,9 +1,13 @@
 package com.tender.saucer.activity;
 
-public class MainMenu {
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
 
-	public MainMenu() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class MainMenu 
+{
+	//TODO
 }

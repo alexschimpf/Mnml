@@ -1,5 +1,12 @@
 package com.tender.saucer.shapebody;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public abstract class DynamicShapeBody extends ShapeBody implements ICollide, IUpdate 
 {
 	public float speed;

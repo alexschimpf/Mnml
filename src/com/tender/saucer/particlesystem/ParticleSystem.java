@@ -8,6 +8,13 @@ import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class ParticleSystem implements IUpdate
 {
 	private LinkedList<Particle> particles = new LinkedList<Particle>();

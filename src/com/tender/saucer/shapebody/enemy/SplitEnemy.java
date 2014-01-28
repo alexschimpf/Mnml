@@ -5,6 +5,13 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class SplitEnemy extends BasicEnemy 
 {
 	private float splitY;
@@ -17,6 +24,7 @@ public class SplitEnemy extends BasicEnemy
 		splitY = (float)((Constants.TOP_BOT_HEIGHT + 20) + (Math.random() * (playAreaHeight / 5)));
 	}
 
+	@Override
 	public boolean update() 
 	{
 		if(health <= 0)

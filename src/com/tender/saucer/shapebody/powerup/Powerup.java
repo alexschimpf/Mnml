@@ -12,11 +12,18 @@ import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class Powerup extends TargetShapeBody
 {
 	protected Powerup() 
 	{		
-		// Todo
+		//TODO
 	}
 
 	private static Powerup buildRandomPowerup()
@@ -36,17 +43,6 @@ public class Powerup extends TargetShapeBody
 
 	public void collide(ICollide other) 
 	{
-		if(other instanceof Player)
-		{
-			((BodyData)body.getUserData()).remove = true;
-		}
-		else if(other instanceof Wall)
-		{
-			((BodyData)body.getUserData()).remove = true;
-		}
-		else if(other instanceof Shot)
-		{
-			((BodyData)body.getUserData()).remove = true;
-		}
+		
 	}
 }

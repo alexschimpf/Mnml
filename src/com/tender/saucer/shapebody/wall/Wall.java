@@ -22,6 +22,13 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class Wall extends ShapeBody implements ICollide, IUpdate
 {
 	public float health = Constants.DEFAULT_WALL_HEALTH;
@@ -44,7 +51,7 @@ public class Wall extends ShapeBody implements ICollide, IUpdate
 
 	public boolean update() 
 	{
-		if(health <= 0 || ((BodyData)body.getUserData()).remove)
+		if(health <= 0)
 		{
 			return true;
 		}

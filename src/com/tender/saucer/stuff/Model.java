@@ -14,10 +14,17 @@ import com.tender.saucer.activity.Main;
 import com.tender.saucer.background.Background;
 import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.player.Player;
-import com.tender.saucer.shapebody.wall.OOBWall;
+import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.wave.WaveIntermission;
 import com.tender.saucer.wave.WaveMachine;
+
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
 
 public class Model 
 {
@@ -28,8 +35,8 @@ public class Model
 	public static HUD hud;
 	public static Player player;
 	public static Wall wall;
-	public static OOBWall oobLeft;
-	public static OOBWall oobRight;
+	public static SideWall oobLeft;
+	public static SideWall oobRight;
 	public static Rectangle hudRect;
 	public static Background background;
 	public static StrokeFont hudFont;

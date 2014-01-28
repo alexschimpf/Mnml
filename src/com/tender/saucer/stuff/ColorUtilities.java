@@ -4,6 +4,13 @@ import java.util.LinkedList;
 
 import org.andengine.util.color.Color;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class ColorUtilities 
 {
 	private ColorUtilities() 

@@ -11,6 +11,13 @@ import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveIntermission;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class UpdateHandler implements IUpdateHandler
 {
 	public void onUpdate(float secondsElapsed) 

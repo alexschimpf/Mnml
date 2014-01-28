@@ -6,6 +6,13 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public abstract class Enemy extends TargetShapeBody
 {	
 	public float health;

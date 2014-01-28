@@ -20,6 +20,13 @@ import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public class BasicEnemy extends Enemy
 {
 	protected BasicEnemy() 

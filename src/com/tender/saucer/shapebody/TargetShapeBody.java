@@ -4,6 +4,13 @@ import com.tender.saucer.stuff.Constants;
 
 import android.util.FloatMath;
 
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
 public abstract class TargetShapeBody extends DynamicShapeBody
 {
 	public float tx;
@@ -12,6 +19,7 @@ public abstract class TargetShapeBody extends DynamicShapeBody
 	{
 	}
 	
+	@Override
 	public void setInMotion()
 	{
 		float dx = tx - shape.getX();

@@ -14,14 +14,21 @@ import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
-public class OOBWall extends ShapeBody implements ICollide
+/**
+ * 
+ * Copyright 2014
+ * @author Alex Schimpf
+ *
+ */
+
+public class SideWall extends ShapeBody implements ICollide
 {
 	private static final float WIDTH = 5;
 	
-	public OOBWall(boolean left) 
+	public SideWall(boolean left) 
 	{
-		float x = left ? -OOBWall.WIDTH : Constants.CAMERA_WIDTH;				
-		shape = new Rectangle(x, 0, OOBWall.WIDTH, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
+		float x = left ? -SideWall.WIDTH : Constants.CAMERA_WIDTH;				
+		shape = new Rectangle(x, 0, SideWall.WIDTH, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setVisible(false);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, .5f, 0);
