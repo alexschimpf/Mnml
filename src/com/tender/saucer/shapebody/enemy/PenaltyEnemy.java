@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 import org.andengine.util.color.Color;
 
-import com.tender.saucer.shapebody.BodyData;
-import com.tender.saucer.stuff.ColorScheme;
+import com.tender.saucer.collision.BodyData;
+import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
 

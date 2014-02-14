@@ -4,10 +4,11 @@ import java.util.Calendar;
 
 import android.util.Log;
 
-import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.update.IPersistentUpdate;
+import com.tender.saucer.update.ITransientUpdate;
 
 /**
  * 
@@ -16,7 +17,7 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public class WaveIntermission implements IUpdate
+public final class WaveIntermission implements IPersistentUpdate
 {
 	private long startTime = 0;
 	private TextSequence countdown = null; 
@@ -32,25 +33,18 @@ public class WaveIntermission implements IUpdate
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
-	public boolean update()
+	public void update()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - startTime;
 		if(timeElapsed > Constants.WAVE_INTERMISSION_DURATION)
 		{
-			return true;
+			Model.state = GameState.WAVE_RUNNING;
+			Model.waveMachine.beginNextWave();
 		}
 		else
 		{			
 			countdown.playOnce();
 		}
-		
-		return false;
-	}
-	
-	public void done()
-	{
-		Model.state = GameState.WAVE_RUNNING;
-		Model.waveMachine.beginNextWave();
 	}
 }

@@ -1,6 +1,8 @@
 package com.tender.saucer.shapebody.enemy;
 
-import com.tender.saucer.shapebody.BodyData;
+import android.util.Log;
+
+import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.shapebody.TargetShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
@@ -22,39 +24,19 @@ public abstract class Enemy extends TargetShapeBody
 	}
 	
 	public static Enemy buildRandomEnemy()
-	{	
-		int choice = (int)(Math.random() * Model.waveMachine.currNumEnemyTypes);
-		
-		Enemy enemy;
-		if(Math.random() < Constants.PENALTY_PROBABILITY)
+	{			
+		try 
 		{
-			enemy = new PenaltyEnemy();
-		}
-		else if(choice == 0)
+			int choice = (int)(Math.random() * Model.waveMachine.currEnemyTypes.size());
+			Enemy enemy = (Enemy)Model.waveMachine.currEnemyTypes.get(choice).newInstance();
+			enemy.body.setUserData(new BodyData(enemy));			
+			Model.transients.add(enemy);
+			
+			return enemy;		
+		} 
+		catch (Exception e) 
 		{
-			enemy = new BasicEnemy(); 
+			return null;
 		}
-		else if(choice == 1)
-		{
-			enemy = new BigEnemy();
-		}
-		else if(choice == 2)
-		{
-			enemy = new MorphEnemy();
-		}
-		else if(choice == 3)
-		{
-			enemy = new SplitEnemy();
-		}
-		else 
-		{
-			enemy = new BounceEnemy();
-		}
-
-		enemy.body.setUserData(new BodyData(enemy));
-		
-		Model.actives.add(enemy);
-		
-		return enemy;
 	}
 }

@@ -1,6 +1,6 @@
 package com.tender.saucer.shapebody.enemy;
 
-import com.tender.saucer.shapebody.BodyData;
+import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
@@ -57,8 +57,8 @@ public class SplitEnemy extends BasicEnemy
 		enemies[0].body.setUserData(new BodyData(enemies[0]));
 		enemies[1].body.setUserData(new BodyData(enemies[1]));
 		
-		Model.actives.add(enemies[0]);
-		Model.actives.add(enemies[1]);
+		Model.transients.add(enemies[0]);
+		Model.transients.add(enemies[1]);
 		
 		return enemies;
 	}

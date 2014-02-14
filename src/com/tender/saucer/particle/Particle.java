@@ -1,4 +1,4 @@
-package com.tender.saucer.particlesystem;
+package com.tender.saucer.particle;
 
 import java.util.Calendar;
 
@@ -8,11 +8,11 @@ import org.andengine.util.color.Color;
 
 import android.util.Log;
 
-import com.tender.saucer.shapebody.IUpdate;
+import com.tender.saucer.color.ColorUtilities;
 import com.tender.saucer.shapebody.ShapeBody;
-import com.tender.saucer.stuff.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.update.ITransientUpdate;
 
 /**
  * 
@@ -21,7 +21,7 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public class Particle implements IUpdate
+public class Particle implements ITransientUpdate
 {
 	private Rectangle rect;
 	private long startTime;

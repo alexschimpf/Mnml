@@ -1,12 +1,12 @@
-package com.tender.saucer.particlesystem;
+package com.tender.saucer.particle;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.update.ITransientUpdate;
 
 /**
  * 
@@ -15,7 +15,7 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public class ParticleSystem implements IUpdate
+public class ParticleSystem implements ITransientUpdate
 {
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
 
@@ -36,14 +36,14 @@ public class ParticleSystem implements IUpdate
 	{
 		ParticleSystem ps = new ParticleSystem(shapeBody, Constants.NUM_PARTICLES_PER_SYSTEM);
 		ps.attachToScene();
-		Model.actives.add(ps);
+		Model.transients.add(ps);
 	}
 	
 	public static void init(ShapeBody shapeBody, int numParticles)
 	{
 		ParticleSystem ps = new ParticleSystem(shapeBody, numParticles);
 		ps.attachToScene();
-		Model.actives.add(ps);
+		Model.transients.add(ps);
 	}
 
 	public boolean update() 

@@ -1,4 +1,4 @@
-package com.tender.saucer.stuff;
+package com.tender.saucer.color;
 
 import java.util.LinkedList;
 

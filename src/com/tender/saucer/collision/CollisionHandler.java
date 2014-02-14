@@ -1,4 +1,4 @@
-package com.tender.saucer.handler;
+package com.tender.saucer.collision;
 
 import android.util.Log;
 
@@ -8,8 +8,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.tender.saucer.shapebody.BodyData;
-import com.tender.saucer.shapebody.ICollide;
 import com.tender.saucer.shapebody.ShapeBody;
 
 /**

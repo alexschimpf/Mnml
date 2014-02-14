@@ -12,10 +12,10 @@ import org.andengine.opengl.font.StrokeFont;
 
 import com.tender.saucer.activity.Main;
 import com.tender.saucer.background.Background;
-import com.tender.saucer.shapebody.IUpdate;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
+import com.tender.saucer.update.ITransientUpdate;
 import com.tender.saucer.wave.WaveIntermission;
 import com.tender.saucer.wave.WaveMachine;
 
@@ -44,7 +44,7 @@ public class Model
 	public static Text scoreText;
 	public static Text waveText;
 	public static Rectangle lifeBar;
-	public static LinkedList<IUpdate> actives;	
+	public static LinkedList<ITransientUpdate> transients;	
 	public static WaveMachine waveMachine;
 	public static WaveIntermission waveIntermission;
 	public static GameState state;
@@ -55,9 +55,7 @@ public class Model
 	
 	public static void init()
 	{
-		actives = new LinkedList<IUpdate>();
-		waveMachine = new WaveMachine();
-		waveIntermission = new WaveIntermission();
+		transients = new LinkedList<ITransientUpdate>();
 		state = GameState.PAUSED;
 	}
 }

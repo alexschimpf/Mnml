@@ -1,11 +1,12 @@
-package com.tender.saucer.handler;
+package com.tender.saucer.update;
 
 import java.util.LinkedList;
 
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 
-import com.tender.saucer.shapebody.IUpdate;
+import android.util.Log;
+
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
@@ -19,17 +20,17 @@ import com.tender.saucer.wave.WaveIntermission;
  *
  */
 
-public class UpdateHandler implements IUpdateHandler
+public final class UpdateHandler implements IUpdateHandler
 {
 	public void onUpdate(float secondsElapsed) 
 	{		
 		switch(Model.state)
 		{
 			case WAVE_RUNNING:	
-				update(Model.waveMachine);			
+				Model.waveMachine.update();			
 				break;
 			case WAVE_INTERMISSION:
-				update(Model.waveIntermission);
+				Model.waveIntermission.update();
 				break;
 			case PAUSED:
 				return;
@@ -37,10 +38,11 @@ public class UpdateHandler implements IUpdateHandler
 				Model.main.restart();
 				break;	
 		}
-		
-		update(Model.player);
-		update(Model.wall);
-		updateActives();
+
+		Model.player.update();
+		Model.wall.update();
+		Model.background.update();
+		updateTransients();
 		updateHUDText();
 	}
 
@@ -48,16 +50,16 @@ public class UpdateHandler implements IUpdateHandler
 	{
 	}
 	
-	private void updateActives()
+	private void updateTransients()
 	{
 		@SuppressWarnings("unchecked")
-		LinkedList<IUpdate> activesClone = (LinkedList<IUpdate>)Model.actives.clone();
-		for(IUpdate active : activesClone)
+		LinkedList<ITransientUpdate> transientsClone = (LinkedList<ITransientUpdate>)Model.transients.clone();
+		for(ITransientUpdate transientClone : transientsClone)
 		{	
-			if(active.update())
+			if(transientClone.update())
 			{
-				active.done();
-				Model.actives.remove(active);
+				transientClone.done();
+				Model.transients.remove(transientClone);
 			}
 		}
 	}
@@ -76,13 +78,5 @@ public class UpdateHandler implements IUpdateHandler
 		
 		Model.waveText.setText("Wave " + Model.waveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);
-	}
-	
-	private void update(IUpdate entity)
-	{
-		if(entity.update())
-		{
-			entity.done();
-		}
 	}
 }

@@ -7,13 +7,13 @@ import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.tender.saucer.shapebody.BodyData;
+import com.tender.saucer.collision.BodyData;
+import com.tender.saucer.collision.ICollide;
+import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.shapebody.DynamicShapeBody;
-import com.tender.saucer.shapebody.ICollide;
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.shapebody.enemy.PenaltyEnemy;
 import com.tender.saucer.shapebody.player.Player;
-import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -27,22 +27,20 @@ import com.tender.saucer.stuff.Model;
 public class Shot extends DynamicShapeBody
 {	
 	public float damage = 1;	
-	private float health = 1;
+	private boolean active = true;
 	
 	private Shot(float width, float height, float speed) 
 	{	
-		Player player = Model.player;
-		
 		this.speed = speed;
 
-		float x = player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (width / 2);
-		float y = player.shape.getY() - height;		
+		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (width / 2);
+		float y = Model.player.shape.getY() - height;		
 		shape = new Rectangle(x, y, width, height, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
 		fixDef.filter.categoryBits = Constants.SHOT_BITMASK;
-		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.OOB_BITMASK;
+		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SIDE_WALL_BITMASK;
 		
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);	
 		body.setBullet(true);
@@ -54,14 +52,14 @@ public class Shot extends DynamicShapeBody
 		Shot shot = new Shot(width, height, speed);
 		shot.body.setUserData(new BodyData(shot));
 		
-		Model.actives.add(shot);
+		Model.transients.add(shot);
 		
 		return shot;
 	}
 	
 	public boolean update()
 	{
-		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || health <= 0)
+		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || !active)
 		{
 			return true;
 		}
@@ -76,6 +74,6 @@ public class Shot extends DynamicShapeBody
 			Model.player.applyPenalty();
 		}
 		
-		health--;
+		active = false;
 	}
 }

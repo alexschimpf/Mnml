@@ -29,19 +29,19 @@ import android.widget.EditText;
 
 import com.badlogic.gdx.math.Vector2;
 import com.tender.saucer.background.Background;
-import com.tender.saucer.handler.CollisionHandler;
-import com.tender.saucer.handler.UpdateHandler;
+import com.tender.saucer.collision.CollisionHandler;
+import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.shapebody.shot.Shot;
 import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
-import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
+import com.tender.saucer.update.UpdateHandler;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveIntermission;
 
@@ -129,6 +129,9 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.oobRight.attachToScene();
 		
 		Model.camera.setHUD(Model.hud);	
+		
+		Model.waveMachine = new WaveMachine();
+		Model.waveIntermission = new WaveIntermission();
 
 		return Model.scene;
 	}
@@ -138,6 +141,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	{
 		if(mEngine.isRunning())
 		{
+			showPausedDialog();
 			mEngine.stop();
 		}
 		else
@@ -201,9 +205,26 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{			
 			public void onClick(DialogInterface dialog, int whichButton) 
 		    {
-				Model.waveMachine.level = 1;
+				Model.waveMachine = new WaveMachine(1);
 				beginGame();
 		    }
+		});
+
+		alert.show();
+	}
+	
+	public void showPausedDialog()
+	{
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Paused");
+
+		alert.setPositiveButton("Resume", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog, int button) 
+			{
+				mEngine.start();
+			}
 		});
 
 		alert.show();

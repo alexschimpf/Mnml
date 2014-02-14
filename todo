@@ -5,8 +5,25 @@
 - outlined rectangles
 - waves change more than just build cooldown
 - bonus rounds (after shooting a bonus powerup...)
+- diallow bad color combinations and too bright / dark colors
 
 - Use 'final'
 - Put constants in their respective classes?
+- Should change IAreaShape to IEntity... and ShapeBody to EntityBody
+	- Or IShape?
 
-- Alpha fading particles
+- Create main menu activity
+- Create paused popup menu 
+- Create game over popup menu
+- Save records and settings in shared preferences
+- Figure out how powerups are going to look
+- Slowly moving, faded, overlapping rectangles in background
+
+--------
+- Use observer pattern to make Wave/WaveIntermission communication more intuitive... or NOT!?
+	- Run Wave on a thread. When finished, signal to the WaveIntermission observer to begin on its own thread... and so on.
+	- Use the following game states: Running, Paused, GameOver
+	
+- Running update stuff on different threads
+	- different threads for each type
+--------

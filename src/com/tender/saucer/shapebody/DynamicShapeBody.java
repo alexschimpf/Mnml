@@ -1,5 +1,8 @@
 package com.tender.saucer.shapebody;
 
+import com.tender.saucer.collision.ICollide;
+import com.tender.saucer.update.ITransientUpdate;
+
 /**
  * 
  * Copyright 2014
@@ -7,7 +10,7 @@ package com.tender.saucer.shapebody;
  *
  */
 
-public abstract class DynamicShapeBody extends ShapeBody implements ICollide, IUpdate 
+public abstract class DynamicShapeBody extends ShapeBody implements ICollide, ITransientUpdate 
 {
 	public float speed;
 	

@@ -9,9 +9,12 @@ import org.andengine.util.modifier.IModifier.IModifierListener;
 
 import android.util.Log;
 
-import com.tender.saucer.stuff.ColorScheme;
+import com.tender.saucer.color.ColorScheme;
+import com.tender.saucer.color.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.update.IPersistentUpdate;
+import com.tender.saucer.update.ITransientUpdate;
 
 /**
  * 
@@ -20,12 +23,12 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public class Background
+public class Background implements IPersistentUpdate
 {
 	private Rectangle rect;
 	private AlphaModifier alphaDecrease;
 	private AlphaModifier alphaIncrease;
-	
+
 	public Background() 
 	{	
 		rect = new Rectangle(0, Constants.TOP_BOT_HEIGHT, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT - (Constants.TOP_BOT_HEIGHT * 2), 
@@ -69,5 +72,10 @@ public class Background
 	public void setColor(Color color)
 	{
 		rect.setColor(color);
+	}
+
+	public void update() 
+	{
+
 	}
 }

@@ -7,14 +7,14 @@ import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.tender.saucer.particlesystem.ParticleSystem;
-import com.tender.saucer.shapebody.BodyData;
-import com.tender.saucer.shapebody.ICollide;
+import com.tender.saucer.collision.BodyData;
+import com.tender.saucer.collision.ICollide;
+import com.tender.saucer.color.ColorScheme;
+import com.tender.saucer.color.ColorUtilities;
+import com.tender.saucer.particle.ParticleSystem;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.shot.Shot;
 import com.tender.saucer.shapebody.wall.Wall;
-import com.tender.saucer.stuff.ColorScheme;
-import com.tender.saucer.stuff.ColorUtilities;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
@@ -44,7 +44,7 @@ public class BigEnemy extends BasicEnemy
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.OOB_BITMASK | Constants.WALL_BITMASK;
+		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
 		
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);	

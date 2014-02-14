@@ -1,4 +1,4 @@
-package com.tender.saucer.shapebody;
+package com.tender.saucer.update;
 
 /**
  * 
@@ -7,7 +7,7 @@ package com.tender.saucer.shapebody;
  *
  */
 
-public interface IUpdate 
+public interface ITransientUpdate 
 {
 	public boolean update();
 	public void done();

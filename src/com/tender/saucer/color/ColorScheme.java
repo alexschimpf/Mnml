@@ -1,10 +1,11 @@
-package com.tender.saucer.stuff;
+package com.tender.saucer.color;
 
 import java.util.LinkedList;
 
 import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.math.Vector2;
+import com.tender.saucer.stuff.Model;
 
 import android.util.Log;
 
@@ -33,10 +34,8 @@ public class ColorScheme
 	
 	public static void repaint()
 	{	
-		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
-		background = complColors.get(0);
-		enemy = complColors.get(1);
-
+		init();
+		
 		Model.background.setColor(background);
 	}
 }

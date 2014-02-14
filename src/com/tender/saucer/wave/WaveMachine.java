@@ -1,16 +1,18 @@
 package com.tender.saucer.wave;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import android.util.Log;
 
-import com.tender.saucer.handler.UpdateHandler;
-import com.tender.saucer.shapebody.IUpdate;
+import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.shapebody.enemy.Enemy;
-import com.tender.saucer.stuff.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.update.IPersistentUpdate;
+import com.tender.saucer.update.ITransientUpdate;
+import com.tender.saucer.update.UpdateHandler;
 
 /**
  * 
@@ -19,11 +21,11 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public class WaveMachine implements IUpdate
+public final class WaveMachine implements IPersistentUpdate
 {
 	public int level = 1;	
 	public int currNumEnemiesLeft = 10;	
-	public int currNumEnemyTypes = 1;
+	public LinkedList<Class<?>> currEnemyTypes = new LinkedList<Class<?>>();
 	
 	private int numBuildsLeft = 10;
 	private long lastBuildTime = 0;
@@ -31,12 +33,18 @@ public class WaveMachine implements IUpdate
 	
 	public WaveMachine()
 	{
+		this.level = 1;
+		initCurrEnemyTypes();
+		lastBuildTime = 0;
+		currNumEnemiesLeft = 10;
+		numBuildsLeft = currNumEnemiesLeft;
+		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
 	}
 	
 	public WaveMachine(int level) 
-	{
+	{	
 		this.level = level;
-		currNumEnemyTypes = getCurrNumEnemyTypes();
+		initCurrEnemyTypes();
 		lastBuildTime = 0;
 		currNumEnemiesLeft = level * 10;
 		numBuildsLeft = currNumEnemiesLeft;
@@ -48,7 +56,7 @@ public class WaveMachine implements IUpdate
 		ColorScheme.repaint();
 		
 		level++;
-		currNumEnemyTypes = getCurrNumEnemyTypes();
+		initCurrEnemyTypes();
 		lastBuildTime = 0;
 		currNumEnemiesLeft = level * 10;
 		numBuildsLeft = currNumEnemiesLeft;
@@ -57,11 +65,12 @@ public class WaveMachine implements IUpdate
 		Model.state = GameState.WAVE_RUNNING;
 	}
 	
-	public boolean update()
+	public void update()
 	{
 		if(currNumEnemiesLeft <= 0)
 		{
-			return true;
+			Model.state = GameState.WAVE_INTERMISSION;
+			Model.waveIntermission.beginNextIntermission();
 		}
 		else 
 		{
@@ -73,16 +82,8 @@ public class WaveMachine implements IUpdate
 				enemy.setInMotion();
 			}
 		}
-		
-		return false;
 	}
-	
-	public void done()
-	{
-		Model.state = GameState.WAVE_INTERMISSION;
-		Model.waveIntermission.beginNextIntermission();
-	}
-	
+
 	private Enemy tryBuildRandomEnemy()
 	{	
 		long currTime = Calendar.getInstance().getTimeInMillis();
@@ -96,14 +97,15 @@ public class WaveMachine implements IUpdate
 		return null;
 	}
 	
-	private int getCurrNumEnemyTypes()
+	private void initCurrEnemyTypes()
 	{
-		int count = 1;	
-		count += (level >= Constants.ENEMY_BIG_LEVEL) ? 1 : 0;
-		count += (level >= Constants.ENEMY_MORPH_LEVEL) ? 1 : 0;
-		count += (level >= Constants.ENEMY_SPLIT_LEVEL) ? 1 : 0;
-		count += (level >= Constants.ENEMY_BOUNCE_LEVEL) ? 1 : 0;
-		
-		return count;
+		currEnemyTypes.clear();
+
+		int numEnemyTypes = Constants.ENEMY_CLASSES.length;
+		for(int i = 0; i < numEnemyTypes; i++)
+		{
+			int choice = (int)(Math.random() * numEnemyTypes);
+			currEnemyTypes.add(Constants.ENEMY_CLASSES[choice]);
+		}
 	}
 }
