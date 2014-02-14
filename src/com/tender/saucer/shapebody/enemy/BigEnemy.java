@@ -48,7 +48,6 @@ public class BigEnemy extends BasicEnemy
 		
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);	
-		body.setUserData(new BodyData(this));
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 	

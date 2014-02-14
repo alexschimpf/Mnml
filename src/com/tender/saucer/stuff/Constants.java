@@ -6,6 +6,7 @@ import com.tender.saucer.shapebody.enemy.BounceEnemy;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.enemy.MorphEnemy;
 import com.tender.saucer.shapebody.enemy.SplitEnemy;
+import com.tender.saucer.shapebody.powerup.HealthPowerup;
 
 /**
  * 
@@ -40,25 +41,17 @@ public class Constants
 	public static final float POWERUP_WIDTH = 40;
 	public static final float POWERUP_HEIGHT = 40;	
 	
-	public static final float DEFAULT_WAVE_BUILD_COOLDOWN = 2000;
+	public static final float DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN = 2000;
+	public static final float DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN = 1000;
 	
 	public static final float POWERUP_DURATION = 10000;
-	public static final float DEFAULT_POWERUP_BUILD_COOLDOWN = 10000;
+	public static final float POWERUP_SIZE = 50;
 	
 	public static final float PENALTY_DURATION = 10000;
 	public static final float PENALTY_FACTOR = .5f;
 	public static final float PENALTY_PROBABILITY = .05f;
 
 	public static final float WAVE_INTERMISSION_DURATION = 6500;
-	
-	public static final Class<?>[] ENEMY_CLASSES = new Class<?>[]
-	{
-		BasicEnemy.class,
-		BigEnemy.class,
-		BounceEnemy.class,
-		MorphEnemy.class,
-		SplitEnemy.class
-	};
 
 	public static final int HUD_FONT_SIZE = 26;
 	public static final int WAVE_INTERMISSION_FONT_SIZE = 60;
@@ -69,4 +62,18 @@ public class Constants
 	public static final short POWERUP_BITMASK = 0x0008;
 	public static final short SIDE_WALL_BITMASK = 0x0010;
 	public static final short WALL_BITMASK = 0x0020;
+	
+	public static final Class<?>[] ENEMY_CLASSES = new Class<?>[]
+	{
+		BasicEnemy.class,
+		BigEnemy.class,
+		BounceEnemy.class,
+		MorphEnemy.class,
+		SplitEnemy.class
+	};
+	
+	public static final Class<?>[] POWERUP_CLASSES = new Class<?>[]
+	{
+		HealthPowerup.class
+	};
 }

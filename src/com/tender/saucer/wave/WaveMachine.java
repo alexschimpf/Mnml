@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.shapebody.enemy.Enemy;
+import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
@@ -25,30 +26,30 @@ public final class WaveMachine implements IPersistentUpdate
 {
 	public int level = 1;	
 	public int currNumEnemiesLeft = 10;	
+	public int currNumPowerupsLeft = 0;
 	public LinkedList<Class<?>> currEnemyTypes = new LinkedList<Class<?>>();
 	
-	private int numBuildsLeft = 10;
-	private long lastBuildTime = 0;
-	private float buildCooldown = Constants.DEFAULT_WAVE_BUILD_COOLDOWN;
+	private int numEnemyBuildsLeft = 10;
+	private long lastEnemyBuildTime = 0;
+	private float enemyBuildCooldown = Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN;	
+	private long lastPowerupBuildTime;
+	private float powerupBuildCooldown = Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN;
 	
 	public WaveMachine()
 	{
-		this.level = 1;
 		initCurrEnemyTypes();
-		lastBuildTime = 0;
-		currNumEnemiesLeft = 10;
-		numBuildsLeft = currNumEnemiesLeft;
-		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
+		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
+		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
 	public WaveMachine(int level) 
 	{	
 		this.level = level;
 		initCurrEnemyTypes();
-		lastBuildTime = 0;
 		currNumEnemiesLeft = level * 10;
-		numBuildsLeft = currNumEnemiesLeft;
-		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
+		numEnemyBuildsLeft = currNumEnemiesLeft;
+		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
+		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 	}
 
 	public void beginNextWave()
@@ -57,17 +58,18 @@ public final class WaveMachine implements IPersistentUpdate
 		
 		level++;
 		initCurrEnemyTypes();
-		lastBuildTime = 0;
+		lastEnemyBuildTime = 0;
 		currNumEnemiesLeft = level * 10;
-		numBuildsLeft = currNumEnemiesLeft;
-		buildCooldown = Math.max(700, Constants.DEFAULT_WAVE_BUILD_COOLDOWN - (level * 100));
+		numEnemyBuildsLeft = currNumEnemiesLeft;
+		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
+		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 		
 		Model.state = GameState.WAVE_RUNNING;
 	}
 	
 	public void update()
 	{
-		if(currNumEnemiesLeft <= 0)
+		if(currNumEnemiesLeft <= 0 && currNumPowerupsLeft <= 0)
 		{
 			Model.state = GameState.WAVE_INTERMISSION;
 			Model.waveIntermission.beginNextIntermission();
@@ -77,9 +79,15 @@ public final class WaveMachine implements IPersistentUpdate
 			Enemy enemy = tryBuildRandomEnemy();
 			if(enemy != null)
 			{
-				numBuildsLeft--;
 				enemy.attachToScene();
 				enemy.setInMotion();
+			}
+			
+			Powerup powerup = tryBuildRandomPowerup();
+			if(powerup != null)
+			{
+				powerup.attachToScene();
+				powerup.setInMotion();
 			}
 		}
 	}
@@ -87,11 +95,26 @@ public final class WaveMachine implements IPersistentUpdate
 	private Enemy tryBuildRandomEnemy()
 	{	
 		long currTime = Calendar.getInstance().getTimeInMillis();
-		long timeElapsed = currTime - lastBuildTime;
-		if(timeElapsed > buildCooldown && numBuildsLeft > 0)
+		long timeElapsed = currTime - lastEnemyBuildTime;
+		if(timeElapsed > enemyBuildCooldown && numEnemyBuildsLeft > 0)
 		{
-			lastBuildTime = currTime;
+			numEnemyBuildsLeft--;
+			lastEnemyBuildTime = currTime;
 			return Enemy.buildRandomEnemy();
+		}
+		
+		return null;
+	}
+	
+	private Powerup tryBuildRandomPowerup()
+	{
+		long currTime = Calendar.getInstance().getTimeInMillis();
+		long timeElapsed = currTime - lastPowerupBuildTime;
+		if(timeElapsed > powerupBuildCooldown)
+		{
+			currNumPowerupsLeft++;
+			lastPowerupBuildTime = currTime;
+			return Powerup.buildRandomPowerup();
 		}
 		
 		return null;

@@ -15,6 +15,9 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
@@ -87,6 +90,12 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.waveIntermissionFont = FontFactory.createStroke(getFontManager(), fontTexture2, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 
 				Constants.WAVE_INTERMISSION_FONT_SIZE, true, android.graphics.Color.WHITE, 0.0f, android.graphics.Color.WHITE);	
 		Model.waveIntermissionFont.load();
+		
+		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mainAtlas, this, "powerup_health.png", 1, 1);
+		try{ mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1)); }
+		catch(Exception e){ e.printStackTrace(); }
+		mainAtlas.load();
 	}
 
 	@Override

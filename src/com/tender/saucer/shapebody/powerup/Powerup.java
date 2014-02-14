@@ -7,6 +7,8 @@ import org.andengine.entity.primitive.Mesh;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.primitive.vbo.HighPerformanceMeshVertexBufferObject;
 import org.andengine.entity.shape.IAreaShape;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.opengl.vbo.DrawType;
@@ -21,6 +23,7 @@ import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.particle.ParticleSystem;
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.shapebody.TargetShapeBody;
+import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.shot.Shot;
 import com.tender.saucer.shapebody.wall.SideWall;
@@ -43,28 +46,25 @@ public abstract class Powerup extends TargetShapeBody
 	{	
 		speed = 5 + (float)(Math.random() * 5);
 		
-		float size = Constants.POWERUP_WIDTH;
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
-		
-		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
-		float y = -size;
-		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.enemy);
-
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		body.setUserData(new BodyData(this));
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
-	private static Powerup buildRandomPowerup()
+	public static Powerup buildRandomPowerup()
 	{
-		return null;
+		try 
+		{
+			int choice = (int)(Math.random() * Constants.POWERUP_CLASSES.length);
+			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
+			powerup.body.setUserData(new BodyData(powerup));			
+			Model.transients.add(powerup);
+			
+			return powerup;		
+		} 
+		catch (Exception e) 
+		{
+			return null;
+		}
 	}
 	
 	public abstract void apply();
@@ -75,14 +75,19 @@ public abstract class Powerup extends TargetShapeBody
 	{
 		return !active;
 	}
+	
+	public void done()
+	{
+		Model.waveMachine.currNumPowerupsLeft--;
+		recycle();
+	}
 
 	public void collide(ICollide other) 
 	{
 		if(!(other instanceof SideWall))
 		{
 			ParticleSystem.init(this);
+			active = false;
 		}
-		
-		active = false;
 	}
 }

@@ -14,6 +14,7 @@ import com.tender.saucer.shapebody.DynamicShapeBody;
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.shapebody.enemy.PenaltyEnemy;
 import com.tender.saucer.shapebody.player.Player;
+import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -72,6 +73,10 @@ public class Shot extends DynamicShapeBody
 		if(other instanceof PenaltyEnemy)
 		{
 			Model.player.applyPenalty();
+		}
+		else if(other instanceof Powerup)
+		{
+			Model.player.applyPowerup((Powerup)other);
 		}
 		
 		active = false;
