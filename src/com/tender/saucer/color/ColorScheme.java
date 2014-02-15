@@ -27,7 +27,7 @@ import com.tender.saucer.untitledgame.R;
 public class ColorScheme 
 {
 	public static Color background;
-	public static Color enemy;
+	public static Color foreground;
 
 	private ColorScheme() 
 	{	
@@ -37,7 +37,7 @@ public class ColorScheme
 	{
 		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
 		background = complColors.get(0);
-		enemy = complColors.get(1);
+		foreground = complColors.get(1);
 	}
 	
 	public static void repaint()
@@ -47,7 +47,7 @@ public class ColorScheme
 		
 		if(Model.player.penalty)
 		{
-			Model.player.shape.setColor(enemy);
+			Model.player.shape.setColor(foreground);
 		}
 	}
 }

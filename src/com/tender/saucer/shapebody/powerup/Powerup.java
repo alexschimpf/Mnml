@@ -12,8 +12,7 @@ import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.opengl.vbo.DrawType;
-
-import android.graphics.Color;
+import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -40,7 +39,11 @@ import com.tender.saucer.stuff.Model;
 
 public abstract class Powerup extends TargetShapeBody
 {
+	public boolean overrides = true;
+	
 	protected boolean active = true;
+	private long lastFlashTime = 0;
+	private float flashCooldown = 300;
 	
 	protected Powerup() 
 	{	
@@ -73,6 +76,22 @@ public abstract class Powerup extends TargetShapeBody
 	
 	public boolean update()
 	{
+		long currTime = Calendar.getInstance().getTimeInMillis();
+		long timeElapsed = currTime - lastFlashTime;
+		if(timeElapsed > flashCooldown)
+		{
+			lastFlashTime = currTime;
+			
+			if(shape.getColor().equals(ColorScheme.foreground))
+			{
+				shape.setColor(Color.WHITE);
+			}
+			else
+			{
+				shape.setColor(ColorScheme.foreground);
+			}
+		}
+		
 		return !active;
 	}
 	

@@ -17,6 +17,7 @@ import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.enemy.PenaltyEnemy;
+import com.tender.saucer.shapebody.powerup.HealthPowerup;
 import com.tender.saucer.shapebody.powerup.Powerup;
 import com.tender.saucer.shapebody.shot.Shot;
 import com.tender.saucer.shapebody.wall.Wall;
@@ -40,6 +41,8 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 	public long score = 0;	
 	public float shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
 	public boolean penalty = false;
+	public float shotSize = Constants.DEFAULT_SHOT_SIZE;
+	public float shotDamage = 1;
 	
 	private long lastShotTime = 0;
 	private long lastPowerupTime = 0;
@@ -129,6 +132,17 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 	
 	public void applyPowerup(Powerup powerup)
 	{
+		if(!powerup.overrides)
+		{
+			powerup.apply();
+			return;
+		}
+		
+		if(this.powerup != null)
+		{
+			this.powerup.remove();
+		}
+		
 		powerup.apply();
 		this.powerup = powerup;
 		lastPowerupTime = Calendar.getInstance().getTimeInMillis();
@@ -141,7 +155,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 		if(!penalty)
 		{
 			penalty = true;
-			shape.setColor(ColorScheme.enemy);
+			shape.setColor(ColorScheme.foreground);
 			shootCooldown /= Constants.PENALTY_FACTOR;
 		}
 	}
@@ -149,7 +163,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 	private void shoot()
 	{	
 		float speed = penalty ? Constants.DEFAULT_SHOT_SPEED * Constants.PENALTY_FACTOR : Constants.DEFAULT_SHOT_SPEED;		
-		Shot shot = Shot.buildShot(Constants.DEFAULT_SHOT_WIDTH, Constants.DEFAULT_SHOT_HEIGHT, speed);
+		Shot shot = Shot.buildShot(shotSize, shotDamage, speed);
 		shot.attachToScene();
 		shot.setInMotion();
 	}

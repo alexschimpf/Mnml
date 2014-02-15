@@ -34,14 +34,14 @@ public class BasicEnemy extends Enemy
 		health = 1;
 		speed = 5 + (float)(Math.random() * 5);
 		
-		float size = (float)(Constants.DEFAULT_SHOT_WIDTH + (Math.random() * Constants.DEFAULT_SHOT_WIDTH * 4));
+		float size = (float)(Constants.DEFAULT_SHOT_SIZE + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 4));
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 		
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.enemy);
+		shape.setColor(ColorScheme.foreground);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
@@ -66,7 +66,7 @@ public class BasicEnemy extends Enemy
 		tx = x + txOffset;
 		
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorScheme.enemy);
+		shape.setColor(ColorScheme.foreground);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;

@@ -30,13 +30,14 @@ public class Shot extends DynamicShapeBody
 	public float damage = 1;	
 	private boolean active = true;
 	
-	private Shot(float width, float height, float speed) 
+	private Shot(float size, float damage, float speed) 
 	{	
+		this.damage = damage;
 		this.speed = speed;
 
-		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (width / 2);
-		float y = Model.player.shape.getY() - height;		
-		shape = new Rectangle(x, y, width, height, Model.main.getVertexBufferObjectManager());
+		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (size / 2);
+		float y = Model.player.shape.getY() - size;		
+		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
@@ -48,9 +49,9 @@ public class Shot extends DynamicShapeBody
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
-	public static Shot buildShot(float width, float height, float speed)
+	public static Shot buildShot(float size, float damage, float speed)
 	{	
-		Shot shot = new Shot(width, height, speed);
+		Shot shot = new Shot(size, damage, speed);
 		shot.body.setUserData(new BodyData(shot));
 		
 		Model.transients.add(shot);

@@ -13,6 +13,8 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 public class Textures 
 {
 	public static ITextureRegion POWERUP_HEALTH;
+	public static ITextureRegion POWERUP_BIG_SHOT;
+	public static ITextureRegion PENALTY;
 	
 	private Textures() 
 	{		

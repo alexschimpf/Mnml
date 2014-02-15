@@ -6,6 +6,7 @@ import com.tender.saucer.shapebody.enemy.BounceEnemy;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.enemy.MorphEnemy;
 import com.tender.saucer.shapebody.enemy.SplitEnemy;
+import com.tender.saucer.shapebody.powerup.BigShotPowerup;
 import com.tender.saucer.shapebody.powerup.HealthPowerup;
 
 /**
@@ -29,8 +30,7 @@ public class Constants
 	public static final int DEFAULT_PLAYER_HEALTH = 5;
 	public static final float DEFAULT_PLAYER_SHOOT_COOLDOWN = 350;
 	
-	public static final float DEFAULT_SHOT_WIDTH = 10;
-	public static final float DEFAULT_SHOT_HEIGHT = 10;
+	public static final float DEFAULT_SHOT_SIZE = 10;
 	public static final float DEFAULT_SHOT_SPEED = -20;
 	
 	public static final float PARTICLE_WIDTH = 5;
@@ -74,6 +74,7 @@ public class Constants
 	
 	public static final Class<?>[] POWERUP_CLASSES = new Class<?>[]
 	{
-		HealthPowerup.class
+		HealthPowerup.class,
+		BigShotPowerup.class
 	};
 }

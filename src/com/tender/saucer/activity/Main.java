@@ -96,6 +96,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_health.png");
+		Textures.POWERUP_BIG_SHOT = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_big_shot.png");
+		Textures.PENALTY = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "penalty.png");
 		try{ mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1)); }
 		catch(Exception e){ e.printStackTrace(); }
 		mainAtlas.load();

@@ -28,10 +28,10 @@
 	- make constructors public
 	- building random enemy should happen within WaveMachine (keep more of its shit private)
 
-- Penalty should be its own entity (e.g. not powerup and not enemy)
-
-- Powerups should be able to define their durations and keep track of when they expire
+- Penalty should be a powerup
 
 - Make ParticleSystem more flexible (parameters for particle duration, speed, number, color)
+
+- Add / remove constants
 
 --------

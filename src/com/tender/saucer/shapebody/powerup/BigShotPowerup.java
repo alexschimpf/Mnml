@@ -1,9 +1,6 @@
 package com.tender.saucer.shapebody.powerup;
 
-import java.util.Calendar;
-
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 
@@ -14,17 +11,15 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 
-public class HealthPowerup extends Powerup
+public class BigShotPowerup extends Powerup
 {
-	protected HealthPowerup() 
+	protected BigShotPowerup() 
 	{
 		super();
 		
-		overrides = false;
-		
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Constants.POWERUP_SIZE));
 		float y = -Constants.POWERUP_SIZE;
-		shape = new Sprite(x, y, Constants.POWERUP_SIZE, Constants.POWERUP_SIZE, Textures.POWERUP_HEALTH, 
+		shape = new Sprite(x, y, Constants.POWERUP_SIZE, Constants.POWERUP_SIZE, Textures.POWERUP_BIG_SHOT, 
 				Model.main.getVertexBufferObjectManager());	
 		shape.setColor(ColorScheme.foreground);
 
@@ -40,11 +35,14 @@ public class HealthPowerup extends Powerup
 	@Override
 	public void apply() 
 	{
-		Model.player.health = Math.min(Model.player.health + 1, Constants.DEFAULT_PLAYER_HEALTH);
+		Model.player.shotSize = Constants.DEFAULT_PLAYER_WIDTH * .75f;
+		Model.player.shotDamage = 2;
 	}
-	
+
 	@Override
 	public void remove() 
 	{
+		Model.player.shotSize = Constants.DEFAULT_SHOT_SIZE;
+		Model.player.shotDamage = 1;
 	}
 }

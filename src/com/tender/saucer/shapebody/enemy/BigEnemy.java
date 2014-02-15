@@ -33,14 +33,14 @@ public class BigEnemy extends BasicEnemy
 		health = 2;
 		speed = 3 + (float)(Math.random() * 2);
 		
-		float size = (float)((Constants.DEFAULT_SHOT_WIDTH * 6) + (Math.random() * Constants.DEFAULT_SHOT_WIDTH * 2));
+		float size = (float)((Constants.DEFAULT_SHOT_SIZE * 6) + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 2));
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 		
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorUtilities.darken(ColorScheme.enemy, .1f));
+		shape.setColor(ColorUtilities.darken(ColorScheme.foreground, .1f));
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
@@ -64,7 +64,7 @@ public class BigEnemy extends BasicEnemy
 		}
 		else if(other instanceof Shot)
 		{
-			health--;
+			health -= ((Shot)other).damage;
 			
 			if(health > 0)
 			{
