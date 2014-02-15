@@ -1,16 +1,13 @@
-- powerups
 - achievements
 - leveling up - gives you more life
 - bosses
 - outlined rectangles
 - waves change more than just build cooldown
 - bonus rounds (after shooting a bonus powerup...)
-- diallow bad color combinations and too bright / dark colors
+- disallow bad color combinations and too bright / dark colors
 
 - Use 'final'
 - Put constants in their respective classes?
-- Should change IAreaShape to IEntity... and ShapeBody to EntityBody
-	- Or IShape?
 
 - Create main menu activity
 - Create paused popup menu 
@@ -20,10 +17,24 @@
 - Slowly moving, faded, overlapping rectangles in background
 
 --------
+
 - Use observer pattern to make Wave/WaveIntermission communication more intuitive... or NOT!?
 	- Run Wave on a thread. When finished, signal to the WaveIntermission observer to begin on its own thread... and so on.
 	- Use the following game states: Running, Paused, GameOver
 	
 - Running update stuff on different threads
 	- different threads for each type
+
+--------
+
+- Get rid of FactoryPattern stuff for enemies and stuff
+	- make constructors public
+	- building random enemy should happen within WaveMachine (keep more of its shit private)
+
+- Penalty should be its own entity (e.g. not powerup and not enemy)
+
+- Powerups should be able to define their durations and keep track of when they expire
+
+- Make ParticleSystem more flexible (parameters for particle duration, speed, number, color)
+
 --------

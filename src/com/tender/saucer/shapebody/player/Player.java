@@ -37,13 +37,13 @@ import com.tender.saucer.wave.WaveMachine;
 public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 {
 	public float health = Constants.DEFAULT_PLAYER_HEALTH;
-	public long score = 0;
+	public long score = 0;	
+	public float shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
+	public boolean penalty = false;
 	
-	private float shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
 	private long lastShotTime = 0;
 	private long lastPowerupTime = 0;
 	private long lastPenaltyTime = 0;
-	private boolean penalty = false;
 	private Powerup powerup = null;
 
 	public Player() 

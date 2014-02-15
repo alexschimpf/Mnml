@@ -23,11 +23,10 @@ public class Constants
 	public static final int CAMERA_HEIGHT = 800;	
 	public static final float OOB_WIDTH = 20;
 	public static final float TOP_BOT_HEIGHT = 50;
-	public static final int DEFAULT_WALL_HEALTH = 5;
 
 	public static final float DEFAULT_PLAYER_WIDTH = 50;
 	public static final float DEFAULT_PLAYER_HEIGHT = 25;
-	public static final int DEFAULT_PLAYER_HEALTH = 3;
+	public static final int DEFAULT_PLAYER_HEALTH = 5;
 	public static final float DEFAULT_PLAYER_SHOOT_COOLDOWN = 350;
 	
 	public static final float DEFAULT_SHOT_WIDTH = 10;
@@ -40,16 +39,17 @@ public class Constants
 	
 	public static final float POWERUP_WIDTH = 40;
 	public static final float POWERUP_HEIGHT = 40;	
+	public static final float DEFAULT_POWERUP_DURATION = 10000;
 	
 	public static final float DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN = 2000;
-	public static final float DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN = 1000;
+	public static final float DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN = 20000;
 	
 	public static final float POWERUP_DURATION = 10000;
 	public static final float POWERUP_SIZE = 50;
 	
 	public static final float PENALTY_DURATION = 10000;
 	public static final float PENALTY_FACTOR = .5f;
-	public static final float PENALTY_PROBABILITY = .05f;
+	public static final float PENALTY_PROBABILITY = .08f;
 
 	public static final float WAVE_INTERMISSION_DURATION = 6500;
 

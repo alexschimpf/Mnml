@@ -1,5 +1,6 @@
 package com.tender.saucer.stuff;
 
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
@@ -11,7 +12,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 public class Textures 
 {
-	public static ITiledTextureRegion POWERUP_HEALTH;
+	public static ITextureRegion POWERUP_HEALTH;
 	
 	private Textures() 
 	{		

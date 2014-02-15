@@ -92,7 +92,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.waveIntermissionFont.load();
 		
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mainAtlas, this, "powerup_health.png", 1, 1);
+		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_health.png");
 		try{ mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1)); }
 		catch(Exception e){ e.printStackTrace(); }
 		mainAtlas.load();
@@ -119,13 +119,12 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.scoreText.setY((Constants.TOP_BOT_HEIGHT - Model.scoreText.getHeight()) / 2);
 		Model.waveText = new Text(0, 0, Model.hudFont, "", 100, getVertexBufferObjectManager());
 		Model.waveText.setPosition((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2, Model.scoreText.getY());
-		Model.lifeBar = new Rectangle(Constants.CAMERA_WIDTH - 80, (Constants.TOP_BOT_HEIGHT - Model.scoreText.getHeight()) / 2,
-				60, Model.waveText.getHeight(), getVertexBufferObjectManager());
+		Model.lifeBar = new Rectangle(5, 5, Constants.CAMERA_WIDTH - 10, Constants.TOP_BOT_HEIGHT - 10, getVertexBufferObjectManager());
 		Model.lifeBar.setColor(Color.GREEN);
 		Model.hud.attachChild(Model.hudRect);
+		Model.hud.attachChild(Model.lifeBar);
 		Model.hud.attachChild(Model.scoreText);
 		Model.hud.attachChild(Model.waveText);
-		Model.hud.attachChild(Model.lifeBar);
 		
 		Model.player = new Player();
 		Model.player.attachToScene();

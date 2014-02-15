@@ -1,13 +1,21 @@
 package com.tender.saucer.color;
 
+
 import java.util.LinkedList;
 
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.source.BitmapTextureAtlasSource;
 import org.andengine.util.color.Color;
 
-import com.badlogic.gdx.math.Vector2;
-import com.tender.saucer.stuff.Model;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 
-import android.util.Log;
+import com.tender.saucer.stuff.Model;
+import com.tender.saucer.stuff.Textures;
+import com.tender.saucer.untitledgame.R;
 
 /**
  * 
@@ -35,7 +43,11 @@ public class ColorScheme
 	public static void repaint()
 	{	
 		init();
-		
 		Model.background.setColor(background);
+		
+		if(Model.player.penalty)
+		{
+			Model.player.shape.setColor(enemy);
+		}
 	}
 }

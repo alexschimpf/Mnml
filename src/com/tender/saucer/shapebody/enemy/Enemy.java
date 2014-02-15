@@ -27,8 +27,17 @@ public abstract class Enemy extends TargetShapeBody
 	{			
 		try 
 		{
-			int choice = (int)(Math.random() * Model.waveMachine.currEnemyTypes.size());
-			Enemy enemy = (Enemy)Model.waveMachine.currEnemyTypes.get(choice).newInstance();
+			Enemy enemy;
+			if(Math.random() <= Constants.PENALTY_PROBABILITY)
+			{
+				enemy = new PenaltyEnemy();
+			}
+			else
+			{
+				int choice = (int)(Math.random() * Model.waveMachine.currEnemyTypes.size());
+				enemy = (Enemy)Model.waveMachine.currEnemyTypes.get(choice).newInstance();
+			}
+			
 			enemy.body.setUserData(new BodyData(enemy));			
 			Model.transients.add(enemy);
 			
