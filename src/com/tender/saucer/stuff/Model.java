@@ -56,6 +56,6 @@ public class Model
 	public static void init()
 	{
 		transients = new LinkedList<ITransientUpdate>();
-		state = GameState.PAUSED;
+		state = GameState.GAME_PAUSED;
 	}
 }

@@ -13,7 +13,6 @@
 - Create paused popup menu 
 - Create game over popup menu
 - Save records and settings in shared preferences
-- Figure out how powerups are going to look
 - Slowly moving, faded, overlapping rectangles in background
 
 --------
@@ -24,8 +23,6 @@
 	
 - Running update stuff on different threads
 	- different threads for each type
-
---------
 
 - Get rid of FactoryPattern stuff for enemies and stuff
 	- make constructors public

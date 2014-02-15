@@ -80,6 +80,6 @@ public class ColorUtilities
 	
 	private static float lum(float c, float percent)
 	{
-		return Math.max(0, Math.min(255, c + percent));
+		return Math.max(0, Math.min(1, c + percent));
 	}
 }

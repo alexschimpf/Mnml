@@ -67,8 +67,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 	{
 		if(health <= 0)
 		{
-			recycle();
-			Model.state = GameState.DONE;
+			Model.state = GameState.GAME_OVER;
 		}
 		
 		if(powerup != null)
@@ -93,8 +92,6 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 				shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
 			}
 		}
-		
-		score += 1;
 	}
 
 	public void collide(ICollide other)

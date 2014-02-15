@@ -30,10 +30,8 @@ import com.tender.saucer.update.ITransientUpdate;
  *
  */
 
-public class Wall extends ShapeBody implements ICollide, IPersistentUpdate
+public class Wall extends ShapeBody implements ICollide
 {
-	public float health = Constants.DEFAULT_WALL_HEALTH;
-	
 	public Wall() 
 	{
 		float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT;		
@@ -50,24 +48,12 @@ public class Wall extends ShapeBody implements ICollide, IPersistentUpdate
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 
-	public void update() 
-	{
-		if(health <= 0)
-		{
-			recycle();
-			Model.state = GameState.DONE;
-		}
-	}
-
 	public void collide(ICollide other) 
 	{ 
 		if((other instanceof Enemy) && !(other instanceof PenaltyEnemy))
 		{
-			health--;
+			Model.player.health--;
 			Model.background.flash();   
 		}
-		
-		Color darker = ColorUtilities.darken(Color.WHITE, 1 - (health / Constants.DEFAULT_WALL_HEALTH));
-		shape.setColor(darker);
 	}
 }

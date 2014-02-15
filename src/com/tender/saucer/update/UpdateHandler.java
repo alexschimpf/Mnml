@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.util.Log;
 
 import com.tender.saucer.stuff.Constants;
@@ -27,23 +30,28 @@ public final class UpdateHandler implements IUpdateHandler
 		switch(Model.state)
 		{
 			case WAVE_RUNNING:	
-				Model.waveMachine.update();			
+				Model.waveMachine.update();	
+				updateHUDText();
 				break;
 			case WAVE_INTERMISSION:
 				Model.waveIntermission.update();
 				break;
-			case PAUSED:
+			case GAME_PAUSED:
 				return;
-			case DONE:
-				Model.main.restart();
+			case GAME_OVER:
+				Model.main.runOnUiThread(new Runnable() 
+				{
+				    public void run() 
+				    {
+				    	Model.main.showGameOverDialog();
+				    }
+				});
 				break;	
 		}
 
 		Model.player.update();
-		Model.wall.update();
 		Model.background.update();
 		updateTransients();
-		updateHUDText();
 	}
 
 	public void reset() 
@@ -66,15 +74,11 @@ public final class UpdateHandler implements IUpdateHandler
 	
 	private void updateHUDText()
 	{
+		Model.player.score++;
 		Model.scoreText.setText("" + Model.player.score);
 		
-		float width = 0;
-		for(int i = 0; i < Model.player.health; i++)
-		{
-			width += 20;
-		}		
+		float width = (Model.player.health / Constants.DEFAULT_PLAYER_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
 		Model.lifeBar.setWidth(width);
-		Model.lifeBar.setPosition(Constants.CAMERA_WIDTH - width - 20, (Constants.TOP_BOT_HEIGHT - Model.lifeBar.getHeight()) / 2);
 		
 		Model.waveText.setText("Wave " + Model.waveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);

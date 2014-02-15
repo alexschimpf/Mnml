@@ -69,6 +69,15 @@ public class Background implements IPersistentUpdate
 		rect.registerEntityModifier(alphaDecrease);	
 	}
 	
+	public void onGameOver()
+	{
+		rect.setColor(Color.BLACK);
+		rect.setPosition(0, 0);
+		rect.setSize(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+		Model.scene.detachChild(rect);
+		Model.hud.attachChild(rect);
+	}
+	
 	public void setColor(Color color)
 	{
 		rect.setColor(color);

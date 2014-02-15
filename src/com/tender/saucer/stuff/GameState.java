@@ -11,6 +11,6 @@ public enum GameState
 {
 	WAVE_RUNNING,
 	WAVE_INTERMISSION,
-	DONE,
-	PAUSED
+	GAME_OVER,
+	GAME_PAUSED
 }

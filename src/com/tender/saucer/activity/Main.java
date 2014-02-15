@@ -23,8 +23,10 @@ import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.util.Log;
@@ -34,6 +36,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tender.saucer.background.Background;
 import com.tender.saucer.collision.CollisionHandler;
 import com.tender.saucer.color.ColorScheme;
+import com.tender.saucer.color.ColorUtilities;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.powerup.Powerup;
@@ -120,7 +123,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.waveText = new Text(0, 0, Model.hudFont, "", 100, getVertexBufferObjectManager());
 		Model.waveText.setPosition((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2, Model.scoreText.getY());
 		Model.lifeBar = new Rectangle(5, 5, Constants.CAMERA_WIDTH - 10, Constants.TOP_BOT_HEIGHT - 10, getVertexBufferObjectManager());
-		Model.lifeBar.setColor(Color.GREEN);
+		Model.lifeBar.setColor(ColorUtilities.darken(Color.WHITE, .2f));
 		Model.hud.attachChild(Model.hudRect);
 		Model.hud.attachChild(Model.lifeBar);
 		Model.hud.attachChild(Model.scoreText);
@@ -175,21 +178,48 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		return true;
 	}
 	
-	public void restart()
+	public void showGameOverDialog()
 	{	
-		Model.scene.clearUpdateHandlers();
-		Model.world.clearPhysicsConnectors();
+		Model.background.onGameOver();
 		
-		Intent intent = new Intent(Main.this, Main.class);
-	    overridePendingTransition(0, 0);
-	    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	    finish();
+		mEngine.stop();
+		
+		long score = Model.player.score;
+		long oldBestScore = updateBestScore(score);
+		
+		final AlertDialog.Builder alert = new AlertDialog.Builder(Model.main);
 
-	    overridePendingTransition(0, 0);
-	    startActivity(intent);
+		alert.setTitle("Game over");
+		alert.setMessage("Score: " + score + "\n" + "Best: " + oldBestScore);
+
+		alert.setPositiveButton("Restart", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog, int button) 
+			{
+				restart();
+			}
+		});
+
+		alert.show();
+	}
+
+	private long updateBestScore(long score)
+	{	
+		SharedPreferences prefs = getSharedPreferences("com.tender.saucer.untitledgame", Context.MODE_PRIVATE);
+		long oldBestScore = prefs.getLong("bestScore", 0);
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		if(score > oldBestScore)
+		{
+			editor.putLong("bestScore", score);			
+		}
+		
+		editor.commit();
+		
+		return oldBestScore;
 	}
 	
-	public void showLevelChoiceDialog()
+	private void showLevelChoiceDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -221,7 +251,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		alert.show();
 	}
 	
-	public void showPausedDialog()
+	private void showPausedDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -236,6 +266,20 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		});
 
 		alert.show();
+	}
+	
+	private void restart()
+	{	
+		Model.scene.clearUpdateHandlers();
+		Model.world.clearPhysicsConnectors();
+		
+		Intent intent = new Intent(Main.this, Main.class);
+	    overridePendingTransition(0, 0);
+	    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	    finish();
+
+	    overridePendingTransition(0, 0);
+	    startActivity(intent);
 	}
 	
 	private void beginGame()
