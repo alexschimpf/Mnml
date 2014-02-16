@@ -3,6 +3,8 @@ package com.tender.saucer.particle;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.andengine.util.adt.pool.Pool;
+
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
@@ -18,7 +20,7 @@ import com.tender.saucer.update.ITransientUpdate;
 public class ParticleSystem implements ITransientUpdate
 {
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
-
+	
 	private ParticleSystem()
 	{
 	}

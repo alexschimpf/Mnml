@@ -80,7 +80,7 @@ public final class UpdateHandler implements IUpdateHandler
 		float width = (Model.player.health / Constants.DEFAULT_PLAYER_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
 		Model.lifeBar.setWidth(width);
 		
-		Model.waveText.setText("Wave " + Model.waveMachine.level);
+		Model.waveText.setText("WAVE " + Model.waveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);
 	}
 }

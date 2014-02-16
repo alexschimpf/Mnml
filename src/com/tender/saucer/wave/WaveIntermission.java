@@ -28,8 +28,9 @@ public final class WaveIntermission implements IPersistentUpdate
 
 	public void beginNextIntermission()
 	{
+		String message = Constants.WAVE_INTERMISSION_MESSAGES[(int)(Math.random() * Constants.WAVE_INTERMISSION_MESSAGES.length)];
 		countdown = new TextSequence(Model.waveIntermissionFont, 
-				new String[]{"WAVE " + Model.waveMachine.level + "\nCOMPLETE", "", "Three", "Two", "One"}, new float[]{3000, 500, 1000, 1000, 1000});
+				new String[]{message, "", "Three", "Two", "One"}, new float[]{2500, 500, 750, 750, 750});
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	

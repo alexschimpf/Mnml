@@ -15,6 +15,15 @@
 - Save records and settings in shared preferences
 - Slowly moving, faded, overlapping rectangles in background
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- Bank of messages for intermission
+- Achievement system, receive tokens 
+	- Unlock skins 
+	- Upgrade powerup durations and frequency
+	
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 --------
 
 - Use observer pattern to make Wave/WaveIntermission communication more intuitive... or NOT!?
@@ -33,5 +42,11 @@
 - Make ParticleSystem more flexible (parameters for particle duration, speed, number, color)
 
 - Add / remove constants
+
+- Change WaveMachine.currNumEnemiesLeft in done() not update().
+	- Works for powerups but not enemies?
+	- Problem is that BombPowerup cant call done() on each enemy, or an error occurs.
+	- WaveInit in collide?
+	- Want to makes enemies emit particles when bomb goes off
 
 --------

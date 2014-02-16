@@ -34,7 +34,7 @@ public class Particle implements ITransientUpdate
 	
 	private Particle(Color color, float x, float y) 
 	{
-		rect = new Rectangle(x, y, Constants.PARTICLE_WIDTH, Constants.PARTICLE_HEIGHT, Model.main.getVertexBufferObjectManager()); 
+		rect = new Rectangle(x, y, Constants.PARTICLE_SIZE, Constants.PARTICLE_SIZE, Model.main.getVertexBufferObjectManager()); 
 		
 		if(color == null)
 		{

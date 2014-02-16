@@ -30,7 +30,7 @@ public class BigEnemy extends BasicEnemy
 {
 	protected BigEnemy()
 	{
-		health = 2;
+		health = 3;
 		speed = 3 + (float)(Math.random() * 2);
 		
 		float size = (float)((Constants.DEFAULT_SHOT_SIZE * 6) + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 2));
@@ -40,7 +40,7 @@ public class BigEnemy extends BasicEnemy
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
-		shape.setColor(ColorUtilities.darken(ColorScheme.foreground, .1f));
+		shape.setColor(ColorUtilities.darken(ColorScheme.foreground, .2f));
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;

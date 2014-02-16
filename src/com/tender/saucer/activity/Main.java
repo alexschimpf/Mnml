@@ -85,18 +85,17 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		
 		BitmapTextureAtlas fontTexture1 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
-		Model.hudFont = FontFactory.createStroke(getFontManager(), fontTexture1, Typeface.create(Typeface.DEFAULT, Typeface.NORMAL), 
-				Constants.HUD_FONT_SIZE, true, android.graphics.Color.BLACK, 0.0f, android.graphics.Color.BLACK);
+		Model.hudFont = FontFactory.createFromAsset(getFontManager(), fontTexture1, getAssets(), "Pixel Berry.TTF", Constants.HUD_FONT_SIZE, false, android.graphics.Color.BLACK);
 		Model.hudFont.load(); 
 		
 		BitmapTextureAtlas fontTexture2 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
-		Model.waveIntermissionFont = FontFactory.createStroke(getFontManager(), fontTexture2, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 
-				Constants.WAVE_INTERMISSION_FONT_SIZE, true, android.graphics.Color.WHITE, 0.0f, android.graphics.Color.WHITE);	
+		Model.waveIntermissionFont = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(), "Pixel Berry.TTF", Constants.WAVE_INTERMISSION_FONT_SIZE, false, android.graphics.Color.BLACK);
 		Model.waveIntermissionFont.load();
 		
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_health.png");
 		Textures.POWERUP_BIG_SHOT = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_big_shot.png");
+		Textures.POWERUP_BOMB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "powerup_bomb.png");
 		Textures.PENALTY = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "penalty.png");
 		try{ mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1)); }
 		catch(Exception e){ e.printStackTrace(); }
@@ -121,7 +120,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.hudRect = new Rectangle(0, 0, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT, getVertexBufferObjectManager());
 		Model.hudRect.setColor(Color.WHITE);		
 		Model.scoreText = new Text(20, 0, Model.hudFont, "0", 100, getVertexBufferObjectManager());
-		Model.scoreText.setY((Constants.TOP_BOT_HEIGHT - Model.scoreText.getHeight()) / 2);
+		Model.scoreText.setY((Constants.TOP_BOT_HEIGHT - Model.scoreText.getHeight()) / 2 + 2);
 		Model.waveText = new Text(0, 0, Model.hudFont, "", 100, getVertexBufferObjectManager());
 		Model.waveText.setPosition((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2, Model.scoreText.getY());
 		Model.lifeBar = new Rectangle(5, 5, Constants.CAMERA_WIDTH - 10, Constants.TOP_BOT_HEIGHT - 10, getVertexBufferObjectManager());

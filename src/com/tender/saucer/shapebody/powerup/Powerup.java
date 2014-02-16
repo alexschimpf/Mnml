@@ -42,8 +42,6 @@ public abstract class Powerup extends TargetShapeBody
 	public boolean overrides = true;
 	
 	protected boolean active = true;
-	private long lastFlashTime = 0;
-	private float flashCooldown = 300;
 	
 	protected Powerup() 
 	{	
@@ -75,30 +73,14 @@ public abstract class Powerup extends TargetShapeBody
 	public abstract void remove();
 	
 	public boolean update()
-	{
-		long currTime = Calendar.getInstance().getTimeInMillis();
-		long timeElapsed = currTime - lastFlashTime;
-		if(timeElapsed > flashCooldown)
-		{
-			lastFlashTime = currTime;
-			
-			if(shape.getColor().equals(ColorScheme.foreground))
-			{
-				shape.setColor(Color.WHITE);
-			}
-			else
-			{
-				shape.setColor(ColorScheme.foreground);
-			}
-		}
-		
+	{	
 		return !active;
 	}
 	
 	public void done()
 	{
+		super.done();
 		Model.waveMachine.currNumPowerupsLeft--;
-		recycle();
 	}
 
 	public void collide(ICollide other) 

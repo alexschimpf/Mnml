@@ -38,7 +38,6 @@ public final class WaveMachine implements IPersistentUpdate
 	public WaveMachine()
 	{
 		initCurrEnemyTypes();
-		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
 		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
@@ -48,7 +47,8 @@ public final class WaveMachine implements IPersistentUpdate
 		initCurrEnemyTypes();
 		currNumEnemiesLeft = level * 10;
 		numEnemyBuildsLeft = currNumEnemiesLeft;
-		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
+		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 200));
+		powerupBuildCooldown = Math.max(15000, Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN - (level * 1000));
 		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 	}
 
@@ -61,7 +61,8 @@ public final class WaveMachine implements IPersistentUpdate
 		lastEnemyBuildTime = 0;
 		currNumEnemiesLeft = level * 10;
 		numEnemyBuildsLeft = currNumEnemiesLeft;
-		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 100));
+		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 200));
+		powerupBuildCooldown = Math.max(15000, Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN - (level * 1000));
 		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 		
 		Model.state = GameState.WAVE_RUNNING;

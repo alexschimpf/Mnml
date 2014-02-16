@@ -77,7 +77,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 		{		
 			long currTime = Calendar.getInstance().getTimeInMillis();
 			long elapsedTime = currTime - lastPowerupTime;
-			if(elapsedTime > Constants.POWERUP_DURATION)
+			if(elapsedTime > Constants.DEFAULT_POWERUP_DURATION)
 			{
 				powerup.remove();
 				powerup = null;
