@@ -45,7 +45,7 @@ public class Particle implements ITransientUpdate
 		float y = shape.getY() + (shape.getHeight() / 2);
 		Color color = shape.getColor();
 		
-		rect = new Rectangle(x, y, Constants.PARTICLE_SIZE, Constants.PARTICLE_SIZE, Model.main.getVertexBufferObjectManager()); 
+		rect = new Rectangle(x, y, Constants.DEFAULT_PARTICLE_SIZE, Constants.DEFAULT_PARTICLE_SIZE, Model.main.getVertexBufferObjectManager()); 
 		
 		if(color == null)
 		{

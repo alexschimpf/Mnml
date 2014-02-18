@@ -37,8 +37,14 @@ public class TextSequence
 		this.durations = durations;
 	}
 	
-	public static void play(Font font, String[] sequence, float[] durations)
+	public static float play(Font font, String[] sequence, float[] durations)
 	{
+		float totalDuration = 0;
+		for(float duration : durations)
+		{
+			totalDuration += duration;
+		}
+		
 		final TextSequence ts = new TextSequence(font, sequence, durations);		
 		ts.setAndAlignText(sequence[ts.currFrame]);
 		Model.hud.attachChild(ts.text);
@@ -67,6 +73,8 @@ public class TextSequence
 		});		
 		
 		Model.scene.registerUpdateHandler(timer);
+		
+		return totalDuration;
 	}
 
 	private void setAndAlignText(String str)

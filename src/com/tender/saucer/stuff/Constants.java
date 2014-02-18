@@ -50,14 +50,13 @@ public class Constants
 	public static final float PENALTY_PROBABILITY = .09f;
 	
 	// Particle
-	public static final float PARTICLE_SIZE = 5;
+	public static final float DEFAULT_PARTICLE_SIZE = 5;
 	public static final int DEFAULT_NUM_PARTICLES_PER_SYSTEM = 20;
 	public static final int DEFAULT_MAX_PARTICLE_DURATION = 2000;
 	
 	// Wave
 	public static final float DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN = 2200;
 	public static final float DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN = 22000;
-	public static final float WAVE_INTERMISSION_DURATION = 5250;
 
 	// Font
 	public static final int HUD_FONT_SIZE = 22;
