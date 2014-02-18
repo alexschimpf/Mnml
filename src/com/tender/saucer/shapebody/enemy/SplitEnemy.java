@@ -16,7 +16,7 @@ public class SplitEnemy extends BasicEnemy
 {
 	private float splitY;
 	
-	protected SplitEnemy() 
+	public SplitEnemy() 
 	{
 		super();
 		
@@ -29,7 +29,7 @@ public class SplitEnemy extends BasicEnemy
 	{
 		if(health <= 0)
 		{
-			Model.waveMachine.currNumEnemiesLeft--;
+			WaveMachine.numEnemiesLeft--;
 			return true;
 		}
 		else if(shape.getY() >= splitY)
@@ -41,7 +41,7 @@ public class SplitEnemy extends BasicEnemy
 				enemy.setInMotion();
 			}
 			
-			Model.waveMachine.currNumEnemiesLeft++;
+			WaveMachine.numEnemiesLeft++;
 			return true;
 		}
 		

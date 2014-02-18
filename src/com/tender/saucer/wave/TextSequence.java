@@ -24,49 +24,43 @@ public class TextSequence
 	private String[] sequence;
 	private float[] durations;
 	private int currFrame = 0;
-	private boolean started = false;
 	
-	public TextSequence(Font font, String[] sequence, float[] durations) 
+	private TextSequence()
+	{
+	}
+	
+	private TextSequence(Font font, String[] sequence, float[] durations) 
 	{
 		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
 		text.setHorizontalAlign(HorizontalAlign.CENTER);
-		resetTextPosition();
 		this.sequence = sequence;
 		this.durations = durations;
 	}
-
-	public void playOnce()
+	
+	public static void play(Font font, String[] sequence, float[] durations)
 	{
-		if(started)
-		{
-			return;
-		}
+		final TextSequence ts = new TextSequence(font, sequence, durations);		
+		ts.setAndAlignText(sequence[ts.currFrame]);
+		Model.hud.attachChild(ts.text);
 		
-		started = true;
-		
-		text.setText(sequence[currFrame]);
-		resetTextPosition();
-		Model.hud.attachChild(text);
-		
-		TimerHandler timer = new TimerHandler(durations[currFrame] / 1000, new ITimerCallback()
+		TimerHandler timer = new TimerHandler(durations[ts.currFrame] / 1000, new ITimerCallback()
 		{
 			public void onTimePassed(TimerHandler timerHandler) 
 			{				
-				currFrame++;	
+				ts.currFrame++;	
 							
-				if(currFrame > sequence.length)
+				if(ts.currFrame > ts.sequence.length)
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
 				}
-				else if(currFrame == sequence.length)
+				else if(ts.currFrame == ts.sequence.length)
 				{
-					Model.hud.detachChild(text);
+					Model.hud.detachChild(ts.text);
 				}
 				else
 				{
-					text.setText(sequence[currFrame]);
-					resetTextPosition();
-					timerHandler.setTimerSeconds(durations[currFrame] / 1000);
+					ts.setAndAlignText(ts.sequence[ts.currFrame]);
+					timerHandler.setTimerSeconds(ts.durations[ts.currFrame] / 1000);
 					timerHandler.reset();
 				}
 			}			
@@ -74,9 +68,10 @@ public class TextSequence
 		
 		Model.scene.registerUpdateHandler(timer);
 	}
-	
-	private void resetTextPosition()
+
+	private void setAndAlignText(String str)
 	{
+		text.setText(str);
 		text.setPosition((Constants.CAMERA_WIDTH - text.getWidth()) / 2, (Constants.CAMERA_HEIGHT - text.getHeight()) / 2);
 	}
 }

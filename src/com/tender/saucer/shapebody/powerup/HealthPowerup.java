@@ -16,7 +16,7 @@ import com.tender.saucer.stuff.Textures;
 
 public class HealthPowerup extends Powerup
 {
-	protected HealthPowerup() 
+	public HealthPowerup() 
 	{
 		super();
 		
@@ -28,13 +28,7 @@ public class HealthPowerup extends Powerup
 				Model.main.getVertexBufferObjectManager());	
 		shape.setColor(ColorScheme.foreground);
 
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		initBody();
 	}
 
 	@Override

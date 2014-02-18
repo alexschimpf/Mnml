@@ -49,7 +49,7 @@ import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 import com.tender.saucer.update.UpdateHandler;
 import com.tender.saucer.wave.WaveMachine;
-import com.tender.saucer.wave.WaveIntermission;
+import com.tender.saucer.wave.WaveRecess;
 
 /**
  * 
@@ -62,14 +62,15 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 {
 	public EngineOptions onCreateEngineOptions() 
 	{
+		ColorScheme.generateColors();
+		
 		Model.init();
-		ColorScheme.init();
-		Textures.init();
+		Shot.init();
+		WaveMachine.init();
+		WaveRecess.init();
 
 		Model.main = this;		
 		Model.camera = new ZoomCamera(0, 0, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
-		
-		showLevelChoiceDialog();
 
 		final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), Model.camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
@@ -142,8 +143,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		
 		Model.camera.setHUD(Model.hud);	
 		
-		Model.waveMachine = new WaveMachine();
-		Model.waveIntermission = new WaveIntermission();
+		beginGame();
 
 		return Model.scene;
 	}
@@ -164,6 +164,11 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 	public boolean onSceneTouchEvent(Scene scene, TouchEvent event) 
 	{
+		if(Model.state == GameState.GAME_OVER || Model.state == GameState.GAME_PAUSED)
+		{
+			return true;
+		}
+		
 		float x = event.getX();
 		float y = event.getY();
 		
@@ -181,10 +186,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	
 	public void showGameOverDialog()
 	{	
-		Model.background.onGameOver();
-		
-		mEngine.stop();
-		
 		long score = Model.player.score;
 		long oldBestScore = updateBestScore(score);
 		
@@ -219,39 +220,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		
 		return oldBestScore;
 	}
-	
-	private void showLevelChoiceDialog()
-	{
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Choose starting level");
-		alert.setMessage("Choose the starting level, asshole.");
-
-		final EditText input = new EditText(this);
-		alert.setView(input);
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() 
-		{
-			public void onClick(DialogInterface dialog, int button) 
-			{
-				Editable level = input.getText();
-				Model.waveMachine = new WaveMachine(Integer.parseInt(level.toString()));
-				beginGame();
-			}
-		});
-
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() 
-		{			
-			public void onClick(DialogInterface dialog, int whichButton) 
-		    {
-				Model.waveMachine = new WaveMachine(1);
-				beginGame();
-		    }
-		});
-
-		alert.show();
-	}
-	
 	private void showPausedDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -285,7 +254,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	
 	private void beginGame()
 	{
-		ColorScheme.repaint();
-		Model.state = GameState.WAVE_RUNNING;
+		Model.state = GameState.WAVE_MACHINE_RUNNING;
+		WaveMachine.beginNextWave();
 	}
 }

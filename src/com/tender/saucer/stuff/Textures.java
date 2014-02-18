@@ -20,9 +20,4 @@ public class Textures
 	private Textures() 
 	{		
 	}
-	
-	public static void init()
-	{
-		
-	}
 }

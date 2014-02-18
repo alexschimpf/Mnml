@@ -23,12 +23,10 @@ import com.tender.saucer.update.ITransientUpdate;
 
 public class SideWall extends ShapeBody implements ICollide
 {
-	private static final float WIDTH = 5;
-	
 	public SideWall(boolean left) 
 	{
-		float x = left ? -SideWall.WIDTH : Constants.CAMERA_WIDTH;				
-		shape = new Rectangle(x, 0, SideWall.WIDTH, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
+		float x = left ? -5 : Constants.CAMERA_WIDTH;				
+		shape = new Rectangle(x, 0, 5, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setVisible(false);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, .5f, 0);

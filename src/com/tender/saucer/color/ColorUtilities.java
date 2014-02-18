@@ -46,12 +46,12 @@ public class ColorUtilities
 		return colors;
 	}
 	
-	public static float colorDiff(Color c1, Color c2)
+	private static float colorDiff(Color c1, Color c2)
 	{
 		return Math.abs(c1.getRed() - c2.getRed()) + Math.abs(c1.getGreen() - c2.getGreen()) + Math.abs(c1.getBlue() - c2.getBlue());
 	}
 
-	public static Color correct(Color c)
+	private static Color correct(Color c)
 	{
 		float r = c.getRed();
 		float g = c.getGreen();

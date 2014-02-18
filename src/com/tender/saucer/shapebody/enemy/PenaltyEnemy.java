@@ -29,9 +29,8 @@ public class PenaltyEnemy extends BasicEnemy
 	private long lastFlashTime = 0;
 	private float flashCooldown = 150;
 	
-	protected PenaltyEnemy() 
+	public PenaltyEnemy() 
 	{	
-		health = 1;
 		speed = 5 + (float)(Math.random() * 5);
 		
 		float m = Math.random() < .5 ? -1 : 1;
@@ -42,13 +41,7 @@ public class PenaltyEnemy extends BasicEnemy
 		shape = new Sprite(x, y, Constants.POWERUP_SIZE, Constants.POWERUP_SIZE, Textures.PENALTY, Model.main.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
 		
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));		
+		initBody();		
 	}
 	
 	@Override
@@ -72,7 +65,7 @@ public class PenaltyEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			Model.waveMachine.currNumEnemiesLeft--;
+			WaveMachine.numEnemiesLeft--;
 			return true;
 		}
 		

@@ -28,7 +28,7 @@ import com.tender.saucer.wave.WaveMachine;
 
 public class BigEnemy extends BasicEnemy
 {
-	protected BigEnemy()
+	public BigEnemy()
 	{
 		health = 3;
 		speed = 3 + (float)(Math.random() * 2);
@@ -42,13 +42,7 @@ public class BigEnemy extends BasicEnemy
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
 		shape.setColor(ColorUtilities.darken(ColorScheme.foreground, .2f));
 		
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		initBody();
 	}
 	
 	@Override
@@ -74,7 +68,7 @@ public class BigEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			ParticleSystem.init(this, Constants.NUM_PARTICLES_PER_SYSTEM * 2);	
+			ParticleSystem.begin(this, Constants.DEFAULT_NUM_PARTICLES_PER_SYSTEM * 2);	
 		}
 	}
 }

@@ -29,9 +29,8 @@ import com.tender.saucer.wave.WaveMachine;
 
 public class BasicEnemy extends Enemy
 {
-	protected BasicEnemy() 
+	public BasicEnemy() 
 	{	
-		health = 1;
 		speed = 5 + (float)(Math.random() * 5);
 		
 		float size = (float)(Constants.DEFAULT_SHOT_SIZE + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 4));
@@ -43,16 +42,10 @@ public class BasicEnemy extends Enemy
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
 		
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		initBody();
 	}
 	
-	protected BasicEnemy(SplitEnemy splitEnemy, boolean dirLeft) 
+	public BasicEnemy(SplitEnemy splitEnemy, boolean dirLeft) 
 	{	
 		health = 1;
 		speed = Math.abs(splitEnemy.speed) / 1.5f;
@@ -68,21 +61,14 @@ public class BasicEnemy extends Enemy
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
 		
-		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
-		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
-		body.setUserData(new BodyData(this));
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+		initBody();
 	}
 
 	public boolean update()
 	{
 		if(health <= 0)
 		{
-			Model.waveMachine.currNumEnemiesLeft--;
+			WaveMachine.numEnemiesLeft--;
 			return true;
 		}
 		
@@ -106,7 +92,7 @@ public class BasicEnemy extends Enemy
 		
 		if(health <= 0)
 		{
-			ParticleSystem.init(this);	
+			ParticleSystem.begin(this);	
 		}
 	}
 }

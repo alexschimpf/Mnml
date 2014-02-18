@@ -19,6 +19,10 @@ import com.tender.saucer.shapebody.powerup.HealthPowerup;
 
 public class Constants 
 {	
+	private Constants()
+	{
+	}
+	
 	// Game
 	public static final int PX_TO_M = 32;
 	public static final int CAMERA_WIDTH = 400;
@@ -47,7 +51,8 @@ public class Constants
 	
 	// Particle
 	public static final float PARTICLE_SIZE = 5;
-	public static final int NUM_PARTICLES_PER_SYSTEM = 20;
+	public static final int DEFAULT_NUM_PARTICLES_PER_SYSTEM = 20;
+	public static final int DEFAULT_MAX_PARTICLE_DURATION = 2000;
 	
 	// Wave
 	public static final float DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN = 2200;
@@ -84,6 +89,7 @@ public class Constants
 	public static final String[] WAVE_INTERMISSION_MESSAGES = new String[]
 	{
 		"COOL.",
+		"DUDE...",
 		"GET\nA\nJOB",
 		"WAVE\nCOMPLETE",
 		"WAVE\nDONE",
@@ -104,6 +110,7 @@ public class Constants
 		"YOU'RE\nLIKE\nSO\nGOOD",
 		"YOU'RE\nLITERALLY\nAMAZING",
 		"VERY\nGOOD",
-		"AWESOME\nBRO"
+		"AWESOME\nBRO",
+		"IT'S\nALL IN\nTHE\nREFLEXES"
 	};
 }

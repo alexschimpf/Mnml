@@ -41,8 +41,6 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 	public long score = 0;	
 	public float shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
 	public boolean penalty = false;
-	public float shotSize = Constants.DEFAULT_SHOT_SIZE;
-	public float shotDamage = 1;
 	
 	private long lastShotTime = 0;
 	private long lastPowerupTime = 0;
@@ -93,6 +91,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 				penalty = false;
 				shape.setColor(Color.WHITE);
 				shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
+				Shot.shotSpeed = Constants.DEFAULT_SHOT_SPEED;
 			}
 		}
 	}
@@ -157,13 +156,13 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 			penalty = true;
 			shape.setColor(ColorScheme.foreground);
 			shootCooldown /= Constants.PENALTY_FACTOR;
+			Shot.shotSpeed = Constants.DEFAULT_SHOT_SPEED * Constants.PENALTY_FACTOR;
 		}
 	}
 	
 	private void shoot()
-	{	
-		float speed = penalty ? Constants.DEFAULT_SHOT_SPEED * Constants.PENALTY_FACTOR : Constants.DEFAULT_SHOT_SPEED;		
-		Shot shot = Shot.buildShot(shotSize, shotDamage, speed);
+	{		
+		Shot shot = Shot.buildShot();
 		shot.attachToScene();
 		shot.setInMotion();
 	}

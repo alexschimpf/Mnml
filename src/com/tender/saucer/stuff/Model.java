@@ -17,7 +17,7 @@ import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.update.ITransientUpdate;
-import com.tender.saucer.wave.WaveIntermission;
+import com.tender.saucer.wave.WaveRecess;
 import com.tender.saucer.wave.WaveMachine;
 
 /**
@@ -46,8 +46,6 @@ public class Model
 	public static Text waveText;
 	public static Rectangle lifeBar;
 	public static LinkedList<ITransientUpdate> transients;	
-	public static WaveMachine waveMachine;
-	public static WaveIntermission waveIntermission;
 	public static GameState state;
 
 	private Model() 

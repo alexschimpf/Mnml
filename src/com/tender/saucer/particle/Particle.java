@@ -27,13 +27,24 @@ public class Particle implements ITransientUpdate
 	private long startTime;
 	private float vx, vy;
 	private float duration;
-	
-	private Particle() 
+
+	public Particle(Color color, float x, float y) 
 	{
+		
 	}
 	
-	private Particle(Color color, float x, float y) 
+	public Particle(ShapeBody shapeBody)
 	{
+		this(shapeBody, 2000);		
+	}
+	
+	public Particle(ShapeBody shapeBody, float maxDuration)
+	{
+		IAreaShape shape = shapeBody.shape;
+		float x = shape.getX() + (shape.getWidth() / 2);
+		float y = shape.getY() + (shape.getHeight() / 2);
+		Color color = shape.getColor();
+		
 		rect = new Rectangle(x, y, Constants.PARTICLE_SIZE, Constants.PARTICLE_SIZE, Model.main.getVertexBufferObjectManager()); 
 		
 		if(color == null)
@@ -46,22 +57,9 @@ public class Particle implements ITransientUpdate
 		int diry = Math.random() < .5 ? -1 : 1;
 		vx = dirx * (float)Math.max(1, Math.random() * 2);
 		vy = diry * (float)Math.max(1, Math.random() * 2);
-		duration = (float)Math.max(500, Math.random() * 2000);
+		duration = (float)Math.max(500, Math.random() * maxDuration);
 		
-		startTime = Calendar.getInstance().getTimeInMillis();
-	}
-	
-	public static Particle buildRandomParticle(float x, float y)
-	{
-		return new Particle(null, x, y);
-	}
-	
-	public static Particle buildRandomParticle(ShapeBody shapeBody)
-	{
-		IAreaShape shape = shapeBody.shape;
-		float x = shape.getX() + (shape.getWidth() / 2);
-		float y = shape.getY() + (shape.getHeight() / 2);
-		return new Particle(shape.getColor(), x, y);
+		startTime = Calendar.getInstance().getTimeInMillis();	
 	}
 
 	public boolean update() 

@@ -19,13 +19,10 @@ public abstract class DynamicShapeBody extends ShapeBody implements ICollide, IT
 		super();
 	}
 	
+	public abstract void setInMotion();
+	
 	public void done()
 	{
 		recycle();
 	}
-	
-	public void setInMotion()
-	{
-		body.setLinearVelocity(0, speed);
-	}	
 }

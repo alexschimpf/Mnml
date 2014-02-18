@@ -19,7 +19,7 @@ public class MorphEnemy extends BasicEnemy
 	private float dSize;
 	private float sineArg;
 	
-	protected MorphEnemy() 
+	public MorphEnemy() 
 	{
 		super();
 		
@@ -35,7 +35,7 @@ public class MorphEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			Model.waveMachine.currNumEnemiesLeft--;
+			WaveMachine.numEnemiesLeft--;
 			return true;
 		}
 		else

@@ -1,52 +1,74 @@
-- achievements
-- leveling up - gives you more life
-- bosses
-- outlined rectangles
-- waves change more than just build cooldown
-- bonus rounds (after shooting a bonus powerup...)
-- disallow bad color combinations and too bright / dark colors
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-- Use 'final'
-- Put constants in their respective classes?
+TODO Tuning/Bugs
 
-- Create main menu activity
-- Create paused popup menu 
-- Create game over popup menu
-- Save records and settings in shared preferences
-- Slowly moving, faded, overlapping rectangles in background
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- make SplitEnemy easier
+- wave progression
+	- speeds, cooldowns, etc.
+- reject bad color combinations
+- better pause menu
+- better game over menu
+	- wave completes in background
+- more particle effects when BombPowerup is hit
+- fix crash on game over
+- optimize updateTransients() in UpdateHandler
 
-- Bank of messages for intermission
-- Achievement system, receive tokens 
-	- Unlock skins 
-	- Upgrade powerup durations and frequency
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+TODO Features
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- achievement system, receive tokens 
+	- unlock skins 
+	- upgrade powerup durations and frequency
+- bosses?
+- main menu
+- save achievement stuff 
+- effects in background
 	
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
---------
+TODO Architecture/Code
 
-- Use observer pattern to make Wave/WaveIntermission communication more intuitive... or NOT!?
-	- Run Wave on a thread. When finished, signal to the WaveIntermission observer to begin on its own thread... and so on.
-	- Use the following game states: Running, Paused, GameOver
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[General]
+	- Use IDisposable for stuff that needs to be 'recycled'
+		- 'dispose' makes more sense than 'recycle'  
+	- Constants?
+		- clean up
+		- should be dispersed among classes
+		- most overarching constants can stay (e.g. CAMERA_WIDTH)
+		- put DEFAULT_ in front of everything that can change 
+	- done() should modify WaveMachine counts (not update!)
+	- done() should start the particle systems 
+	- factory patterns shouldnt do TOO much (e.g. setInMotion, attachToScene)
+	- use final more, but how much?
+	- put abstract methods before static
+	- collide rules
+		- 'health--' inside of the classes that the health belongs
+			- EXCEPT player/wall have a "linked" health
+	- go through all member variables and evaluate access levels
+	- different types of access modifiers should be grouped and separated from the others
+
+[ParticleSystem.java]
+	- use pools of particles 
 	
-- Running update stuff on different threads
-	- different threads for each type
+[BombPowerup.java]
+	- in apply(), should call done() instead of health = 0
 
-- Get rid of FactoryPattern stuff for enemies and stuff
-	- make constructors public
-	- building random enemy should happen within WaveMachine (keep more of its shit private)
-
-- Penalty should be a powerup
-
-- Make ParticleSystem more flexible (parameters for particle duration, speed, number, color)
-
-- Add / remove constants
-
-- Change WaveMachine.currNumEnemiesLeft in done() not update().
-	- Works for powerups but not enemies?
-	- Problem is that BombPowerup cant call done() on each enemy, or an error occurs.
-	- WaveInit in collide?
-	- Want to makes enemies emit particles when bomb goes off
-
---------
+[TextSequence.java]
+	- make more extendable?
+	
+	

@@ -29,6 +29,7 @@ import com.tender.saucer.shapebody.wall.SideWall;
 import com.tender.saucer.shapebody.wall.Wall;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
+import com.tender.saucer.wave.WaveMachine;
 
 /**
  * 
@@ -43,7 +44,7 @@ public abstract class Powerup extends TargetShapeBody
 	
 	protected boolean active = true;
 	
-	protected Powerup() 
+	public Powerup() 
 	{	
 		speed = 5 + (float)(Math.random() * 5);
 		
@@ -51,23 +52,6 @@ public abstract class Powerup extends TargetShapeBody
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 	}
 
-	public static Powerup buildRandomPowerup()
-	{
-		try 
-		{
-			int choice = (int)(Math.random() * Constants.POWERUP_CLASSES.length);
-			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
-			powerup.body.setUserData(new BodyData(powerup));			
-			Model.transients.add(powerup);
-			
-			return powerup;		
-		} 
-		catch (Exception e) 
-		{
-			return null;
-		}
-	}
-	
 	public abstract void apply();
 	
 	public abstract void remove();
@@ -80,15 +64,26 @@ public abstract class Powerup extends TargetShapeBody
 	public void done()
 	{
 		super.done();
-		Model.waveMachine.currNumPowerupsLeft--;
+		WaveMachine.numPowerupsLeft--;
 	}
 
 	public void collide(ICollide other) 
 	{
 		if(!(other instanceof SideWall))
 		{
-			ParticleSystem.init(this);
+			ParticleSystem.begin(this);
 			active = false;
 		}
+	}
+	
+	protected void initBody()
+	{
+		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
+		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
+		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
+		
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
+		body.setFixedRotation(true);	
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 }

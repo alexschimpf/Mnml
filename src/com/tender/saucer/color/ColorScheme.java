@@ -33,16 +33,17 @@ public class ColorScheme
 	{	
 	}
 	
-	public static void init()
+	public static void generateColors()
 	{
 		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
 		background = complColors.get(0);
 		foreground = complColors.get(1);
 	}
 	
-	public static void repaint()
+	public static void applyNewScheme()
 	{	
-		init();
+		generateColors();
+		
 		Model.background.setColor(background);
 		
 		if(Model.player.penalty)

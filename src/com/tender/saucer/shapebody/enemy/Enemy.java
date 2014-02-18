@@ -1,7 +1,12 @@
 package com.tender.saucer.shapebody.enemy;
 
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
+
 import android.util.Log;
 
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.shapebody.TargetShapeBody;
 import com.tender.saucer.stuff.Constants;
@@ -17,35 +22,20 @@ import com.tender.saucer.wave.WaveMachine;
 
 public abstract class Enemy extends TargetShapeBody
 {	
-	public float health;
+	public float health = 1;
 	
-	protected Enemy() 
+	public Enemy() 
 	{
 	}
 	
-	public static Enemy buildRandomEnemy()
-	{			
-		try 
-		{
-			Enemy enemy;
-			if(Math.random() <= Constants.PENALTY_PROBABILITY)
-			{
-				enemy = new PenaltyEnemy();
-			}
-			else
-			{
-				int choice = (int)(Math.random() * Model.waveMachine.currEnemyTypes.size());
-				enemy = (Enemy)Model.waveMachine.currEnemyTypes.get(choice).newInstance();
-			}
-			
-			enemy.body.setUserData(new BodyData(enemy));			
-			Model.transients.add(enemy);
-			
-			return enemy;		
-		} 
-		catch (Exception e) 
-		{
-			return null;
-		}
+	protected void initBody()
+	{
+		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
+		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
+		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
+		
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
+		body.setFixedRotation(true);	
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 }

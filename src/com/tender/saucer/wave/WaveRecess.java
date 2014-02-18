@@ -17,35 +17,35 @@ import com.tender.saucer.update.ITransientUpdate;
  *
  */
 
-public final class WaveIntermission implements IPersistentUpdate
+public final class WaveRecess
 {
-	private long startTime = 0;
-	private TextSequence countdown = null; 
+	private static long startTime = 0;
 	
-	public WaveIntermission() 
+	private WaveRecess() 
 	{		
 	}
+	
+	public static void init()
+	{
+		startTime = 0;
+	}
 
-	public void beginNextIntermission()
+	public static void begin()
 	{
 		String message = Constants.WAVE_INTERMISSION_MESSAGES[(int)(Math.random() * Constants.WAVE_INTERMISSION_MESSAGES.length)];
-		countdown = new TextSequence(Model.waveIntermissionFont, 
-				new String[]{message, "", "Three", "Two", "One"}, new float[]{2500, 500, 750, 750, 750});
+		TextSequence.play(Model.waveIntermissionFont, new String[]{message, "", "Three", "Two", "One"}, 
+				new float[]{2500, 500, 750, 750, 750});
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
-	public void update()
+	public static void update()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - startTime;
 		if(timeElapsed > Constants.WAVE_INTERMISSION_DURATION)
 		{
-			Model.state = GameState.WAVE_RUNNING;
-			Model.waveMachine.beginNextWave();
-		}
-		else
-		{			
-			countdown.playOnce();
+			Model.state = GameState.WAVE_MACHINE_RUNNING;
+			WaveMachine.beginNextWave();
 		}
 	}
 }

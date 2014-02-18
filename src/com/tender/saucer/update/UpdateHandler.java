@@ -14,7 +14,7 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
-import com.tender.saucer.wave.WaveIntermission;
+import com.tender.saucer.wave.WaveRecess;
 
 /**
  * 
@@ -25,28 +25,34 @@ import com.tender.saucer.wave.WaveIntermission;
 
 public final class UpdateHandler implements IUpdateHandler
 {
+	private boolean skip = false;
+	
 	public void onUpdate(float secondsElapsed) 
 	{		
 		switch(Model.state)
 		{
-			case WAVE_RUNNING:	
-				Model.waveMachine.update();	
+			case WAVE_MACHINE_RUNNING:	
+				WaveMachine.update();	
 				updateHUDText();
 				break;
-			case WAVE_INTERMISSION:
-				Model.waveIntermission.update();
+			case WAVE_RECESS_RUNNING:
+				WaveRecess.update();
 				break;
 			case GAME_PAUSED:
 				return;
 			case GAME_OVER:
-				Model.main.runOnUiThread(new Runnable() 
+				if(!skip)
 				{
-				    public void run() 
-				    {
-				    	Model.main.showGameOverDialog();
-				    }
-				});
-				break;	
+					skip = true;
+					Model.main.runOnUiThread(new Runnable() 
+					{
+					    public void run() 
+					    {
+					    	Model.main.showGameOverDialog();
+					    }
+					});
+				}
+				break;
 		}
 
 		Model.player.update();
@@ -80,7 +86,7 @@ public final class UpdateHandler implements IUpdateHandler
 		float width = (Model.player.health / Constants.DEFAULT_PLAYER_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
 		Model.lifeBar.setWidth(width);
 		
-		Model.waveText.setText("WAVE " + Model.waveMachine.level);
+		Model.waveText.setText("WAVE " + WaveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);
 	}
 }

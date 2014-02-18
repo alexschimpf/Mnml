@@ -27,17 +27,21 @@ import com.tender.saucer.stuff.Model;
 
 public class Shot extends DynamicShapeBody
 {	
+	public static float shotSize = Constants.DEFAULT_SHOT_SIZE;
+	public static float shotSpeed = Constants.DEFAULT_SHOT_SPEED;
+	public static float shotDamage = 1;
+	
 	public float damage = 1;	
 	private boolean active = true;
 	
-	private Shot(float size, float damage, float speed) 
+	private Shot() 
 	{	
-		this.damage = damage;
-		this.speed = speed;
+		this.damage = Shot.shotDamage;
+		this.speed = Shot.shotSpeed;
 
-		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (size / 2);
-		float y = Model.player.shape.getY() - size;		
-		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
+		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (Shot.shotSize / 2);
+		float y = Model.player.shape.getY() - Shot.shotSize;		
+		shape = new Rectangle(x, y, Shot.shotSize, Shot.shotSize, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 		
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
@@ -48,15 +52,28 @@ public class Shot extends DynamicShapeBody
 		body.setBullet(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
+	
+	public static void init()
+	{
+		shotSize = Constants.DEFAULT_SHOT_SIZE;
+		shotSpeed = Constants.DEFAULT_SHOT_SPEED;
+		shotDamage = 1;
+	}
 
-	public static Shot buildShot(float size, float damage, float speed)
+	public static Shot buildShot()
 	{	
-		Shot shot = new Shot(size, damage, speed);
+		Shot shot = new Shot();
 		shot.body.setUserData(new BodyData(shot));
 		
 		Model.transients.add(shot);
 		
 		return shot;
+	}
+	
+	@Override
+	public void setInMotion()
+	{
+		body.setLinearVelocity(0, speed);
 	}
 	
 	public boolean update()

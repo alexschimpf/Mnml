@@ -27,23 +27,31 @@ public class ParticleSystem implements ITransientUpdate
 	
 	private ParticleSystem(ShapeBody shapeBody, int numParticles)
 	{
+		this(shapeBody, numParticles, Constants.DEFAULT_MAX_PARTICLE_DURATION);
+	}
+	
+	private ParticleSystem(ShapeBody shapeBody, int numParticles, float maxDuration)
+	{
 		for(int i = 0; i < numParticles; i++)
 		{
-			Particle particle = Particle.buildRandomParticle(shapeBody);
+			Particle particle = new Particle(shapeBody, maxDuration);
 			particles.add(particle);
 		}
 	}
 
-	public static void init(ShapeBody shapeBody)
+	public static void begin(ShapeBody shapeBody)
 	{
-		ParticleSystem ps = new ParticleSystem(shapeBody, Constants.NUM_PARTICLES_PER_SYSTEM);
-		ps.attachToScene();
-		Model.transients.add(ps);
+		begin(shapeBody, Constants.DEFAULT_NUM_PARTICLES_PER_SYSTEM);
 	}
 	
-	public static void init(ShapeBody shapeBody, int numParticles)
+	public static void begin(ShapeBody shapeBody, int numParticles)
 	{
-		ParticleSystem ps = new ParticleSystem(shapeBody, numParticles);
+		begin(shapeBody, numParticles, Constants.DEFAULT_MAX_PARTICLE_DURATION);
+	}
+	
+	public static void begin(ShapeBody shapeBody, int numParticles, float maxDuration)
+	{
+		ParticleSystem ps = new ParticleSystem(shapeBody, numParticles, maxDuration);
 		ps.attachToScene();
 		Model.transients.add(ps);
 	}
