@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.util.Log;
 
+import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
@@ -83,7 +84,7 @@ public final class UpdateHandler implements IUpdateHandler
 		Model.player.score++;
 		Model.scoreText.setText("" + Model.player.score);
 		
-		float width = (Model.player.health / Constants.DEFAULT_PLAYER_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
+		float width = (Model.player.health / Player.DEFAULT_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
 		Model.lifeBar.setWidth(width);
 		
 		Model.waveText.setText("WAVE " + WaveMachine.level);

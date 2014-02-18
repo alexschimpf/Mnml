@@ -26,6 +26,9 @@ import com.tender.saucer.update.UpdateHandler;
 
 public final class WaveMachine
 {
+	public static final float DEFAULT_ENEMY_BUILD_COOLDOWN = 2200;
+	public static final float DEFAULT_POWERUP_BUILD_COOLDOWN = 22000;
+	
 	public static int level = 0;	
 	public static int numEnemiesLeft = 10;	
 	public static int numPowerupsLeft = 0;
@@ -33,9 +36,9 @@ public final class WaveMachine
 	
 	private static int numEnemyBuildsLeft = 10;
 	private static long lastEnemyBuildTime = 0;
-	private static float enemyBuildCooldown = Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN;	
+	private static float enemyBuildCooldown = DEFAULT_ENEMY_BUILD_COOLDOWN;	
 	private static long lastPowerupBuildTime = 0;
-	private static float powerupBuildCooldown = Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN;
+	private static float powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
 	
 	private WaveMachine()
 	{
@@ -49,9 +52,9 @@ public final class WaveMachine
 		enemyTypes = new LinkedList<Class<?>>();
 		numEnemyBuildsLeft = 10;
 		lastEnemyBuildTime = 0;
-		enemyBuildCooldown = Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN;	
+		enemyBuildCooldown = DEFAULT_ENEMY_BUILD_COOLDOWN;	
 		lastPowerupBuildTime = 0;
-		powerupBuildCooldown = Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN;
+		powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
 	}
 
 	public static void beginNextWave()
@@ -63,8 +66,8 @@ public final class WaveMachine
 		lastEnemyBuildTime = 0;
 		numEnemiesLeft = level * 10;
 		numEnemyBuildsLeft = numEnemiesLeft;
-		enemyBuildCooldown = Math.max(700, Constants.DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN - (level * 200));
-		powerupBuildCooldown = Math.max(15000, Constants.DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN - (level * 1000));
+		enemyBuildCooldown = Math.max(700, DEFAULT_ENEMY_BUILD_COOLDOWN - (level * 200));
+		powerupBuildCooldown = Math.max(15000, DEFAULT_POWERUP_BUILD_COOLDOWN - (level * 1000));
 		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 		
 		Model.state = GameState.WAVE_MACHINE_RUNNING;
@@ -114,7 +117,7 @@ public final class WaveMachine
 		try 
 		{
 			Enemy enemy;
-			if(Math.random() <= Constants.PENALTY_PROBABILITY)
+			if(Math.random() <= PenaltyEnemy.DEFAULT_PROBABILITY)
 			{
 				enemy = new PenaltyEnemy();
 			}

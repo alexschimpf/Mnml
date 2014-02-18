@@ -33,7 +33,7 @@ public class BigEnemy extends BasicEnemy
 		health = 3;
 		speed = 3 + (float)(Math.random() * 2);
 		
-		float size = (float)((Constants.DEFAULT_SHOT_SIZE * 6) + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 2));
+		float size = (float)((Shot.DEFAULT_SIZE * 6) + (Math.random() * Shot.DEFAULT_SIZE * 2));
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 		
@@ -68,7 +68,7 @@ public class BigEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			ParticleSystem.begin(this, Constants.DEFAULT_NUM_PARTICLES_PER_SYSTEM * 2);	
+			ParticleSystem.begin(this, ParticleSystem.DEFAULT_NUM_PARTICLES * 2);	
 		}
 	}
 }

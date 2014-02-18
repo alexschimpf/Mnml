@@ -27,8 +27,11 @@ import com.tender.saucer.stuff.Model;
 
 public class Shot extends DynamicShapeBody
 {	
-	public static float shotSize = Constants.DEFAULT_SHOT_SIZE;
-	public static float shotSpeed = Constants.DEFAULT_SHOT_SPEED;
+	public static final float DEFAULT_SIZE = 10;
+	public static final float DEFAULT_SPEED = -20;
+	
+	public static float shotSize = DEFAULT_SIZE;
+	public static float shotSpeed = DEFAULT_SPEED;
 	public static float shotDamage = 1;
 	
 	public float damage = 1;	
@@ -39,7 +42,7 @@ public class Shot extends DynamicShapeBody
 		this.damage = Shot.shotDamage;
 		this.speed = Shot.shotSpeed;
 
-		float x = Model.player.shape.getX() + (Constants.DEFAULT_PLAYER_WIDTH / 2) - (Shot.shotSize / 2);
+		float x = Model.player.shape.getX() + (Player.DEFAULT_WIDTH / 2) - (Shot.shotSize / 2);
 		float y = Model.player.shape.getY() - Shot.shotSize;		
 		shape = new Rectangle(x, y, Shot.shotSize, Shot.shotSize, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
@@ -55,8 +58,8 @@ public class Shot extends DynamicShapeBody
 	
 	public static void init()
 	{
-		shotSize = Constants.DEFAULT_SHOT_SIZE;
-		shotSpeed = Constants.DEFAULT_SHOT_SPEED;
+		shotSize = DEFAULT_SIZE;
+		shotSpeed = DEFAULT_SPEED;
 		shotDamage = 1;
 	}
 

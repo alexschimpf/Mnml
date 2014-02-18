@@ -23,9 +23,9 @@ public class BombPowerup extends Powerup
 		
 		overrides = false;
 		
-		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Constants.POWERUP_SIZE));
-		float y = -Constants.POWERUP_SIZE;
-		shape = new Sprite(x, y, Constants.POWERUP_SIZE, Constants.POWERUP_SIZE, Textures.POWERUP_BOMB, 
+		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
+		float y = -Powerup.DEFAULT_SIZE;
+		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.POWERUP_BOMB, 
 				Model.main.getVertexBufferObjectManager());	
 		shape.setColor(ColorScheme.foreground);
 

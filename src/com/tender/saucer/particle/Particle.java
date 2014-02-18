@@ -23,6 +23,9 @@ import com.tender.saucer.update.ITransientUpdate;
 
 public class Particle implements ITransientUpdate
 {
+	public static final float DEFAULT_SIZE = 5;
+	public static final int DEFAULT_MAX_DURATION = 2000;
+	
 	private Rectangle rect;
 	private long startTime;
 	private float vx, vy;
@@ -45,7 +48,7 @@ public class Particle implements ITransientUpdate
 		float y = shape.getY() + (shape.getHeight() / 2);
 		Color color = shape.getColor();
 		
-		rect = new Rectangle(x, y, Constants.DEFAULT_PARTICLE_SIZE, Constants.DEFAULT_PARTICLE_SIZE, Model.main.getVertexBufferObjectManager()); 
+		rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main.getVertexBufferObjectManager()); 
 		
 		if(color == null)
 		{

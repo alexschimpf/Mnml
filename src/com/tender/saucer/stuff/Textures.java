@@ -10,7 +10,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
  *
  */
 
-public class Textures 
+public final class Textures 
 {
 	public static ITextureRegion POWERUP_HEALTH;
 	public static ITextureRegion POWERUP_BIG_SHOT;

@@ -46,11 +46,6 @@ TODO Architecture/Code
 [General]
 	- Use IDisposable for stuff that needs to be 'recycled'
 		- 'dispose' makes more sense than 'recycle'  
-	- Constants?
-		- clean up
-		- should be dispersed among classes
-		- most overarching constants can stay (e.g. CAMERA_WIDTH)
-		- put DEFAULT_ in front of everything that can change 
 	- done() should modify WaveMachine counts (not update!)
 	- done() should start the particle systems 
 	- factory patterns shouldnt do TOO much (e.g. setInMotion, attachToScene)

@@ -17,48 +17,16 @@ import com.tender.saucer.shapebody.powerup.HealthPowerup;
  *
  */
 
-public class Constants 
+public final class Constants 
 {	
-	private Constants()
-	{
-	}
-	
-	// Game
+	// Main
 	public static final int PX_TO_M = 32;
 	public static final int CAMERA_WIDTH = 400;
 	public static final int CAMERA_HEIGHT = 800;	
 	public static final float OOB_WIDTH = 20;
 	public static final float TOP_BOT_HEIGHT = 50;
 
-	// Player
-	public static final float DEFAULT_PLAYER_WIDTH = 50;
-	public static final float DEFAULT_PLAYER_HEIGHT = 25;
-	public static final int DEFAULT_PLAYER_HEALTH = 5;
-	public static final float DEFAULT_PLAYER_SHOOT_COOLDOWN = 350;
-	
-	// Shot
-	public static final float DEFAULT_SHOT_SIZE = 10;
-	public static final float DEFAULT_SHOT_SPEED = -20;
-	
-	// Powerup
-	public static final float DEFAULT_POWERUP_DURATION = 8000;
-	public static final float POWERUP_SIZE = 50;
-	
-	// Penalty
-	public static final float PENALTY_DURATION = 10000;
-	public static final float PENALTY_FACTOR = .5f;
-	public static final float PENALTY_PROBABILITY = .09f;
-	
-	// Particle
-	public static final float DEFAULT_PARTICLE_SIZE = 5;
-	public static final int DEFAULT_NUM_PARTICLES_PER_SYSTEM = 20;
-	public static final int DEFAULT_MAX_PARTICLE_DURATION = 2000;
-	
-	// Wave
-	public static final float DEFAULT_WAVE_ENEMY_BUILD_COOLDOWN = 2200;
-	public static final float DEFAULT_WAVE_POWERUP_BUILD_COOLDOWN = 22000;
-
-	// Font
+	// Fonts
 	public static final int HUD_FONT_SIZE = 22;
 	public static final int WAVE_INTERMISSION_FONT_SIZE = 45;
 	
@@ -69,6 +37,10 @@ public class Constants
 	public static final short POWERUP_BITMASK = 0x0008;
 	public static final short SIDE_WALL_BITMASK = 0x0010;
 	public static final short WALL_BITMASK = 0x0020;
+	
+	private Constants()
+	{
+	}
 	
 	// Miscellaneous
 	public static final Class<?>[] ENEMY_CLASSES = new Class<?>[]

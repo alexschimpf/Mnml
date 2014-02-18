@@ -17,7 +17,7 @@ import com.tender.saucer.shapebody.ShapeBody;
  *
  */
 
-public class CollisionHandler implements ContactListener
+public final class CollisionHandler implements ContactListener
 {
 	public void beginContact(Contact contact) 
 	{

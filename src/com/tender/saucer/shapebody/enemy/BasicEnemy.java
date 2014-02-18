@@ -33,7 +33,7 @@ public class BasicEnemy extends Enemy
 	{	
 		speed = 5 + (float)(Math.random() * 5);
 		
-		float size = (float)(Constants.DEFAULT_SHOT_SIZE + (Math.random() * Constants.DEFAULT_SHOT_SIZE * 4));
+		float size = (float)(Shot.DEFAULT_SIZE + (Math.random() * Shot.DEFAULT_SIZE * 4));
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 		

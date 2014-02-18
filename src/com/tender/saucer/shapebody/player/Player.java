@@ -35,13 +35,18 @@ import com.tender.saucer.wave.WaveMachine;
  *
  */
 
-public class Player extends ShapeBody implements ICollide, IPersistentUpdate
+public final class Player extends ShapeBody implements ICollide, IPersistentUpdate
 {
-	public float health = Constants.DEFAULT_PLAYER_HEALTH;
-	public long score = 0;	
-	public float shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
-	public boolean penalty = false;
+	public static final float DEFAULT_WIDTH = 50;
+	public static final float DEFAULT_HEIGHT = 25;
+	public static final int DEFAULT_HEALTH = 5;
+	public static final float DEFAULT_SHOOT_COOLDOWN = 350;
 	
+	public float health = Player.DEFAULT_HEALTH;
+	public long score = 0;	
+	public float shootCooldown = Player.DEFAULT_SHOOT_COOLDOWN;
+	public boolean penalty = false;
+
 	private long lastShotTime = 0;
 	private long lastPowerupTime = 0;
 	private long lastPenaltyTime = 0;
@@ -49,9 +54,9 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 
 	public Player() 
 	{
-		float x = (Constants.CAMERA_WIDTH - Constants.DEFAULT_PLAYER_WIDTH) / 2;
-		float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Constants.DEFAULT_PLAYER_HEIGHT;
-		shape = new Rectangle(x, y, Constants.DEFAULT_PLAYER_WIDTH, Constants.DEFAULT_PLAYER_HEIGHT, Model.main.getVertexBufferObjectManager());
+		float x = (Constants.CAMERA_WIDTH - Player.DEFAULT_WIDTH) / 2;
+		float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT;
+		shape = new Rectangle(x, y, Player.DEFAULT_WIDTH, Player.DEFAULT_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
 
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
@@ -75,7 +80,7 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 		{		
 			long currTime = Calendar.getInstance().getTimeInMillis();
 			long elapsedTime = currTime - lastPowerupTime;
-			if(elapsedTime > Constants.DEFAULT_POWERUP_DURATION)
+			if(elapsedTime > Powerup.DEFAULT_DURATION)
 			{
 				powerup.remove();
 				powerup = null;
@@ -86,12 +91,12 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
 			long elapsedTime = currTime - lastPenaltyTime;
-			if(elapsedTime > Constants.PENALTY_DURATION)
+			if(elapsedTime > PenaltyEnemy.DEFAULT_PENALTY_DURATION)
 			{
 				penalty = false;
 				shape.setColor(Color.WHITE);
-				shootCooldown = Constants.DEFAULT_PLAYER_SHOOT_COOLDOWN;
-				Shot.shotSpeed = Constants.DEFAULT_SHOT_SPEED;
+				shootCooldown = Player.DEFAULT_SHOOT_COOLDOWN;
+				Shot.shotSpeed = Shot.DEFAULT_SPEED;
 			}
 		}
 	}
@@ -155,8 +160,8 @@ public class Player extends ShapeBody implements ICollide, IPersistentUpdate
 		{
 			penalty = true;
 			shape.setColor(ColorScheme.foreground);
-			shootCooldown /= Constants.PENALTY_FACTOR;
-			Shot.shotSpeed = Constants.DEFAULT_SHOT_SPEED * Constants.PENALTY_FACTOR;
+			shootCooldown /= PenaltyEnemy.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
+			Shot.shotSpeed = Shot.DEFAULT_SPEED * PenaltyEnemy.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
 		}
 	}
 	

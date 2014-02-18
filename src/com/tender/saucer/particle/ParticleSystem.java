@@ -19,6 +19,8 @@ import com.tender.saucer.update.ITransientUpdate;
 
 public class ParticleSystem implements ITransientUpdate
 {
+	public static final int DEFAULT_NUM_PARTICLES = 20;
+	
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
 	
 	private ParticleSystem()
@@ -27,7 +29,7 @@ public class ParticleSystem implements ITransientUpdate
 	
 	private ParticleSystem(ShapeBody shapeBody, int numParticles)
 	{
-		this(shapeBody, numParticles, Constants.DEFAULT_MAX_PARTICLE_DURATION);
+		this(shapeBody, numParticles, Particle.DEFAULT_MAX_DURATION);
 	}
 	
 	private ParticleSystem(ShapeBody shapeBody, int numParticles, float maxDuration)
@@ -41,12 +43,12 @@ public class ParticleSystem implements ITransientUpdate
 
 	public static void begin(ShapeBody shapeBody)
 	{
-		begin(shapeBody, Constants.DEFAULT_NUM_PARTICLES_PER_SYSTEM);
+		begin(shapeBody, ParticleSystem.DEFAULT_NUM_PARTICLES);
 	}
 	
 	public static void begin(ShapeBody shapeBody, int numParticles)
 	{
-		begin(shapeBody, numParticles, Constants.DEFAULT_MAX_PARTICLE_DURATION);
+		begin(shapeBody, numParticles, Particle.DEFAULT_MAX_DURATION);
 	}
 	
 	public static void begin(ShapeBody shapeBody, int numParticles, float maxDuration)

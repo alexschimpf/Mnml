@@ -11,7 +11,7 @@ import org.andengine.util.color.Color;
  *
  */
 
-public class ColorUtilities 
+public final class ColorUtilities 
 {
 	private ColorUtilities() 
 	{

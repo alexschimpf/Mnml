@@ -27,7 +27,7 @@ import com.tender.saucer.wave.WaveMachine;
  *
  */
 
-public class Model 
+public final class Model 
 {
 	public static Main main;
 	public static PhysicsWorld world;

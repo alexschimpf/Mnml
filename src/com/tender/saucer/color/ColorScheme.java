@@ -24,7 +24,7 @@ import com.tender.saucer.untitledgame.R;
  *
  */
 
-public class ColorScheme 
+public final class ColorScheme 
 {
 	public static Color background;
 	public static Color foreground;

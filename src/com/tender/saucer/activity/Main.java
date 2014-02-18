@@ -172,7 +172,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		float x = event.getX();
 		float y = event.getY();
 		
-		if(y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Constants.DEFAULT_PLAYER_HEIGHT)
+		if(y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT)
 		{
 			Model.player.move(x);
 		}

@@ -21,7 +21,7 @@ import com.tender.saucer.update.ITransientUpdate;
  *
  */
 
-public class SideWall extends ShapeBody implements ICollide
+public final class SideWall extends ShapeBody implements ICollide
 {
 	public SideWall(boolean left) 
 	{

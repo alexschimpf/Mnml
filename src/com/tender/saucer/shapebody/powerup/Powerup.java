@@ -40,6 +40,9 @@ import com.tender.saucer.wave.WaveMachine;
 
 public abstract class Powerup extends TargetShapeBody
 {
+	public static final float DEFAULT_DURATION = 8000;
+	public static final float DEFAULT_SIZE = 50;
+	
 	public boolean overrides = true;
 	
 	protected boolean active = true;

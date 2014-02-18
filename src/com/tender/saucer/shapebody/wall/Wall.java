@@ -30,7 +30,7 @@ import com.tender.saucer.update.ITransientUpdate;
  *
  */
 
-public class Wall extends ShapeBody implements ICollide
+public final class Wall extends ShapeBody implements ICollide
 {
 	public Wall() 
 	{

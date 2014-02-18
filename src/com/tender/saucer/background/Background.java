@@ -23,7 +23,7 @@ import com.tender.saucer.update.ITransientUpdate;
  *
  */
 
-public class Background implements IPersistentUpdate
+public final class Background implements IPersistentUpdate
 {
 	private Rectangle rect;
 	private AlphaModifier alphaDecrease;
