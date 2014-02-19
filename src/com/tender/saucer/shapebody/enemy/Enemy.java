@@ -8,6 +8,7 @@ import android.util.Log;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.tender.saucer.collision.BodyData;
+import com.tender.saucer.particle.ParticleSystem;
 import com.tender.saucer.shapebody.TargetShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
@@ -26,6 +27,19 @@ public abstract class Enemy extends TargetShapeBody
 	
 	public Enemy() 
 	{
+	}
+	
+	public boolean update()
+	{
+		return health <= 0;
+	}
+	
+	@Override
+	public void done()
+	{
+		WaveMachine.numEnemiesLeft--;
+		ParticleSystem.begin(this);	
+		super.done();
 	}
 	
 	protected void initBody()

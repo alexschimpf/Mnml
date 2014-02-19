@@ -66,15 +66,15 @@ public abstract class Powerup extends TargetShapeBody
 	
 	public void done()
 	{
-		super.done();
 		WaveMachine.numPowerupsLeft--;
+		ParticleSystem.begin(this);
+		super.done();
 	}
 
 	public void collide(ICollide other) 
 	{
 		if(!(other instanceof SideWall))
 		{
-			ParticleSystem.begin(this);
 			active = false;
 		}
 	}

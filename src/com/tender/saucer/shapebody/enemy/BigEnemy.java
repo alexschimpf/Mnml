@@ -46,6 +46,14 @@ public class BigEnemy extends BasicEnemy
 	}
 	
 	@Override
+	public void done()
+	{
+		WaveMachine.numEnemiesLeft--;
+		ParticleSystem.begin(this, ParticleSystem.DEFAULT_NUM_PARTICLES * 2);
+		dispose();
+	}
+	
+	@Override
 	public void collide(ICollide other)
 	{
 		if(other instanceof Player)
@@ -64,11 +72,6 @@ public class BigEnemy extends BasicEnemy
 			{
 				shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));	
 			}
-		}
-		
-		if(health <= 0)
-		{
-			ParticleSystem.begin(this, ParticleSystem.DEFAULT_NUM_PARTICLES * 2);	
 		}
 	}
 }

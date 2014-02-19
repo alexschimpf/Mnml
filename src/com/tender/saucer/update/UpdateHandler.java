@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.util.Log;
 
+import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
@@ -72,7 +73,7 @@ public final class UpdateHandler implements IUpdateHandler
 		for(ITransientUpdate transientClone : transientsClone)
 		{	
 			if(transientClone.update())
-			{
+			{	
 				transientClone.done();
 				Model.transients.remove(transientClone);
 			}

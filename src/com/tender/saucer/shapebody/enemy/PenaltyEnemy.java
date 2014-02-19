@@ -68,12 +68,6 @@ public class PenaltyEnemy extends BasicEnemy
 			}
 		}
 		
-		if(health <= 0)
-		{
-			WaveMachine.numEnemiesLeft--;
-			return true;
-		}
-		
-		return false;
+		return health <= 0;
 	}
 }

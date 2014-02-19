@@ -33,6 +33,9 @@ TODO Features
 - main menu
 - save achievement stuff 
 - effects in background
+- indicate when powerup is active
+	- and when it is about to run out
+- make health bar more intuitive
 	
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -44,15 +47,8 @@ TODO Architecture/Code
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 [General] 
-	- use final more, but how much?
 	- constructors, static, abstract, public, protected, private
 	- go through all member variables and evaluate access levels
 	- different types of access modifiers should be grouped and separated from the others
-	
-[BombPowerup.java]
-	- in apply(), should call done() instead of health = 0
-
-[ParticleSystem.java]
-	- use pools of particles 
 	
 	

@@ -1,6 +1,7 @@
 package com.tender.saucer.shapebody.enemy;
 
 import com.tender.saucer.collision.BodyData;
+import com.tender.saucer.particle.ParticleSystem;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.wave.WaveMachine;
@@ -15,6 +16,7 @@ import com.tender.saucer.wave.WaveMachine;
 public class SplitEnemy extends BasicEnemy 
 {
 	private float splitY;
+	private boolean split = false;
 	
 	public SplitEnemy() 
 	{
@@ -27,13 +29,10 @@ public class SplitEnemy extends BasicEnemy
 	@Override
 	public boolean update() 
 	{
-		if(health <= 0)
+		if(shape.getY() >= splitY)
 		{
-			WaveMachine.numEnemiesLeft--;
-			return true;
-		}
-		else if(shape.getY() >= splitY)
-		{
+			split = true;
+			
 			Enemy[] enemies = buildSplitEnemies(this);
 			for(Enemy enemy : enemies)
 			{
@@ -41,11 +40,23 @@ public class SplitEnemy extends BasicEnemy
 				enemy.setInMotion();
 			}
 			
-			WaveMachine.numEnemiesLeft++;
+			WaveMachine.numEnemiesLeft += 2;
 			return true;
 		}
 		
-		return false;
+		return health <= 0;
+	}
+	
+	@Override
+	public void done()
+	{
+		if(!split)
+		{
+			ParticleSystem.begin(this);
+		}
+		
+		WaveMachine.numEnemiesLeft--;
+		dispose();
 	}
 	
 	protected Enemy[] buildSplitEnemies(SplitEnemy splitEnemy)

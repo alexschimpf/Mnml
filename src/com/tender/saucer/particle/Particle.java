@@ -26,34 +26,32 @@ public class Particle implements ITransientUpdate
 	public static final float DEFAULT_SIZE = 5;
 	public static final int DEFAULT_MAX_DURATION = 2000;
 	
+	private ParticlePool parent;
 	private Rectangle rect;
 	private long startTime;
 	private float vx, vy;
 	private float duration;
 
-	public Particle(Color color, float x, float y) 
+	public Particle(ParticlePool parent)
 	{
+		this.parent = parent;
+	}
+	
+	public Particle(ParticlePool parent, ShapeBody shapeBody)
+	{
+		this(parent, shapeBody, Particle.DEFAULT_MAX_DURATION);	
+	}
+	
+	public Particle(ParticlePool parent, ShapeBody shapeBody, float maxDuration)
+	{
+		this.parent = parent; 
 		
-	}
-	
-	public Particle(ShapeBody shapeBody)
-	{
-		this(shapeBody, 2000);		
-	}
-	
-	public Particle(ShapeBody shapeBody, float maxDuration)
-	{
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
 		Color color = shape.getColor();
 		
 		rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main.getVertexBufferObjectManager()); 
-		
-		if(color == null)
-		{
-			color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
-		}
 		rect.setColor(color);
 		
 		int dirx = Math.random() < .5 ? -1 : 1;
@@ -63,6 +61,46 @@ public class Particle implements ITransientUpdate
 		duration = (float)Math.max(500, Math.random() * maxDuration);
 		
 		startTime = Calendar.getInstance().getTimeInMillis();	
+	}
+
+	public Particle set(ShapeBody shapeBody)
+	{
+		set(shapeBody, Particle.DEFAULT_MAX_DURATION);
+		return this;
+	}
+	
+	public Particle set(ShapeBody shapeBody, float maxDuration)
+	{
+		IAreaShape shape = shapeBody.shape;
+		float x = shape.getX() + (shape.getWidth() / 2);
+		float y = shape.getY() + (shape.getHeight() / 2);
+		Color color = shape.getColor();
+		
+		if(rect == null)
+		{
+			rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main.getVertexBufferObjectManager()); 
+		}
+		else
+		{		
+			rect.setX(x);
+			rect.setY(y);
+		}
+		rect.setColor(color);
+		
+		int dirx = Math.random() < .5 ? -1 : 1;
+		int diry = Math.random() < .5 ? -1 : 1;
+		vx = dirx * (float)Math.max(1, Math.random() * 2);
+		vy = diry * (float)Math.max(1, Math.random() * 2);
+		duration = (float)Math.max(500, Math.random() * maxDuration);
+		
+		startTime = Calendar.getInstance().getTimeInMillis();
+		
+		return this;
+	}
+	
+	public void recycle()
+	{
+		parent.recycleParticle(this);
 	}
 
 	public boolean update() 
@@ -84,6 +122,7 @@ public class Particle implements ITransientUpdate
 	public void done() 
 	{
 		Model.scene.detachChild(rect);
+		recycle();
 	}
 	
 	public void attachToScene()

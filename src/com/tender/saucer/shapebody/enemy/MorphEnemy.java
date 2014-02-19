@@ -35,7 +35,6 @@ public class MorphEnemy extends BasicEnemy
 		
 		if(health <= 0)
 		{
-			WaveMachine.numEnemiesLeft--;
 			return true;
 		}
 		else

@@ -3,8 +3,6 @@ package com.tender.saucer.particle;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.andengine.util.adt.pool.Pool;
-
 import com.tender.saucer.shapebody.ShapeBody;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
@@ -21,6 +19,8 @@ public class ParticleSystem implements ITransientUpdate
 {
 	public static final int DEFAULT_NUM_PARTICLES = 20;
 	
+	private static final ParticlePool PARTICLE_POOL = new ParticlePool(500);
+
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
 	
 	private ParticleSystem()
@@ -36,7 +36,7 @@ public class ParticleSystem implements ITransientUpdate
 	{
 		for(int i = 0; i < numParticles; i++)
 		{
-			Particle particle = new Particle(shapeBody, maxDuration);
+			Particle particle = PARTICLE_POOL.obtainParticle(shapeBody, maxDuration);
 			particles.add(particle);
 		}
 	}
@@ -71,8 +71,8 @@ public class ParticleSystem implements ITransientUpdate
 			Particle particle = it.next();
 			if(particle.update())
 			{
-				particle.done();
 				it.remove();
+				particle.done();
 			}
 		}
 		
