@@ -43,9 +43,7 @@ TODO Architecture/Code
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-[General]
-	- Use IDisposable for stuff that needs to be 'recycled'
-		- 'dispose' makes more sense than 'recycle'  
+[General] 
 	- done() should modify WaveMachine counts (not update!)
 	- done() should start the particle systems 
 	- factory patterns shouldnt do TOO much (e.g. setInMotion, attachToScene)

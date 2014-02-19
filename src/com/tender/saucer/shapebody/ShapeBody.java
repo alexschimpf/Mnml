@@ -1,6 +1,7 @@
 package com.tender.saucer.shapebody;
 
 import org.andengine.entity.shape.IAreaShape;
+import org.andengine.util.IDisposable;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tender.saucer.stuff.Model;
@@ -12,7 +13,7 @@ import com.tender.saucer.stuff.Model;
  *
  */
 
-public abstract class ShapeBody
+public class ShapeBody implements IDispose
 {
 	public IAreaShape shape;
 	public Body body;
@@ -26,7 +27,7 @@ public abstract class ShapeBody
 		Model.scene.attachChild(shape);
 	}
 	
-	protected void recycle()
+	public void dispose()
 	{ 
 		Model.world.unregisterPhysicsConnector(Model.world.getPhysicsConnectorManager().findPhysicsConnectorByShape(shape));
 		Model.scene.detachChild(shape);						

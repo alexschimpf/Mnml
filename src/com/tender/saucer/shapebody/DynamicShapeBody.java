@@ -23,6 +23,6 @@ public abstract class DynamicShapeBody extends ShapeBody implements ICollide, IT
 	
 	public void done()
 	{
-		recycle();
+		dispose();
 	}
 }
