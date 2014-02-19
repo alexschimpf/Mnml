@@ -45,7 +45,7 @@ public final class WaveMachine
 	}
 	
 	public static void init()
-	{
+	{	
 		level = 0;
 		numEnemiesLeft = 10;
 		numPowerupsLeft = 0;

@@ -64,17 +64,6 @@ public class BasicEnemy extends Enemy
 		initBody();
 	}
 
-	public boolean update()
-	{
-		if(health <= 0)
-		{
-			WaveMachine.numEnemiesLeft--;
-			return true;
-		}
-		
-		return false;
-	}
-
 	public void collide(ICollide other)
 	{
 		if(other instanceof Player)
@@ -87,12 +76,7 @@ public class BasicEnemy extends Enemy
 		}
 		else if(other instanceof Shot)
 		{
-			health--;
-		}
-		
-		if(health <= 0)
-		{
-			ParticleSystem.begin(this);	
+			health -= ((Shot)other).damage;
 		}
 	}
 }
