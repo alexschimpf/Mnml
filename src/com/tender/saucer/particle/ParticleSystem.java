@@ -19,8 +19,6 @@ public class ParticleSystem implements ITransientUpdate
 {
 	public static final int DEFAULT_NUM_PARTICLES = 20;
 	
-	private static final ParticlePool PARTICLE_POOL = new ParticlePool(500);
-
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
 	
 	private ParticleSystem()
@@ -36,7 +34,7 @@ public class ParticleSystem implements ITransientUpdate
 	{
 		for(int i = 0; i < numParticles; i++)
 		{
-			Particle particle = PARTICLE_POOL.obtainParticle(shapeBody, maxDuration);
+			Particle particle = ParticlePool.obtain(shapeBody, maxDuration);
 			particles.add(particle);
 		}
 	}

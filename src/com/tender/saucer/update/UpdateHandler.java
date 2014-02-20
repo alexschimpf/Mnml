@@ -4,12 +4,14 @@ import java.util.LinkedList;
 
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.util.color.Color;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.util.Log;
 
+import com.tender.saucer.color.ColorUtilities;
 import com.tender.saucer.shapebody.enemy.Enemy;
 import com.tender.saucer.shapebody.player.Player;
 import com.tender.saucer.stuff.Constants;
@@ -85,8 +87,10 @@ public final class UpdateHandler implements IUpdateHandler
 		Model.player.score++;
 		Model.scoreText.setText("" + Model.player.score);
 		
-		float width = (Model.player.health / Player.DEFAULT_HEALTH) * (Constants.CAMERA_WIDTH - 10);		
+		float width = (Model.player.health / Player.DEFAULT_HEALTH) * (Constants.CAMERA_WIDTH - 10);
+		float red = 1 - (Model.player.health / Player.DEFAULT_HEALTH);
 		Model.lifeBar.setWidth(width);
+		Model.lifeBar.setColor(ColorUtilities.brighten(new Color(red, 1 - red, 0), .5f));
 		
 		Model.waveText.setText("WAVE " + WaveMachine.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);

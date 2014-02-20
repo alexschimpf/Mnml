@@ -125,7 +125,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.waveText = new Text(0, 0, Model.hudFont, "", 100, getVertexBufferObjectManager());
 		Model.waveText.setPosition((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2, Model.scoreText.getY());
 		Model.lifeBar = new Rectangle(5, 5, Constants.CAMERA_WIDTH - 10, Constants.TOP_BOT_HEIGHT - 10, getVertexBufferObjectManager());
-		Model.lifeBar.setColor(ColorUtilities.darken(Color.WHITE, .2f));
+		Model.lifeBar.setColor(ColorUtilities.brighten(Color.GREEN, .8f));
 		Model.hud.attachChild(Model.hudRect);
 		Model.hud.attachChild(Model.lifeBar);
 		Model.hud.attachChild(Model.scoreText);

@@ -26,26 +26,23 @@ public class Particle implements ITransientUpdate
 	public static final float DEFAULT_SIZE = 5;
 	public static final int DEFAULT_MAX_DURATION = 2000;
 	
-	private ParticlePool parent;
 	private Rectangle rect;
 	private long startTime;
 	private float vx, vy;
 	private float duration;
 
-	public Particle(ParticlePool parent)
+	public Particle()
 	{
-		this.parent = parent;
-	}
-	
-	public Particle(ParticlePool parent, ShapeBody shapeBody)
-	{
-		this(parent, shapeBody, Particle.DEFAULT_MAX_DURATION);	
-	}
-	
-	public Particle(ParticlePool parent, ShapeBody shapeBody, float maxDuration)
-	{
-		this.parent = parent; 
 		
+	}
+	
+	public Particle(ShapeBody shapeBody)
+	{
+		this(shapeBody, Particle.DEFAULT_MAX_DURATION);	
+	}
+	
+	public Particle(ShapeBody shapeBody, float maxDuration)
+	{
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
@@ -97,11 +94,6 @@ public class Particle implements ITransientUpdate
 		
 		return this;
 	}
-	
-	public void recycle()
-	{
-		parent.recycleParticle(this);
-	}
 
 	public boolean update() 
 	{
@@ -122,7 +114,7 @@ public class Particle implements ITransientUpdate
 	public void done() 
 	{
 		Model.scene.detachChild(rect);
-		recycle();
+		ParticlePool.recycle(this);
 	}
 	
 	public void attachToScene()

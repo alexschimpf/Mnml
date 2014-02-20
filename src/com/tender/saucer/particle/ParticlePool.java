@@ -1,56 +1,37 @@
 package com.tender.saucer.particle;
 
-import java.util.ArrayList;
-
-import android.util.Log;
+import org.andengine.util.adt.pool.GenericPool;
 
 import com.tender.saucer.shapebody.ShapeBody;
 
-
-public class ParticlePool
+public class ParticlePool 
 {
-	private ArrayList<Particle> particles;
-	private int maxSize;
-	
-	public ParticlePool(int size)
+	private static final GenericPool<Particle> POOL = new GenericPool<Particle>() 
 	{
-		this.maxSize = size;
-		particles = new ArrayList<Particle>(size);
-	}
-	
-	public Particle obtainParticle()
-	{		
-		if(particles.size() <= 0)
+		@Override
+		protected Particle onAllocatePoolItem() 
 		{
-			allocateParticles();
+			return new Particle();
 		}
-		
-		return particles.remove(particles.size() - 1);
+	};
+	
+	public static Particle obtain()
+	{
+		return POOL.obtainPoolItem();
 	}
 	
-	public Particle obtainParticle(ShapeBody shapeBody)
+	public static Particle obtain(ShapeBody shapeBody)
 	{
-		return obtainParticle().set(shapeBody);
+		return POOL.obtainPoolItem().set(shapeBody);
 	}
 	
-	public Particle obtainParticle(ShapeBody shapeBody, float maxDuration)
+	public static Particle obtain(ShapeBody shapeBody, float maxDuration)
 	{
-		return obtainParticle().set(shapeBody, maxDuration);
+		return POOL.obtainPoolItem().set(shapeBody, maxDuration);
 	}
 	
-	public void recycleParticle(Particle poolItem)
+	public static void recycle(Particle particle)
 	{
-		if(particles.size() < maxSize)
-		{
-			particles.add(poolItem);
-		}
-	}
-	
-	public void allocateParticles()
-	{
-		while(particles.size() < maxSize)
-		{
-			particles.add(new Particle(this));
-		}
+		POOL.recyclePoolItem(particle);
 	}
 }

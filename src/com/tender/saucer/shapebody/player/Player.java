@@ -39,7 +39,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 {
 	public static final float DEFAULT_WIDTH = 50;
 	public static final float DEFAULT_HEIGHT = 25;
-	public static final int DEFAULT_HEALTH = 5;
+	public static final float DEFAULT_HEALTH = 5;
 	public static final float DEFAULT_SHOOT_COOLDOWN = 350;
 	
 	public float health = Player.DEFAULT_HEALTH;
