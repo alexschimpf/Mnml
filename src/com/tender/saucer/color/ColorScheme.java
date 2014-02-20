@@ -3,19 +3,9 @@ package com.tender.saucer.color;
 
 import java.util.LinkedList;
 
-import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.atlas.bitmap.source.BitmapTextureAtlasSource;
 import org.andengine.util.color.Color;
 
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.stuff.Textures;
-import com.tender.saucer.untitledgame.R;
 
 /**
  * 
@@ -29,17 +19,6 @@ public final class ColorScheme
 	public static Color background;
 	public static Color foreground;
 
-	private ColorScheme() 
-	{	
-	}
-	
-	public static void generateColors()
-	{
-		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
-		background = complColors.get(0);
-		foreground = complColors.get(1);
-	}
-	
 	public static void applyNewScheme()
 	{	
 		generateColors();
@@ -50,5 +29,16 @@ public final class ColorScheme
 		{
 			Model.player.shape.setColor(foreground);
 		}
+	}
+	
+	public static void generateColors()
+	{
+		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
+		background = complColors.get(0);
+		foreground = complColors.get(1);
+	}
+	
+	private ColorScheme() 
+	{	
 	}
 }

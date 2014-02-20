@@ -9,8 +9,8 @@ package com.tender.saucer.stuff;
 
 public enum GameState 
 {
-	WAVE_MACHINE_RUNNING,
-	WAVE_RECESS_RUNNING,
 	GAME_OVER,
-	GAME_PAUSED
+	GAME_PAUSED,
+	WAVE_MACHINE_RUNNING,
+	WAVE_RECESS_RUNNING
 }

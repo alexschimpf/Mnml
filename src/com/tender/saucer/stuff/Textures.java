@@ -1,7 +1,6 @@
 package com.tender.saucer.stuff;
 
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
  * 
@@ -12,10 +11,11 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 public final class Textures 
 {
-	public static ITextureRegion POWERUP_HEALTH;
+	public static ITextureRegion ENEMY;
+	public static ITextureRegion PENALTY_ENEMY;
 	public static ITextureRegion POWERUP_BIG_SHOT;
 	public static ITextureRegion POWERUP_BOMB;
-	public static ITextureRegion PENALTY;
+	public static ITextureRegion POWERUP_HEALTH;
 	
 	private Textures() 
 	{		

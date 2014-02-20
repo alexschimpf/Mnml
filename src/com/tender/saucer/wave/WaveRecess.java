@@ -2,13 +2,9 @@ package com.tender.saucer.wave;
 
 import java.util.Calendar;
 
-import android.util.Log;
-
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
-import com.tender.saucer.update.IPersistentUpdate;
-import com.tender.saucer.update.ITransientUpdate;
 
 /**
  * 
@@ -19,19 +15,9 @@ import com.tender.saucer.update.ITransientUpdate;
 
 public final class WaveRecess
 {
-	private static long startTime = 0;
 	private static float duration = 0;
+	private static long startTime = 0;
 	
-	private WaveRecess() 
-	{		
-	}
-	
-	public static void init()
-	{
-		startTime = 0;
-		duration = 0;
-	}
-
 	public static void begin()
 	{
 		String message = Constants.WAVE_INTERMISSION_MESSAGES[(int)(Math.random() * Constants.WAVE_INTERMISSION_MESSAGES.length)];
@@ -40,6 +26,12 @@ public final class WaveRecess
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
+	public static void init()
+	{
+		startTime = 0;
+		duration = 0;
+	}
+
 	public static void update()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
@@ -49,5 +41,9 @@ public final class WaveRecess
 			Model.state = GameState.WAVE_MACHINE_RUNNING;
 			WaveMachine.beginNextWave();
 		}
+	}
+	
+	private WaveRecess() 
+	{		
 	}
 }

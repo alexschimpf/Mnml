@@ -13,10 +13,6 @@ import org.andengine.util.color.Color;
 
 public final class ColorUtilities 
 {
-	private ColorUtilities() 
-	{
-	}
-
 	public static Color brighten(Color c, float percent)
 	{
 		float r = lum(c.getRed(), percent);
@@ -24,7 +20,7 @@ public final class ColorUtilities
 		float b = lum(c.getBlue(), percent);
 		return new Color(r, g, b);
 	}
-	
+
 	public static Color darken(Color c, float percent)
 	{
 		return brighten(c, -percent);
@@ -50,7 +46,7 @@ public final class ColorUtilities
 	{
 		return Math.abs(c1.getRed() - c2.getRed()) + Math.abs(c1.getGreen() - c2.getGreen()) + Math.abs(c1.getBlue() - c2.getBlue());
 	}
-
+	
 	private static Color correct(Color c)
 	{
 		float r = c.getRed();
@@ -77,9 +73,13 @@ public final class ColorUtilities
 
 		return new Color(r, g, b);
 	}
-	
+
 	private static float lum(float c, float percent)
 	{
 		return Math.max(0, Math.min(1, c + percent));
+	}
+	
+	private ColorUtilities() 
+	{
 	}
 }

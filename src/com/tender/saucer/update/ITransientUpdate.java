@@ -9,6 +9,6 @@ package com.tender.saucer.update;
 
 public interface ITransientUpdate 
 {
-	public boolean update();
 	public void done();
+	public boolean update();
 }

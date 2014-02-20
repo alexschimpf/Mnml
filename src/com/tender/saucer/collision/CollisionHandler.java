@@ -1,14 +1,11 @@
 package com.tender.saucer.collision;
 
-import android.util.Log;
-
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.tender.saucer.shapebody.ShapeBody;
 
 /**
  * 
@@ -38,12 +35,12 @@ public final class CollisionHandler implements ContactListener
 
 	}
 
-	public void preSolve(Contact contact, Manifold oldManifold) 
+	public void postSolve(Contact contact, ContactImpulse impulse) 
 	{
 		
 	}
 
-	public void postSolve(Contact contact, ContactImpulse impulse) 
+	public void preSolve(Contact contact, Manifold oldManifold) 
 	{
 		
 	}

@@ -6,8 +6,6 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.Font;
 import org.andengine.util.HorizontalAlign;
 
-import android.util.Log;
-
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -20,23 +18,6 @@ import com.tender.saucer.stuff.Model;
 
 public class TextSequence 
 {	
-	private Text text;
-	private String[] sequence;
-	private float[] durations;
-	private int currFrame = 0;
-	
-	private TextSequence()
-	{
-	}
-	
-	private TextSequence(Font font, String[] sequence, float[] durations) 
-	{
-		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
-		text.setHorizontalAlign(HorizontalAlign.CENTER);
-		this.sequence = sequence;
-		this.durations = durations;
-	}
-	
 	public static float play(Font font, String[] sequence, float[] durations)
 	{
 		float totalDuration = 0;
@@ -75,6 +56,23 @@ public class TextSequence
 		Model.scene.registerUpdateHandler(timer);
 		
 		return totalDuration;
+	}
+	
+	private int currFrame = 0;
+	private float[] durations;
+	private String[] sequence;
+	private Text text;
+	
+	private TextSequence()
+	{
+	}
+	
+	private TextSequence(Font font, String[] sequence, float[] durations) 
+	{
+		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
+		text.setHorizontalAlign(HorizontalAlign.CENTER);
+		this.sequence = sequence;
+		this.durations = durations;
 	}
 
 	private void setAndAlignText(String str)
