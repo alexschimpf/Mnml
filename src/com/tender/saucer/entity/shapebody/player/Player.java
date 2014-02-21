@@ -112,7 +112,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 			else
 				if (other instanceof Powerup)
 				{
-					applyPowerup((Powerup) other);
+					applyPowerup((Powerup)other);
 				}
 	}
 

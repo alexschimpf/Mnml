@@ -7,6 +7,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.Font;
 import org.andengine.util.HorizontalAlign;
 
+import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -74,6 +75,7 @@ public class TextSequence
 	{
 		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
 		text.setHorizontalAlign(HorizontalAlign.CENTER);
+		text.setColor(ColorScheme.text);
 		this.sequence = sequence;
 		this.durations = durations;
 	}

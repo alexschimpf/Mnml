@@ -13,7 +13,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 
 public final class Textures
 {
-	public static ITextureRegion ENEMY;
 	public static ITextureRegion PENALTY_ENEMY;
 	public static ITextureRegion POWERUP_BIG_SHOT;
 	public static ITextureRegion POWERUP_BOMB;

@@ -31,12 +31,12 @@ public class PenaltyEnemy extends BasicEnemy
 
 	public PenaltyEnemy()
 	{
-		speed = 5 + (float) (Math.random() * 5);
+		speed = 5 + (float)(Math.random() * 5);
 
 		float m = Math.random() < .5 ? -1 : 1;
-		tx = m * (float) (Math.random() * Constants.CAMERA_WIDTH * 2);
+		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 
-		float x = (float) (Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
+		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
 		float y = -Powerup.DEFAULT_SIZE;
 		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.PENALTY_ENEMY, Model.main
 				.getVertexBufferObjectManager());

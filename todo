@@ -6,15 +6,8 @@ TODO Tuning/Bugs
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-- make SplitEnemy easier
-- wave progression
-	- speeds, cooldowns, etc.
-- reject bad color combinations
+
 - better pause menu
-- better game over menu
-	- wave completes in background
-- more particle effects when BombPowerup is hit
-- fix crash on game over
 - optimize updateTransients() in UpdateHandler
 - fix how leaving activity / pausing fucks up durations/cooldowns/etc.
 

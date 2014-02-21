@@ -25,7 +25,7 @@ public class SplitEnemy extends BasicEnemy
 		super();
 
 		float playAreaHeight = Constants.CAMERA_HEIGHT - (2 * Constants.TOP_BOT_HEIGHT);
-		splitY = (float) ((Constants.TOP_BOT_HEIGHT + 20) + (Math.random() * (playAreaHeight / 5)));
+		splitY = (float)((Constants.TOP_BOT_HEIGHT + 20) + (Math.random() * (playAreaHeight / 5)));
 	}
 
 	@Override

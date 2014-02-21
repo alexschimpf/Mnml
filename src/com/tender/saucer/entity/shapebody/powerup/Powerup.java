@@ -33,10 +33,10 @@ public abstract class Powerup extends TargetShapeBody
 
 	public Powerup()
 	{
-		speed = 5 + (float) (Math.random() * 5);
+		speed = 5 + (float)(Math.random() * 5);
 
 		float m = Math.random() < .5 ? -1 : 1;
-		tx = m * (float) (Math.random() * Constants.CAMERA_WIDTH * 2);
+		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 	}
 
 	public abstract void apply();

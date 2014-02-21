@@ -25,11 +25,18 @@ public final class CollisionHandler implements ContactListener
 		Body bodyA = fixA.getBody();
 		Body bodyB = fixB.getBody();
 
-		ICollide ownerA = ((BodyData) bodyA.getUserData()).owner;
-		ICollide ownerB = ((BodyData) bodyB.getUserData()).owner;
+		try
+		{
+			ICollide ownerA = ((BodyData)bodyA.getUserData()).owner;
+			ICollide ownerB = ((BodyData)bodyB.getUserData()).owner;
 
-		ownerA.collide(ownerB);
-		ownerB.collide(ownerA);
+			ownerA.collide(ownerB);
+			ownerB.collide(ownerA);
+		}
+		catch (NullPointerException e)
+		{
+			// TODO
+		}
 	}
 
 	public void endContact(Contact contact)

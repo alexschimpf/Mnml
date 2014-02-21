@@ -51,9 +51,9 @@ public class Particle extends Entity implements ITransientUpdate
 
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
-		vx = dirx * (float) Math.max(1, Math.random() * 2);
-		vy = diry * (float) Math.max(1, Math.random() * 2);
-		duration = (float) Math.max(500, Math.random() * maxDuration);
+		vx = dirx * (float)Math.max(1, Math.random() * 2);
+		vy = diry * (float)Math.max(1, Math.random() * 2);
+		duration = (float)Math.max(500, Math.random() * maxDuration);
 
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
@@ -95,9 +95,9 @@ public class Particle extends Entity implements ITransientUpdate
 
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
-		vx = dirx * (float) Math.max(1, Math.random() * 2);
-		vy = diry * (float) Math.max(1, Math.random() * 2);
-		duration = (float) Math.max(500, Math.random() * maxDuration);
+		vx = dirx * (float)Math.max(1, Math.random() * 2);
+		vy = diry * (float)Math.max(1, Math.random() * 2);
+		duration = (float)Math.max(500, Math.random() * maxDuration);
 
 		startTime = Calendar.getInstance().getTimeInMillis();
 

@@ -79,7 +79,7 @@ public final class UpdateHandler implements IUpdateHandler
 	private void updateTransients()
 	{
 		@SuppressWarnings("unchecked")
-		LinkedList<ITransientUpdate> transientsClone = (LinkedList<ITransientUpdate>) Model.transients.clone();
+		LinkedList<ITransientUpdate> transientsClone = (LinkedList<ITransientUpdate>)Model.transients.clone();
 		for (ITransientUpdate transientClone : transientsClone)
 		{
 			if (transientClone.update())

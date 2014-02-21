@@ -83,7 +83,7 @@ public class Shot extends DynamicShapeBody
 		else
 			if (other instanceof Powerup)
 			{
-				Model.player.applyPowerup((Powerup) other);
+				Model.player.applyPowerup((Powerup)other);
 			}
 
 		active = false;

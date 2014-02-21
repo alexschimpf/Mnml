@@ -30,7 +30,7 @@ public abstract class TargetShapeBody extends DynamicShapeBody
 			speed = 0 - speed;
 		}
 		float dy = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - shape.getY();
-		float theta = (float) Math.atan(dy / dx);
+		float theta = (float)Math.atan(dy / dx);
 
 		float vx = speed * FloatMath.cos(theta);
 		float vy = speed * FloatMath.sin(theta);

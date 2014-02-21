@@ -102,8 +102,8 @@ public final class WaveMachine
 			}
 			else
 			{
-				int choice = (int) (Math.random() * enemyTypes.size());
-				enemy = (Enemy) enemyTypes.get(choice).newInstance();
+				int choice = (int)(Math.random() * enemyTypes.size());
+				enemy = (Enemy)enemyTypes.get(choice).newInstance();
 			}
 
 			enemy.body.setUserData(new BodyData(enemy));
@@ -121,8 +121,8 @@ public final class WaveMachine
 	{
 		try
 		{
-			int choice = (int) (Math.random() * Constants.POWERUP_CLASSES.length);
-			Powerup powerup = (Powerup) Constants.POWERUP_CLASSES[choice].newInstance();
+			int choice = (int)(Math.random() * Constants.POWERUP_CLASSES.length);
+			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
 			powerup.body.setUserData(new BodyData(powerup));
 			Model.transients.add(powerup);
 
@@ -141,7 +141,7 @@ public final class WaveMachine
 		int numEnemyTypes = Constants.ENEMY_CLASSES.length;
 		for (int i = 0; i < numEnemyTypes; i++)
 		{
-			int choice = (int) (Math.random() * numEnemyTypes);
+			int choice = (int)(Math.random() * numEnemyTypes);
 			enemyTypes.add(Constants.ENEMY_CLASSES[choice]);
 		}
 	}

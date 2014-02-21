@@ -28,13 +28,19 @@ public final class ColorUtilities
 		return brighten(c, -percent);
 	}
 
+	public static float getBrightness(Color color)
+	{
+		return (0.299f * color.getRed()) + (0.587f * color.getGreen()) + (0.114f * color.getBlue());
+	}
+
 	public static LinkedList<Color> getComplementaryColors()
 	{
 		Color c1 = new Color(Color.WHITE);
 		Color c2 = new Color(Color.WHITE);
 		while (colorDiff(c1, c2) < .7)
 		{
-			c1 = correct(new Color((float) Math.random(), (float) Math.random(), (float) Math.random()));
+			c1 = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
+			correct(c1);
 			c2 = new Color(1 - c1.getRed(), 1 - c1.getGreen(), 1 - c1.getBlue());
 		}
 
@@ -50,31 +56,17 @@ public final class ColorUtilities
 				+ Math.abs(c1.getBlue() - c2.getBlue());
 	}
 
-	private static Color correct(Color c)
+	private static void correct(Color c)
 	{
-		float r = c.getRed();
-		float g = c.getGreen();
-		float b = c.getBlue();
-		float sum = r + g + b;
-		float maxSum = 3;
-
-		while (sum > maxSum * .8)
+		while (getBrightness(c) > .75f)
 		{
-			r -= .01;
-			g -= .01;
-			b -= .01;
-			sum = r + g + b;
+			c.set(c.getRed() - .01f, c.getGreen() - .01f, c.getBlue() - .01f);
 		}
 
-		while (sum < maxSum * .2)
+		while (getBrightness(c) < .25f)
 		{
-			r += .01;
-			g += .01;
-			b += .01;
-			sum = r + g + b;
+			c.set(c.getRed() + .01f, c.getGreen() + .01f, c.getBlue() + .01f);
 		}
-
-		return new Color(r, g, b);
 	}
 
 	private static float lum(float c, float percent)

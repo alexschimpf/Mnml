@@ -22,7 +22,7 @@ public final class WaveRecess
 
 	public static void begin()
 	{
-		String message = Constants.WAVE_INTERMISSION_MESSAGES[(int) (Math.random() * Constants.WAVE_INTERMISSION_MESSAGES.length)];
+		String message = Constants.WAVE_INTERMISSION_MESSAGES[(int)(Math.random() * Constants.WAVE_INTERMISSION_MESSAGES.length)];
 		duration = TextSequence.play(Model.waveIntermissionFont, new String[] { message, "", "Three", "Two", "One" },
 				new float[] { 2500, 500, 750, 750, 750 });
 		startTime = Calendar.getInstance().getTimeInMillis();

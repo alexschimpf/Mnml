@@ -125,28 +125,30 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		long bestScore = updateBestScore(currScore);
 		int backgroundColor = ColorScheme.foreground.getARGBPackedInt();
 		int foregroundColor = ColorScheme.background.getARGBPackedInt();
+		int textColor = ColorScheme.text.getARGBPackedInt() == Color.WHITE_ARGB_PACKED_INT ? Color.BLACK_ARGB_PACKED_INT
+				: Color.WHITE_ARGB_PACKED_INT;
 
 		Typeface typeface = Typeface.createFromAsset(getAssets(), "Pixel Berry.TTF");
 
-		LinearLayout menuLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.game_over_menu, null);
+		LinearLayout menuLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.game_over_menu, null);
 		menuLayout.setBackgroundColor(backgroundColor);
 
-		TextView titleView = (TextView) menuLayout.getChildAt(0);
-		titleView.setText(Constants.GAME_OVER_MESSAGES[(int) (Math.random() * Constants.GAME_OVER_MESSAGES.length)]);
+		TextView titleView = (TextView)menuLayout.getChildAt(0);
+		titleView.setText(Constants.GAME_OVER_MESSAGES[(int)(Math.random() * Constants.GAME_OVER_MESSAGES.length)]);
 		titleView.setTextColor(foregroundColor);
 		titleView.setTypeface(typeface);
 
-		TextView currScoreView = (TextView) menuLayout.getChildAt(2);
+		TextView currScoreView = (TextView)menuLayout.getChildAt(2);
 		currScoreView.setText("- " + currScore + " -");
-		currScoreView.setTextColor(Color.BLACK_ARGB_PACKED_INT);
+		currScoreView.setTextColor(textColor);
 		currScoreView.setTypeface(typeface);
 
-		TextView bestScoreView = (TextView) menuLayout.getChildAt(4);
+		TextView bestScoreView = (TextView)menuLayout.getChildAt(4);
 		bestScoreView.setText("PREVIOUS BEST:\n" + bestScore);
-		bestScoreView.setTextColor(Color.BLACK_ARGB_PACKED_INT);
+		bestScoreView.setTextColor(textColor);
 		bestScoreView.setTypeface(typeface);
 
-		Button restartButton = (Button) menuLayout.getChildAt(6);
+		Button restartButton = (Button)menuLayout.getChildAt(6);
 		restartButton.setTypeface(typeface);
 		restartButton.setTextColor(foregroundColor);
 		restartButton.setOnClickListener(new OnClickListener()
@@ -157,7 +159,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 			}
 		});
 
-		Button mainMenuButton = (Button) menuLayout.getChildAt(7);
+		Button mainMenuButton = (Button)menuLayout.getChildAt(7);
 		mainMenuButton.setTypeface(typeface);
 		mainMenuButton.setTextColor(foregroundColor);
 		mainMenuButton.setOnClickListener(new OnClickListener()
@@ -185,7 +187,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 		BitmapTextureAtlas fontTexture2 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		Model.waveIntermissionFont = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(),
-				"Pixel Berry.TTF", Constants.WAVE_INTERMISSION_FONT_SIZE, false, android.graphics.Color.BLACK);
+				"Pixel Berry.TTF", Constants.WAVE_INTERMISSION_FONT_SIZE, false, android.graphics.Color.WHITE);
 		Model.waveIntermissionFont.load();
 
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024,
@@ -197,7 +199,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Textures.POWERUP_BOMB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this,
 				"powerup_bomb.png");
 		Textures.PENALTY_ENEMY = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "penalty.png");
-		Textures.ENEMY = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "enemy.png");
 		try
 		{
 			mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
