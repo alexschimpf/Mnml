@@ -8,7 +8,6 @@ package com.tender.saucer.collision;
  * @author Alex Schimpf
  * 
  */
-
 public final class BodyData
 {
 	public ICollide owner;

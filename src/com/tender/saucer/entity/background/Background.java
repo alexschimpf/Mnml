@@ -44,12 +44,10 @@ public final class Background extends Entity implements IPersistentUpdate
 	public void flash()
 	{
 		rect.setAlpha(1);
-
 		if (rect.getEntityModifierCount() > 0)
 		{
 			rect.clearEntityModifiers();
 		}
-
 		alphaDecrease = new AlphaModifier(.5f, 1, 0);
 		alphaDecrease.setAutoUnregisterWhenFinished(true);
 		alphaDecrease.addModifierListener(new IModifierListener<IEntity>()
@@ -57,7 +55,6 @@ public final class Background extends Entity implements IPersistentUpdate
 			public void onModifierFinished(IModifier<IEntity> modifier, IEntity item)
 			{
 				alphaDecrease = null;
-
 				alphaIncrease = new AlphaModifier(.5f, 0, 1);
 				alphaIncrease.setAutoUnregisterWhenFinished(true);
 				rect.registerEntityModifier(alphaIncrease);
@@ -67,7 +64,6 @@ public final class Background extends Entity implements IPersistentUpdate
 			{
 			}
 		});
-
 		rect.registerEntityModifier(alphaDecrease);
 	}
 
@@ -78,6 +74,5 @@ public final class Background extends Entity implements IPersistentUpdate
 
 	public void update()
 	{
-
 	}
 }

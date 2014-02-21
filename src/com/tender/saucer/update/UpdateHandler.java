@@ -20,7 +20,6 @@ import com.tender.saucer.wave.WaveRecess;
  * @author Alex Schimpf
  * 
  */
-
 public final class UpdateHandler implements IUpdateHandler
 {
 	private boolean skip = false;
@@ -52,7 +51,6 @@ public final class UpdateHandler implements IUpdateHandler
 			}
 			break;
 		}
-
 		Model.player.update();
 		Model.background.update();
 		updateTransients();
@@ -66,13 +64,11 @@ public final class UpdateHandler implements IUpdateHandler
 	{
 		Model.player.score++;
 		Model.scoreText.setText("" + Model.player.score);
-
 		float width = (Model.player.health / Player.DEFAULT_HEALTH) * (Constants.CAMERA_WIDTH - 10);
 		float red = 1 - (Model.player.health / Player.DEFAULT_HEALTH);
 		Model.lifeBar.setWidth(width);
 		Model.lifeBar.setColor(ColorUtilities.brighten(new Color(red, 1 - red, 0), .5f));
-
-		Model.waveText.setText("WAVE " + WaveMachine.level);
+		Model.waveText.setText("WAVE " + WaveMachine.instance.level);
 		Model.waveText.setX((Constants.CAMERA_WIDTH - Model.waveText.getWidth()) / 2);
 	}
 

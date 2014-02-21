@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  * @author Alex Schimpf
  * 
  */
-
 public final class CollisionHandler implements ContactListener
 {
 	public void beginContact(Contact contact)
@@ -24,12 +23,10 @@ public final class CollisionHandler implements ContactListener
 		Fixture fixB = contact.getFixtureB();
 		Body bodyA = fixA.getBody();
 		Body bodyB = fixB.getBody();
-
 		try
 		{
 			ICollide ownerA = ((BodyData)bodyA.getUserData()).owner;
 			ICollide ownerB = ((BodyData)bodyB.getUserData()).owner;
-
 			ownerA.collide(ownerB);
 			ownerB.collide(ownerA);
 		}
@@ -41,16 +38,13 @@ public final class CollisionHandler implements ContactListener
 
 	public void endContact(Contact contact)
 	{
-
 	}
 
 	public void postSolve(Contact contact, ContactImpulse impulse)
 	{
-
 	}
 
 	public void preSolve(Contact contact, Manifold oldManifold)
 	{
-
 	}
 }

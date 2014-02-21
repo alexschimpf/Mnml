@@ -8,7 +8,6 @@ package com.tender.saucer.update;
  * @author Alex Schimpf
  * 
  */
-
 public interface IPersistentUpdate
 {
 	public void update();

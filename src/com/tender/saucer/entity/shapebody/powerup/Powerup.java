@@ -21,20 +21,16 @@ import com.tender.saucer.wave.WaveMachine;
  * @author Alex Schimpf
  * 
  */
-
 public abstract class Powerup extends TargetShapeBody
 {
 	public static final float DEFAULT_DURATION = 8000;
 	public static final float DEFAULT_SIZE = 50;
-
 	public boolean overrides = true;
-
 	protected boolean active = true;
 
 	public Powerup()
 	{
 		speed = 5 + (float)(Math.random() * 5);
-
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
 	}
@@ -51,7 +47,7 @@ public abstract class Powerup extends TargetShapeBody
 
 	public void done()
 	{
-		WaveMachine.numPowerupsLeft--;
+		WaveMachine.instance.numPowerupsLeft--;
 		ParticleSystem.begin(this);
 		super.done();
 	}
@@ -69,7 +65,6 @@ public abstract class Powerup extends TargetShapeBody
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
 		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK
 				| Constants.WALL_BITMASK;
-
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));

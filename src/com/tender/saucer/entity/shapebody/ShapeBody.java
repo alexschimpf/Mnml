@@ -14,7 +14,6 @@ import com.tender.saucer.stuff.Model;
  * @author Alex Schimpf
  * 
  */
-
 public class ShapeBody extends Entity implements IDispose
 {
 	public Body body;

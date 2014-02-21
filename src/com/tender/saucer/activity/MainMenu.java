@@ -8,7 +8,6 @@ package com.tender.saucer.activity;
  * @author Alex Schimpf
  * 
  */
-
 public class MainMenu
 {
 	// TODO

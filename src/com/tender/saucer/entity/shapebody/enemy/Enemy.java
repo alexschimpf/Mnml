@@ -20,7 +20,6 @@ import com.tender.saucer.wave.WaveMachine;
  * @author Alex Schimpf
  * 
  */
-
 public abstract class Enemy extends TargetShapeBody
 {
 	public float health = 1;
@@ -32,7 +31,7 @@ public abstract class Enemy extends TargetShapeBody
 	@Override
 	public void done()
 	{
-		WaveMachine.numEnemiesLeft--;
+		WaveMachine.instance.numEnemiesLeft--;
 		ParticleSystem.begin(this, ColorScheme.foreground);
 		super.done();
 	}
@@ -48,7 +47,6 @@ public abstract class Enemy extends TargetShapeBody
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
 		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK
 				| Constants.WALL_BITMASK;
-
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setFixedRotation(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));

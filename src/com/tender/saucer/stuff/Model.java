@@ -25,7 +25,6 @@ import com.tender.saucer.update.ITransientUpdate;
  * @author Alex Schimpf
  * 
  */
-
 public final class Model
 {
 	public static Background background;

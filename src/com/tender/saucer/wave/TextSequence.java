@@ -18,7 +18,6 @@ import com.tender.saucer.stuff.Model;
  * @author Alex Schimpf
  * 
  */
-
 public class TextSequence
 {
 	public static float play(Font font, String[] sequence, float[] durations)
@@ -28,17 +27,14 @@ public class TextSequence
 		{
 			totalDuration += duration;
 		}
-
 		final TextSequence ts = new TextSequence(font, sequence, durations);
 		ts.setAndAlignText(sequence[ts.currFrame]);
 		Model.hud.attachChild(ts.text);
-
 		TimerHandler timer = new TimerHandler(durations[ts.currFrame] / 1000, new ITimerCallback()
 		{
 			public void onTimePassed(TimerHandler timerHandler)
 			{
 				ts.currFrame++;
-
 				if (ts.currFrame > ts.sequence.length)
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
@@ -56,9 +52,7 @@ public class TextSequence
 					}
 			}
 		});
-
 		Model.scene.registerUpdateHandler(timer);
-
 		return totalDuration;
 	}
 

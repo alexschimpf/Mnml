@@ -8,7 +8,6 @@ package com.tender.saucer.entity;
  * @author Alex Schimpf
  * 
  */
-
 public abstract class Entity
 {
 	public Entity()

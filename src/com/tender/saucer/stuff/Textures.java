@@ -10,7 +10,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  * @author Alex Schimpf
  * 
  */
-
 public final class Textures
 {
 	public static ITextureRegion PENALTY_ENEMY;

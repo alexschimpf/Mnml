@@ -24,12 +24,10 @@ import com.tender.saucer.stuff.Model;
  * @author Alex Schimpf
  * 
  */
-
 public class Shot extends DynamicShapeBody
 {
 	public static final float DEFAULT_SIZE = 10;
 	public static final float DEFAULT_SPEED = -20;
-
 	public static float shotDamage = 1;
 	public static float shotSize = DEFAULT_SIZE;
 	public static float shotSpeed = DEFAULT_SPEED;
@@ -38,9 +36,7 @@ public class Shot extends DynamicShapeBody
 	{
 		Shot shot = new Shot();
 		shot.body.setUserData(new BodyData(shot));
-
 		Model.transients.add(shot);
-
 		return shot;
 	}
 
@@ -52,23 +48,19 @@ public class Shot extends DynamicShapeBody
 	}
 
 	public float damage = 1;
-
 	private boolean active = true;
 
 	private Shot()
 	{
 		this.damage = Shot.shotDamage;
 		this.speed = Shot.shotSpeed;
-
 		float x = Model.player.shape.getX() + (Player.DEFAULT_WIDTH / 2) - (Shot.shotSize / 2);
 		float y = Model.player.shape.getY() - Shot.shotSize;
 		shape = new Rectangle(x, y, Shot.shotSize, Shot.shotSize, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
-
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
 		fixDef.filter.categoryBits = Constants.SHOT_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SIDE_WALL_BITMASK;
-
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setBullet(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
@@ -85,7 +77,6 @@ public class Shot extends DynamicShapeBody
 			{
 				Model.player.applyPowerup((Powerup)other);
 			}
-
 		active = false;
 	}
 
@@ -101,7 +92,6 @@ public class Shot extends DynamicShapeBody
 		{
 			return true;
 		}
-
 		return false;
 	}
 }

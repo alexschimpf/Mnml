@@ -8,7 +8,6 @@ package com.tender.saucer.collision;
  * @author Alex Schimpf
  * 
  */
-
 public interface ICollide
 {
 	public void collide(ICollide other);

@@ -4,6 +4,7 @@ package com.tender.saucer.wave;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+import com.tender.saucer.activity.IOnResumeGameListener;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.entity.shapebody.enemy.Enemy;
@@ -20,55 +21,34 @@ import com.tender.saucer.stuff.Model;
  * @author Alex Schimpf
  * 
  */
-
-public final class WaveMachine
+public final class WaveMachine implements IOnResumeGameListener
 {
 	public static final float DEFAULT_ENEMY_BUILD_COOLDOWN = 2200;
 	public static final float DEFAULT_POWERUP_BUILD_COOLDOWN = 22000;
-
-	public static LinkedList<Class<?>> enemyTypes = new LinkedList<Class<?>>();
-	public static int level = 0;
-	public static int numEnemiesLeft = 10;
-	public static int numPowerupsLeft = 0;
-
-	private static float enemyBuildCooldown = DEFAULT_ENEMY_BUILD_COOLDOWN;
-	private static long lastEnemyBuildTime = 0;
-	private static long lastPowerupBuildTime = 0;
-	private static int numEnemyBuildsLeft = 10;
-	private static float powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
+	public static WaveMachine instance;
 
 	public static void beginNextWave()
 	{
 		ColorScheme.applyNewScheme();
-
-		level++;
+		instance.level++;
 		initCurrEnemyTypes();
-		lastEnemyBuildTime = 0;
-		numEnemiesLeft = level * 10;
-		numEnemyBuildsLeft = numEnemiesLeft;
-		enemyBuildCooldown = Math.max(700, DEFAULT_ENEMY_BUILD_COOLDOWN - (level * 200));
-		powerupBuildCooldown = Math.max(15000, DEFAULT_POWERUP_BUILD_COOLDOWN - (level * 1000));
-		lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
-
+		instance.lastEnemyBuildTime = 0;
+		instance.numEnemiesLeft = instance.level * 10;
+		instance.numEnemyBuildsLeft = instance.numEnemiesLeft;
+		instance.enemyBuildCooldown = Math.max(700, DEFAULT_ENEMY_BUILD_COOLDOWN - (instance.level * 200));
+		instance.powerupBuildCooldown = Math.max(15000, DEFAULT_POWERUP_BUILD_COOLDOWN - (instance.level * 1000));
+		instance.lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 		Model.state = GameState.WAVE_MACHINE_RUNNING;
 	}
 
 	public static void init()
 	{
-		level = 0;
-		numEnemiesLeft = 10;
-		numPowerupsLeft = 0;
-		enemyTypes = new LinkedList<Class<?>>();
-		numEnemyBuildsLeft = 10;
-		lastEnemyBuildTime = 0;
-		enemyBuildCooldown = DEFAULT_ENEMY_BUILD_COOLDOWN;
-		lastPowerupBuildTime = 0;
-		powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
+		instance = new WaveMachine();
 	}
 
 	public static void update()
 	{
-		if (numEnemiesLeft <= 0 && numPowerupsLeft <= 0)
+		if (instance.numEnemiesLeft <= 0 && instance.numPowerupsLeft <= 0)
 		{
 			Model.state = GameState.WAVE_RECESS_RUNNING;
 			WaveRecess.begin();
@@ -81,7 +61,6 @@ public final class WaveMachine
 				enemy.attachToScene();
 				enemy.setInMotion();
 			}
-
 			Powerup powerup = tryBuildRandomPowerup();
 			if (powerup != null)
 			{
@@ -102,13 +81,11 @@ public final class WaveMachine
 			}
 			else
 			{
-				int choice = (int)(Math.random() * enemyTypes.size());
-				enemy = (Enemy)enemyTypes.get(choice).newInstance();
+				int choice = (int)(Math.random() * instance.enemyTypes.size());
+				enemy = (Enemy)instance.enemyTypes.get(choice).newInstance();
 			}
-
 			enemy.body.setUserData(new BodyData(enemy));
 			Model.transients.add(enemy);
-
 			return enemy;
 		}
 		catch (Exception e)
@@ -125,7 +102,6 @@ public final class WaveMachine
 			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
 			powerup.body.setUserData(new BodyData(powerup));
 			Model.transients.add(powerup);
-
 			return powerup;
 		}
 		catch (Exception e)
@@ -136,45 +112,58 @@ public final class WaveMachine
 
 	private static void initCurrEnemyTypes()
 	{
-		enemyTypes.clear();
-
+		instance.enemyTypes.clear();
 		int numEnemyTypes = Constants.ENEMY_CLASSES.length;
 		for (int i = 0; i < numEnemyTypes; i++)
 		{
 			int choice = (int)(Math.random() * numEnemyTypes);
-			enemyTypes.add(Constants.ENEMY_CLASSES[choice]);
+			instance.enemyTypes.add(Constants.ENEMY_CLASSES[choice]);
 		}
 	}
 
 	private static Enemy tryBuildRandomEnemy()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
-		long timeElapsed = currTime - lastEnemyBuildTime;
-		if (timeElapsed > enemyBuildCooldown && numEnemyBuildsLeft > 0)
+		long timeElapsed = currTime - instance.lastEnemyBuildTime;
+		if (timeElapsed > instance.enemyBuildCooldown && instance.numEnemyBuildsLeft > 0)
 		{
-			numEnemyBuildsLeft--;
-			lastEnemyBuildTime = currTime;
+			instance.numEnemyBuildsLeft--;
+			instance.lastEnemyBuildTime = currTime;
 			return buildRandomEnemy();
 		}
-
 		return null;
 	}
 
 	private static Powerup tryBuildRandomPowerup()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
-		long timeElapsed = currTime - lastPowerupBuildTime;
-		if (timeElapsed > powerupBuildCooldown)
+		long timeElapsed = currTime - instance.lastPowerupBuildTime;
+		if (timeElapsed > instance.powerupBuildCooldown)
 		{
-			numPowerupsLeft++;
-			lastPowerupBuildTime = currTime;
+			instance.numPowerupsLeft++;
+			instance.lastPowerupBuildTime = currTime;
 			return buildRandomPowerup();
 		}
-
 		return null;
 	}
 
+	public LinkedList<Class<?>> enemyTypes = new LinkedList<Class<?>>();
+	public int level = 0;
+	public int numEnemiesLeft = 10;
+	public int numPowerupsLeft = 0;
+	private float enemyBuildCooldown = DEFAULT_ENEMY_BUILD_COOLDOWN;
+	private long lastEnemyBuildTime = 0;
+	private long lastPowerupBuildTime = 0;
+	private int numEnemyBuildsLeft = 10;
+	private float powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
+
 	private WaveMachine()
 	{
+	}
+
+	public void onResumeGame(long awayDuration)
+	{
+		lastEnemyBuildTime += awayDuration;
+		lastPowerupBuildTime += awayDuration;
 	}
 }

@@ -17,19 +17,16 @@ import com.tender.saucer.stuff.Textures;
  * @author Alex Schimpf
  * 
  */
-
 public class BigShotPowerup extends Powerup
 {
 	public BigShotPowerup()
 	{
 		super();
-
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
 		float y = -Powerup.DEFAULT_SIZE;
 		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.POWERUP_BIG_SHOT, Model.main
 				.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
-
 		initBody();
 	}
 

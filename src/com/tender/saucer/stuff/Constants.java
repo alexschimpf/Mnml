@@ -17,7 +17,6 @@ import com.tender.saucer.entity.shapebody.powerup.HealthPowerup;
  * @author Alex Schimpf
  * 
  */
-
 public final class Constants
 {
 	// Main
@@ -26,11 +25,9 @@ public final class Constants
 	public static final int CAMERA_HEIGHT = 800;
 	public static final float TOP_BOT_HEIGHT = 50;
 	public static final float OOB_WIDTH = 20;
-
 	// Fonts
 	public static final int HUD_FONT_SIZE = 22;
 	public static final int WAVE_INTERMISSION_FONT_SIZE = 45;
-
 	// Collision
 	public static final short PLAYER_BITMASK = 0x0001;
 	public static final short SHOT_BITMASK = 0x0002;
@@ -38,7 +35,6 @@ public final class Constants
 	public static final short POWERUP_BITMASK = 0x0008;
 	public static final short SIDE_WALL_BITMASK = 0x0010;
 	public static final short WALL_BITMASK = 0x0020;
-
 	// Miscellaneous
 	public static final Class<?>[] ENEMY_CLASSES = new Class<?>[] { BasicEnemy.class, BigEnemy.class,
 			BounceEnemy.class, MorphEnemy.class, SplitEnemy.class };

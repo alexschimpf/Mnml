@@ -21,23 +21,19 @@ import com.tender.saucer.wave.WaveMachine;
  * @author Alex Schimpf
  * 
  */
-
 public class BigEnemy extends BasicEnemy
 {
 	public BigEnemy()
 	{
 		health = 3;
 		speed = 3 + (float)(Math.random() * 2);
-
 		float size = (float)((Shot.DEFAULT_SIZE * 6) + (Math.random() * Shot.DEFAULT_SIZE * 2));
 		float m = Math.random() < .5 ? -1 : 1;
 		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
-
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - size));
 		float y = -size;
 		shape = new Rectangle(x, y, size, size, Model.main.getVertexBufferObjectManager());
 		shape.setColor(ColorUtilities.darken(ColorScheme.foreground, .2f));
-
 		initBody();
 	}
 
@@ -57,7 +53,6 @@ public class BigEnemy extends BasicEnemy
 				if (other instanceof Shot)
 				{
 					health -= ((Shot)other).damage;
-
 					if (health > 0)
 					{
 						shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));
@@ -68,7 +63,7 @@ public class BigEnemy extends BasicEnemy
 	@Override
 	public void done()
 	{
-		WaveMachine.numEnemiesLeft--;
+		WaveMachine.instance.numEnemiesLeft--;
 		ParticleSystem.begin(this, ParticleSystem.DEFAULT_NUM_PARTICLES * 2);
 		dispose();
 	}

@@ -12,7 +12,6 @@ import org.andengine.util.color.Color;
  * @author Alex Schimpf
  * 
  */
-
 public final class ColorUtilities
 {
 	public static Color brighten(Color c, float percent)
@@ -43,7 +42,6 @@ public final class ColorUtilities
 			correct(c1);
 			c2 = new Color(1 - c1.getRed(), 1 - c1.getGreen(), 1 - c1.getBlue());
 		}
-
 		LinkedList<Color> colors = new LinkedList<Color>();
 		colors.add(c1);
 		colors.add(c2);
@@ -62,7 +60,6 @@ public final class ColorUtilities
 		{
 			c.set(c.getRed() - .01f, c.getGreen() - .01f, c.getBlue() - .01f);
 		}
-
 		while (getBrightness(c) < .25f)
 		{
 			c.set(c.getRed() + .01f, c.getGreen() + .01f, c.getBlue() + .01f);

@@ -18,21 +18,17 @@ import com.tender.saucer.update.ITransientUpdate;
  * @author Alex Schimpf
  * 
  */
-
 public class BombPowerup extends Powerup
 {
 	public BombPowerup()
 	{
 		super();
-
 		overrides = false;
-
 		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
 		float y = -Powerup.DEFAULT_SIZE;
 		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.POWERUP_BOMB, Model.main
 				.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
-
 		initBody();
 	}
 
@@ -41,7 +37,6 @@ public class BombPowerup extends Powerup
 	{
 		Model.background.flash();
 		ParticleSystem.begin(this);
-
 		for (ITransientUpdate t : Model.transients)
 		{
 			if (t instanceof Enemy)

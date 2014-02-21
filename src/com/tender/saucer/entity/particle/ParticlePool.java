@@ -14,6 +14,7 @@ import com.tender.saucer.stuff.Model;
  * @author Alex Schimpf
  * 
  */
+
 public class ParticlePool
 {
 	private static final GenericPool<Particle> POOL = new GenericPool<Particle>()

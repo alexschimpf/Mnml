@@ -8,7 +8,6 @@ package com.tender.saucer.entity.shapebody;
  * @author Alex Schimpf
  * 
  */
-
 public interface IDispose
 {
 	public void dispose();
