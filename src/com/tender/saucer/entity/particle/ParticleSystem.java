@@ -18,7 +18,6 @@ import com.tender.saucer.update.ITransientUpdate;
  * @author Alex Schimpf
  * 
  */
-
 public class ParticleSystem extends Entity implements ITransientUpdate
 {
 	public static final int DEFAULT_NUM_PARTICLES = 20;
@@ -61,6 +60,7 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 		for (int i = 0; i < numParticles; i++)
 		{
 			Particle particle = ParticlePool.obtain(shapeBody, color, maxDuration);
+			Model.main.addOnResumeGameListener(particle);
 			particles.add(particle);
 		}
 	}
@@ -84,7 +84,6 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 		{
 			return true;
 		}
-
 		Iterator<Particle> it = particles.iterator();
 		while (it.hasNext())
 		{
@@ -95,7 +94,6 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 				particle.done();
 			}
 		}
-
 		return false;
 	}
 }

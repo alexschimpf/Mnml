@@ -5,6 +5,7 @@ import org.andengine.util.adt.pool.GenericPool;
 import org.andengine.util.color.Color;
 
 import com.tender.saucer.entity.shapebody.ShapeBody;
+import com.tender.saucer.stuff.Model;
 
 /**
  * 
@@ -13,7 +14,6 @@ import com.tender.saucer.entity.shapebody.ShapeBody;
  * @author Alex Schimpf
  * 
  */
-
 public class ParticlePool
 {
 	private static final GenericPool<Particle> POOL = new GenericPool<Particle>()
@@ -32,6 +32,7 @@ public class ParticlePool
 
 	public static void recycle(Particle particle)
 	{
+		Model.main.removeOnResumeGameListener(particle);
 		POOL.recyclePoolItem(particle);
 	}
 }

@@ -1,6 +1,9 @@
 
 package com.tender.saucer.activity;
 
+import java.util.Calendar;
+import java.util.LinkedList;
+
 import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.options.EngineOptions;
@@ -59,19 +62,29 @@ import com.tender.saucer.wave.WaveRecess;
  * @author Alex Schimpf
  * 
  */
-
 public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListener
 {
+	private LinkedList<IOnResumeGameListener> onResumeGameListeners = new LinkedList<IOnResumeGameListener>();
+	private long awayStartTime;
+
+	public void addOnResumeGameListener(IOnResumeGameListener listener)
+	{
+		onResumeGameListeners.add(listener);
+	}
+
 	@Override
 	public void onBackPressed()
 	{
 		if (mEngine.isRunning())
 		{
+			awayStartTime = Calendar.getInstance().getTimeInMillis();
 			showPausedDialog();
 			mEngine.stop();
 		}
 		else
 		{
+			long awayDuration = Calendar.getInstance().getTimeInMillis() - awayStartTime;
+			notifyOnResumeGameListeners(awayDuration);
 			mEngine.start();
 		}
 	}
@@ -79,21 +92,17 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	public EngineOptions onCreateEngineOptions()
 	{
 		ColorScheme.generateColors();
-
 		Model.init();
 		Shot.init();
 		WaveMachine.init();
 		WaveRecess.init();
-
 		Model.main = this;
 		Model.camera = new ZoomCamera(0, 0, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
-
 		final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
 				new FillResolutionPolicy(), Model.camera);
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		engineOptions.getAudioOptions().setNeedsMusic(true);
-
 		return engineOptions;
 	}
 
@@ -103,10 +112,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{
 			return true;
 		}
-
 		float x = event.getX();
 		float y = event.getY();
-
 		if (y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT)
 		{
 			Model.player.move(x);
@@ -115,8 +122,12 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{
 			Model.player.tryShoot();
 		}
-
 		return true;
+	}
+
+	public void removeOnResumeGameListener(IOnResumeGameListener listener)
+	{
+		onResumeGameListeners.remove(listener);
 	}
 
 	public void showGameOverDialog()
@@ -127,27 +138,21 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		int foregroundColor = ColorScheme.background.getARGBPackedInt();
 		int textColor = ColorScheme.text.getARGBPackedInt() == Color.WHITE_ARGB_PACKED_INT ? Color.BLACK_ARGB_PACKED_INT
 				: Color.WHITE_ARGB_PACKED_INT;
-
 		Typeface typeface = Typeface.createFromAsset(getAssets(), "Pixel Berry.TTF");
-
 		LinearLayout menuLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.game_over_menu, null);
 		menuLayout.setBackgroundColor(backgroundColor);
-
 		TextView titleView = (TextView)menuLayout.getChildAt(0);
 		titleView.setText(Constants.GAME_OVER_MESSAGES[(int)(Math.random() * Constants.GAME_OVER_MESSAGES.length)]);
 		titleView.setTextColor(foregroundColor);
 		titleView.setTypeface(typeface);
-
 		TextView currScoreView = (TextView)menuLayout.getChildAt(2);
 		currScoreView.setText("- " + currScore + " -");
 		currScoreView.setTextColor(textColor);
 		currScoreView.setTypeface(typeface);
-
 		TextView bestScoreView = (TextView)menuLayout.getChildAt(4);
 		bestScoreView.setText("PREVIOUS BEST:\n" + bestScore);
 		bestScoreView.setTextColor(textColor);
 		bestScoreView.setTypeface(typeface);
-
 		Button restartButton = (Button)menuLayout.getChildAt(6);
 		restartButton.setTypeface(typeface);
 		restartButton.setTextColor(foregroundColor);
@@ -158,7 +163,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 				restart();
 			}
 		});
-
 		Button mainMenuButton = (Button)menuLayout.getChildAt(7);
 		mainMenuButton.setTypeface(typeface);
 		mainMenuButton.setTextColor(foregroundColor);
@@ -169,7 +173,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 				Model.main.finish();
 			}
 		});
-
 		final AlertDialog.Builder alert = new AlertDialog.Builder(Model.main);
 		alert.setView(menuLayout);
 		alert.show();
@@ -179,17 +182,14 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	protected void onCreateResources()
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
 		BitmapTextureAtlas fontTexture1 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		Model.hudFont = FontFactory.createFromAsset(getFontManager(), fontTexture1, getAssets(), "Pixel Berry.TTF",
 				Constants.HUD_FONT_SIZE, false, android.graphics.Color.BLACK);
 		Model.hudFont.load();
-
 		BitmapTextureAtlas fontTexture2 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		Model.waveIntermissionFont = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(),
 				"Pixel Berry.TTF", Constants.WAVE_INTERMISSION_FONT_SIZE, false, android.graphics.Color.WHITE);
 		Model.waveIntermissionFont.load();
-
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024,
 				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this,
@@ -216,14 +216,11 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.scene = new Scene();
 		Model.scene.setOnSceneTouchListener(this);
 		Model.scene.registerUpdateHandler(new UpdateHandler());
-
 		Model.world = new PhysicsWorld(new Vector2(0, 0), false);
 		Model.world.setContactListener(new CollisionHandler());
 		Model.scene.registerUpdateHandler(Model.world);
-
 		Model.background = new Background();
 		Model.background.attachToScene();
-
 		Model.hud = new HUD();
 		Model.hudRect = new Rectangle(0, 0, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT,
 				getVertexBufferObjectManager());
@@ -240,21 +237,16 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		attachLifeBarBorder();
 		Model.hud.attachChild(Model.scoreText);
 		Model.hud.attachChild(Model.waveText);
-
 		Model.player = new Player();
 		Model.player.attachToScene();
-
 		Model.wall = new Wall();
 		Model.oobLeft = new SideWall(true);
 		Model.oobRight = new SideWall(false);
 		Model.hud.attachChild(Model.wall.shape);
 		Model.oobLeft.attachToScene();
 		Model.oobRight.attachToScene();
-
 		Model.camera.setHUD(Model.hud);
-
 		beginGame();
-
 		return Model.scene;
 	}
 
@@ -264,7 +256,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		float lifeBarY = Model.lifeBar.getY();
 		float lifeBarWidth = Model.lifeBar.getWidth();
 		float lifeBarHeight = Model.lifeBar.getHeight();
-
 		Rectangle top = new Rectangle(lifeBarX, lifeBarY - 2, lifeBarWidth, 2, getVertexBufferObjectManager());
 		top.setColor(Color.BLACK);
 		Rectangle bottom = new Rectangle(lifeBarX, lifeBarY + lifeBarHeight, lifeBarWidth, 2,
@@ -275,7 +266,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Rectangle right = new Rectangle(lifeBarX + lifeBarWidth, lifeBarY, 2, lifeBarHeight,
 				getVertexBufferObjectManager());
 		right.setColor(Color.BLACK);
-
 		Model.hud.attachChild(top);
 		Model.hud.attachChild(bottom);
 		Model.hud.attachChild(left);
@@ -285,19 +275,28 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	private void beginGame()
 	{
 		Model.state = GameState.WAVE_MACHINE_RUNNING;
+		addOnResumeGameListener(Model.player);
+		addOnResumeGameListener(WaveMachine.instance);
+		addOnResumeGameListener(WaveRecess.instance);
 		WaveMachine.beginNextWave();
+	}
+
+	private void notifyOnResumeGameListeners(long awayDuration)
+	{
+		for (IOnResumeGameListener listener : onResumeGameListeners)
+		{
+			listener.onResumeGame(awayDuration);
+		}
 	}
 
 	private void restart()
 	{
 		Model.scene.clearUpdateHandlers();
 		Model.world.clearPhysicsConnectors();
-
 		Intent intent = new Intent(Main.this, Main.class);
 		overridePendingTransition(0, 0);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		finish();
-
 		overridePendingTransition(0, 0);
 		startActivity(intent);
 	}
@@ -305,17 +304,16 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	private void showPausedDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
 		alert.setTitle("Paused");
-
 		alert.setPositiveButton("Resume", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int button)
 			{
+				long awayDuration = Calendar.getInstance().getTimeInMillis() - awayStartTime;
+				notifyOnResumeGameListeners(awayDuration);
 				mEngine.start();
 			}
 		});
-
 		alert.show();
 	}
 
@@ -323,15 +321,12 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	{
 		SharedPreferences prefs = getSharedPreferences("com.tender.saucer.untitledgame", Context.MODE_PRIVATE);
 		long oldBestScore = prefs.getLong("bestScore", 0);
-
 		SharedPreferences.Editor editor = prefs.edit();
 		if (score > oldBestScore)
 		{
 			editor.putLong("bestScore", score);
 		}
-
 		editor.commit();
-
 		return oldBestScore;
 	}
 }

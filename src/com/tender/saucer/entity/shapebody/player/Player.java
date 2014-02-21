@@ -10,6 +10,7 @@ import org.andengine.util.color.Color;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.tender.saucer.activity.IOnResumeGameListener;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.collision.ICollide;
 import com.tender.saucer.color.ColorScheme;
@@ -30,19 +31,16 @@ import com.tender.saucer.update.IPersistentUpdate;
  * @author Alex Schimpf
  * 
  */
-
-public final class Player extends ShapeBody implements ICollide, IPersistentUpdate
+public final class Player extends ShapeBody implements ICollide, IPersistentUpdate, IOnResumeGameListener
 {
 	public static final float DEFAULT_HEALTH = 5;
 	public static final float DEFAULT_HEIGHT = 25;
 	public static final float DEFAULT_SHOOT_COOLDOWN = 350;
 	public static final float DEFAULT_WIDTH = 50;
-
 	public float health = Player.DEFAULT_HEALTH;
 	public boolean penalty = false;
 	public long score = 0;
 	public float shootCooldown = Player.DEFAULT_SHOOT_COOLDOWN;
-
 	private long lastPenaltyTime = 0;
 	private long lastPowerupTime = 0;
 	private long lastShotTime = 0;
@@ -55,11 +53,9 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		shape = new Rectangle(x, y, Player.DEFAULT_WIDTH, Player.DEFAULT_HEIGHT, Model.main
 				.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
-
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.PLAYER_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK;
-
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);
 		body.setFixedRotation(true);
 		body.setUserData(new BodyData(this));
@@ -69,7 +65,6 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	public void applyPenalty()
 	{
 		lastPenaltyTime = Calendar.getInstance().getTimeInMillis();
-
 		if (!penalty)
 		{
 			penalty = true;
@@ -86,12 +81,10 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 			powerup.apply();
 			return;
 		}
-
 		if (this.powerup != null)
 		{
 			this.powerup.remove();
 		}
-
 		powerup.apply();
 		this.powerup = powerup;
 		lastPowerupTime = Calendar.getInstance().getTimeInMillis();
@@ -121,6 +114,13 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		body.setTransform(x / Constants.PX_TO_M, body.getPosition().y, body.getAngle());
 	}
 
+	public void onResumeGame(long awayDuration)
+	{
+		lastPenaltyTime += awayDuration;
+		lastPowerupTime += awayDuration;
+		lastShotTime += awayDuration;
+	}
+
 	public void tryShoot()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
@@ -138,7 +138,6 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		{
 			Model.state = GameState.GAME_OVER;
 		}
-
 		if (powerup != null)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
@@ -149,7 +148,6 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 				powerup = null;
 			}
 		}
-
 		if (penalty)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
