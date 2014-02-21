@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.background;
 
 import org.andengine.entity.IEntity;
@@ -16,8 +17,9 @@ import com.tender.saucer.update.IPersistentUpdate;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
 public final class Background extends Entity implements IPersistentUpdate
@@ -26,24 +28,24 @@ public final class Background extends Entity implements IPersistentUpdate
 	private AlphaModifier alphaIncrease;
 	private Rectangle rect;
 
-	public Background() 
-	{	
-		rect = new Rectangle(0, Constants.TOP_BOT_HEIGHT, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT - (Constants.TOP_BOT_HEIGHT * 2), 
-				Model.main.getVertexBufferObjectManager());
+	public Background()
+	{
+		rect = new Rectangle(0, Constants.TOP_BOT_HEIGHT, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT
+				- (Constants.TOP_BOT_HEIGHT * 2), Model.main.getVertexBufferObjectManager());
 		rect.setColor(ColorScheme.background);
 	}
-	
+
 	@Override
 	public void attachToScene()
 	{
 		Model.scene.attachChild(rect);
 	}
-	
+
 	public void flash()
 	{
 		rect.setAlpha(1);
-		
-		if(rect.getEntityModifierCount() > 0)
+
+		if (rect.getEntityModifierCount() > 0)
 		{
 			rect.clearEntityModifiers();
 		}
@@ -52,19 +54,21 @@ public final class Background extends Entity implements IPersistentUpdate
 		alphaDecrease.setAutoUnregisterWhenFinished(true);
 		alphaDecrease.addModifierListener(new IModifierListener<IEntity>()
 		{
-			public void onModifierFinished(IModifier<IEntity> modifier, IEntity item) 
+			public void onModifierFinished(IModifier<IEntity> modifier, IEntity item)
 			{
 				alphaDecrease = null;
-				
+
 				alphaIncrease = new AlphaModifier(.5f, 0, 1);
 				alphaIncrease.setAutoUnregisterWhenFinished(true);
 				rect.registerEntityModifier(alphaIncrease);
 			}
 
-			public void onModifierStarted(IModifier<IEntity> modifier, IEntity item) {}
+			public void onModifierStarted(IModifier<IEntity> modifier, IEntity item)
+			{
+			}
 		});
-		
-		rect.registerEntityModifier(alphaDecrease);	
+
+		rect.registerEntityModifier(alphaDecrease);
 	}
 
 	public void setColor(Color color)
@@ -72,7 +76,7 @@ public final class Background extends Entity implements IPersistentUpdate
 		rect.setColor(color);
 	}
 
-	public void update() 
+	public void update()
 	{
 
 	}

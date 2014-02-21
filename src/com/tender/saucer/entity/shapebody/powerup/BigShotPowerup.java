@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.shapebody.powerup;
 
 import org.andengine.entity.sprite.Sprite;
@@ -12,35 +13,35 @@ import com.tender.saucer.stuff.Textures;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
-
 
 public class BigShotPowerup extends Powerup
 {
-	public BigShotPowerup() 
+	public BigShotPowerup()
 	{
 		super();
-		
-		float x = (float)(Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
+
+		float x = (float) (Math.random() * (Constants.CAMERA_WIDTH - Powerup.DEFAULT_SIZE));
 		float y = -Powerup.DEFAULT_SIZE;
-		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.POWERUP_BIG_SHOT, 
-				Model.main.getVertexBufferObjectManager());	
+		shape = new Sprite(x, y, Powerup.DEFAULT_SIZE, Powerup.DEFAULT_SIZE, Textures.POWERUP_BIG_SHOT, Model.main
+				.getVertexBufferObjectManager());
 		shape.setColor(ColorScheme.foreground);
 
 		initBody();
 	}
 
 	@Override
-	public void apply() 
+	public void apply()
 	{
 		Shot.shotSize = Player.DEFAULT_WIDTH * .75f;
 		Shot.shotDamage = 3;
 	}
 
 	@Override
-	public void remove() 
+	public void remove()
 	{
 		Shot.shotSize = Shot.DEFAULT_SIZE;
 		Shot.shotDamage = 1;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/game_over_menu_title"
+        android:gravity="center"
+        android:textSize="28dp" />
+   	
+    <View android:layout_width="match_parent"
+        android:layout_height="10dp" 
+        android:visibility="invisible"/>
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/game_over_menu_current_score"
+        android:gravity="center"
+        android:textSize="24dp" 
+        android:textStyle="bold" />
+    
+    <View android:layout_width="match_parent"
+        android:layout_height="10dp" 
+        android:visibility="invisible"/>
+    
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/game_over_menu_best_score"
+        android:gravity="center"
+        android:textSize="16dp" />
+    
+    <View android:layout_width="match_parent"
+        android:layout_height="10dp" 
+        android:visibility="invisible"/>
+
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/game_over_menu_restart_button"
+        android:text="RESTART"
+        android:background="@drawable/game_over_menu_button"
+        android:textSize="16dp" />
+    
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/game_over_menu_main_menu_button"
+        android:text="MAIN MENU"
+        android:background="@drawable/game_over_menu_button"
+        android:textSize="16dp" />
+    
+</LinearLayout>

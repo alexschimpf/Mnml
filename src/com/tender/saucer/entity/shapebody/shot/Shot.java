@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.shapebody.shot;
 
 import org.andengine.entity.primitive.Rectangle;
@@ -19,85 +20,88 @@ import com.tender.saucer.stuff.Model;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
 public class Shot extends DynamicShapeBody
-{	
+{
 	public static final float DEFAULT_SIZE = 10;
 	public static final float DEFAULT_SPEED = -20;
-	
+
 	public static float shotDamage = 1;
 	public static float shotSize = DEFAULT_SIZE;
 	public static float shotSpeed = DEFAULT_SPEED;
-	
+
 	public static Shot buildShot()
-	{	
+	{
 		Shot shot = new Shot();
 		shot.body.setUserData(new BodyData(shot));
-		
+
 		Model.transients.add(shot);
-		
+
 		return shot;
-	}	
+	}
+
 	public static void init()
 	{
 		shotSize = DEFAULT_SIZE;
 		shotSpeed = DEFAULT_SPEED;
 		shotDamage = 1;
 	}
-	
+
 	public float damage = 1;
-	
+
 	private boolean active = true;
 
-	private Shot() 
-	{	
+	private Shot()
+	{
 		this.damage = Shot.shotDamage;
 		this.speed = Shot.shotSpeed;
 
 		float x = Model.player.shape.getX() + (Player.DEFAULT_WIDTH / 2) - (Shot.shotSize / 2);
-		float y = Model.player.shape.getY() - Shot.shotSize;		
+		float y = Model.player.shape.getY() - Shot.shotSize;
 		shape = new Rectangle(x, y, Shot.shotSize, Shot.shotSize, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
-		
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
 		fixDef.filter.categoryBits = Constants.SHOT_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SIDE_WALL_BITMASK;
-		
-		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);	
+
+		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
 		body.setBullet(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
-	
+
 	public void collide(ICollide other)
 	{
-		if(other instanceof PenaltyEnemy)
+		if (other instanceof PenaltyEnemy)
 		{
 			Model.player.applyPenalty();
 		}
-		else if(other instanceof Powerup)
-		{
-			Model.player.applyPowerup((Powerup)other);
-		}
-		
+		else
+			if (other instanceof Powerup)
+			{
+				Model.player.applyPowerup((Powerup) other);
+			}
+
 		active = false;
 	}
-	
+
 	@Override
 	public void setInMotion()
 	{
 		body.setLinearVelocity(0, speed);
 	}
-	
+
 	public boolean update()
 	{
-		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || !active)
+		if (shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || !active)
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 }

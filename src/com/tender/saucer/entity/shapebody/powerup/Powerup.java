@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.shapebody.powerup;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -16,59 +17,61 @@ import com.tender.saucer.wave.WaveMachine;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
 public abstract class Powerup extends TargetShapeBody
 {
 	public static final float DEFAULT_DURATION = 8000;
 	public static final float DEFAULT_SIZE = 50;
-	
+
 	public boolean overrides = true;
-	
+
 	protected boolean active = true;
-	
-	public Powerup() 
-	{	
-		speed = 5 + (float)(Math.random() * 5);
-		
+
+	public Powerup()
+	{
+		speed = 5 + (float) (Math.random() * 5);
+
 		float m = Math.random() < .5 ? -1 : 1;
-		tx = m * (float)(Math.random() * Constants.CAMERA_WIDTH * 2);
+		tx = m * (float) (Math.random() * Constants.CAMERA_WIDTH * 2);
 	}
 
 	public abstract void apply();
-	
-	public void collide(ICollide other) 
+
+	public void collide(ICollide other)
 	{
-		if(!(other instanceof SideWall))
+		if (!(other instanceof SideWall))
 		{
 			active = false;
 		}
 	}
-	
+
 	public void done()
 	{
 		WaveMachine.numPowerupsLeft--;
 		ParticleSystem.begin(this);
 		super.done();
 	}
-	
+
 	public abstract void remove();
 
 	public boolean update()
-	{	
+	{
 		return !active;
 	}
-	
+
 	protected void initBody()
 	{
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.ENEMY_BITMASK;
-		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK | Constants.WALL_BITMASK;
-		
+		fixDef.filter.maskBits = Constants.PLAYER_BITMASK | Constants.SHOT_BITMASK | Constants.SIDE_WALL_BITMASK
+				| Constants.WALL_BITMASK;
+
 		body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.DynamicBody, fixDef);
-		body.setFixedRotation(true);	
+		body.setFixedRotation(true);
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
 }

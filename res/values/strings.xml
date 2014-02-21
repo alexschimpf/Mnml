@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UntitledGame</string>
+    <color name="button_pressed">#FFFFFF</color>
 </resources>

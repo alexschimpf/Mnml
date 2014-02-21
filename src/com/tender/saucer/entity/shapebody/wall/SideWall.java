@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.shapebody.wall;
 
 import org.andengine.entity.primitive.Rectangle;
@@ -16,28 +17,29 @@ import com.tender.saucer.stuff.Model;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
 public final class SideWall extends ShapeBody implements ICollide
 {
-	public SideWall(boolean left) 
+	public SideWall(boolean left)
 	{
-		float x = left ? -5 : Constants.CAMERA_WIDTH;				
+		float x = left ? -5 : Constants.CAMERA_WIDTH;
 		shape = new Rectangle(x, 0, 5, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setVisible(false);
-		
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, .5f, 0);
 		fixDef.filter.categoryBits = Constants.SIDE_WALL_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SHOT_BITMASK;
-		
-		Body body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);	
-		body.setFixedRotation(true);	
+
+		Body body = PhysicsFactory.createBoxBody(Model.world, shape, BodyType.KinematicBody, fixDef);
+		body.setFixedRotation(true);
 		body.setUserData(new BodyData(this));
-		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true)); 
+		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
-	
+
 	public void collide(ICollide other)
 	{
 	}

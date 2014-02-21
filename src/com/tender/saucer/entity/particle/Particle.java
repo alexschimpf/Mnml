@@ -1,3 +1,4 @@
+
 package com.tender.saucer.entity.particle;
 
 import java.util.Calendar;
@@ -14,15 +15,16 @@ import com.tender.saucer.update.ITransientUpdate;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
 public class Particle extends Entity implements ITransientUpdate
 {
 	public static final int DEFAULT_MAX_DURATION = 2000;
 	public static final float DEFAULT_SIZE = 5;
-	
+
 	private float duration;
 	private Rectangle rect;
 	private long startTime;
@@ -30,31 +32,30 @@ public class Particle extends Entity implements ITransientUpdate
 
 	public Particle()
 	{
-		
 	}
-	
-	public Particle(ShapeBody shapeBody)
-	{
-		this(shapeBody, Particle.DEFAULT_MAX_DURATION);	
-	}
-	
-	public Particle(ShapeBody shapeBody, float maxDuration)
+
+	public Particle(ShapeBody shapeBody, Color color, float maxDuration)
 	{
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
-		Color color = shape.getColor();
-		
-		rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main.getVertexBufferObjectManager()); 
+
+		if (color == null)
+		{
+			color = shape.getColor();
+		}
+
+		rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main
+				.getVertexBufferObjectManager());
 		rect.setColor(color);
-		
+
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
-		vx = dirx * (float)Math.max(1, Math.random() * 2);
-		vy = diry * (float)Math.max(1, Math.random() * 2);
-		duration = (float)Math.max(500, Math.random() * maxDuration);
-		
-		startTime = Calendar.getInstance().getTimeInMillis();	
+		vx = dirx * (float) Math.max(1, Math.random() * 2);
+		vy = diry * (float) Math.max(1, Math.random() * 2);
+		duration = (float) Math.max(500, Math.random() * maxDuration);
+
+		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 
 	@Override
@@ -62,61 +63,60 @@ public class Particle extends Entity implements ITransientUpdate
 	{
 		Model.scene.attachChild(rect);
 	}
-	
-	public void done() 
+
+	public void done()
 	{
 		Model.scene.detachChild(rect);
 		ParticlePool.recycle(this);
 	}
 
-	public Particle set(ShapeBody shapeBody)
-	{
-		set(shapeBody, Particle.DEFAULT_MAX_DURATION);
-		return this;
-	}
-
-	public Particle set(ShapeBody shapeBody, float maxDuration)
+	public Particle set(ShapeBody shapeBody, Color color, float maxDuration)
 	{
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
-		Color color = shape.getColor();
-		
-		if(rect == null)
+
+		if (color == null)
 		{
-			rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main.getVertexBufferObjectManager()); 
+			color = shape.getColor();
+		}
+
+		if (rect == null)
+		{
+			rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main
+					.getVertexBufferObjectManager());
 		}
 		else
-		{		
+		{
 			rect.setX(x);
 			rect.setY(y);
 		}
 		rect.setColor(color);
-		
+
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
-		vx = dirx * (float)Math.max(1, Math.random() * 2);
-		vy = diry * (float)Math.max(1, Math.random() * 2);
-		duration = (float)Math.max(500, Math.random() * maxDuration);
-		
+		vx = dirx * (float) Math.max(1, Math.random() * 2);
+		vy = diry * (float) Math.max(1, Math.random() * 2);
+		duration = (float) Math.max(500, Math.random() * maxDuration);
+
 		startTime = Calendar.getInstance().getTimeInMillis();
-		
+
 		return this;
 	}
-	
-	public boolean update() 
+
+	public boolean update()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - startTime;
-		if(timeElapsed > duration)
+		if (timeElapsed > duration)
 		{
 			return true;
 		}
-		
+
 		rect.setX(rect.getX() + vx);
-		rect.setY(rect.getY() + vy);		
+		rect.setY(rect.getY() + vy);
 		rect.setAlpha(Math.max(0, rect.getAlpha() - .009f));
-		
+
 		return false;
 	}
 }

@@ -16,6 +16,7 @@ TODO Tuning/Bugs
 - more particle effects when BombPowerup is hit
 - fix crash on game over
 - optimize updateTransients() in UpdateHandler
+- fix how leaving activity / pausing fucks up durations/cooldowns/etc.
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -35,7 +36,6 @@ TODO Features
 - effects in background
 - indicate when powerup is active
 	- and when it is about to run out
-- make health bar more intuitive
 	
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -47,8 +47,6 @@ TODO Architecture/Code
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 [General] 
-	- constructors, static, abstract, public, protected, private
 	- go through all member variables and evaluate access levels
-	- different types of access modifiers should be grouped and separated from the others
 	
 	

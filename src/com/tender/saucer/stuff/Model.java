@@ -1,3 +1,4 @@
+
 package com.tender.saucer.stuff;
 
 import java.util.LinkedList;
@@ -20,11 +21,12 @@ import com.tender.saucer.update.ITransientUpdate;
 /**
  * 
  * Copyright 2014
+ * 
  * @author Alex Schimpf
- *
+ * 
  */
 
-public final class Model 
+public final class Model
 {
 	public static Background background;
 	public static ZoomCamera camera;
@@ -42,7 +44,7 @@ public final class Model
 	public static LinkedList<ITransientUpdate> transients;
 	public static Wall wall;
 	public static Font waveIntermissionFont;
-	public static Text waveText;	
+	public static Text waveText;
 	public static PhysicsWorld world;
 
 	public static void init()
@@ -50,8 +52,8 @@ public final class Model
 		transients = new LinkedList<ITransientUpdate>();
 		state = GameState.GAME_PAUSED;
 	}
-	
-	private Model() 
+
+	private Model()
 	{
 	}
 }
