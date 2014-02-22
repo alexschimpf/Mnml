@@ -28,28 +28,28 @@ public final class UpdateHandler implements IUpdateHandler
 	{
 		switch (Model.state)
 		{
-		case WAVE_MACHINE_RUNNING:
-			WaveMachine.update();
-			updateHUDText();
-			break;
-		case WAVE_RECESS_RUNNING:
-			WaveRecess.update();
-			break;
-		case GAME_PAUSED:
-			return;
-		case GAME_OVER:
-			if (!skip)
-			{
-				skip = true;
-				Model.main.runOnUiThread(new Runnable()
+			case WAVE_MACHINE_RUNNING:
+				WaveMachine.update();
+				updateHUDText();
+				break;
+			case WAVE_RECESS_RUNNING:
+				WaveRecess.update();
+				break;
+			case GAME_PAUSED:
+				return;
+			case GAME_OVER:
+				if (!skip)
 				{
-					public void run()
+					skip = true;
+					Model.main.runOnUiThread(new Runnable()
 					{
-						Model.main.showGameOverDialog();
-					}
-				});
-			}
-			break;
+						public void run()
+						{
+							Model.main.showGameOverDialog();
+						}
+					});
+				}
+				break;
 		}
 		Model.player.update();
 		Model.background.update();

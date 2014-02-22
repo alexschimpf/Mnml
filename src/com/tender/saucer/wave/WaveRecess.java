@@ -26,6 +26,7 @@ public final class WaveRecess implements IOnResumeGameListener
 				"One" }, new float[] { 2500, 500, 750, 750, 750 });
 		instance.startTime = Calendar.getInstance().getTimeInMillis();
 	}
+
 	public static void init()
 	{
 		instance = new WaveRecess();

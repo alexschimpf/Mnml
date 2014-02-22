@@ -70,13 +70,12 @@ public class Shot extends DynamicShapeBody
 	{
 		if (other instanceof PenaltyEnemy)
 		{
-			Model.player.applyPenalty();
+			Model.player.collide(other);
 		}
-		else
-			if (other instanceof Powerup)
-			{
-				Model.player.applyPowerup((Powerup)other);
-			}
+		else if (other instanceof Powerup)
+		{
+			Model.player.collide(other);
+		}
 		active = false;
 	}
 

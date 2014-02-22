@@ -26,10 +26,8 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.math.Vector2;
+import com.tender.saucer.achievements.Achievements;
 import com.tender.saucer.collision.CollisionHandler;
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.color.ColorUtilities;
@@ -92,6 +91,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	public EngineOptions onCreateEngineOptions()
 	{
 		ColorScheme.generateColors();
+		Achievements.init();
 		Model.init();
 		Shot.init();
 		WaveMachine.init();
@@ -133,7 +133,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	public void showGameOverDialog()
 	{
 		long currScore = Model.player.score;
-		long bestScore = updateBestScore(currScore);
+		long bestScore = Achievements.updateBestScore(currScore);
 		int backgroundColor = ColorScheme.foreground.getARGBPackedInt();
 		int foregroundColor = ColorScheme.background.getARGBPackedInt();
 		int textColor = ColorScheme.text.getARGBPackedInt() == Color.WHITE_ARGB_PACKED_INT ? Color.BLACK_ARGB_PACKED_INT
@@ -278,6 +278,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		addOnResumeGameListener(Model.player);
 		addOnResumeGameListener(WaveMachine.instance);
 		addOnResumeGameListener(WaveRecess.instance);
+		Model.player.addOnPlayerPenaltyListener(Achievements.instance);
+		Model.player.addOnPlayerPowerupListener(Achievements.instance);
 		WaveMachine.beginNextWave();
 	}
 
@@ -315,18 +317,5 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 			}
 		});
 		alert.show();
-	}
-
-	private long updateBestScore(long score)
-	{
-		SharedPreferences prefs = getSharedPreferences("com.tender.saucer.untitledgame", Context.MODE_PRIVATE);
-		long oldBestScore = prefs.getLong("bestScore", 0);
-		SharedPreferences.Editor editor = prefs.edit();
-		if (score > oldBestScore)
-		{
-			editor.putLong("bestScore", score);
-		}
-		editor.commit();
-		return oldBestScore;
 	}
 }

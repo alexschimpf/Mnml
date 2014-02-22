@@ -2,6 +2,7 @@
 package com.tender.saucer.entity.shapebody.player;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -45,6 +46,8 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	private long lastPowerupTime = 0;
 	private long lastShotTime = 0;
 	private Powerup powerup = null;
+	private LinkedList<IOnPlayerPenaltyListener> onPlayerPenaltyListeners = new LinkedList<IOnPlayerPenaltyListener>();
+	private LinkedList<IOnPlayerPowerupListener> onPlayerPowerupListeners = new LinkedList<IOnPlayerPowerupListener>();
 
 	public Player()
 	{
@@ -60,6 +63,16 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		body.setFixedRotation(true);
 		body.setUserData(new BodyData(this));
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
+	}
+
+	public void addOnPlayerPenaltyListener(IOnPlayerPenaltyListener listener)
+	{
+		onPlayerPenaltyListeners.add(listener);
+	}
+
+	public void addOnPlayerPowerupListener(IOnPlayerPowerupListener listener)
+	{
+		onPlayerPowerupListeners.add(listener);
 	}
 
 	public void applyPenalty()
@@ -95,18 +108,18 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		if (other instanceof PenaltyEnemy)
 		{
 			applyPenalty();
+			notifyOnPlayerPenaltyListeners();
 		}
-		else
-			if (other instanceof Enemy)
-			{
-				health--;
-				Model.background.flash();
-			}
-			else
-				if (other instanceof Powerup)
-				{
-					applyPowerup((Powerup)other);
-				}
+		else if (other instanceof Enemy)
+		{
+			health--;
+			Model.background.flash();
+		}
+		else if (other instanceof Powerup)
+		{
+			applyPowerup((Powerup)other);
+			notifyOnPlayerPowerupListeners((Powerup)other);
+		}
 	}
 
 	public void move(float x)
@@ -119,6 +132,16 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		lastPenaltyTime += awayDuration;
 		lastPowerupTime += awayDuration;
 		lastShotTime += awayDuration;
+	}
+
+	public void removeOnPlayerPenaltyListener(IOnPlayerPenaltyListener listener)
+	{
+		onPlayerPenaltyListeners.remove(listener);
+	}
+
+	public void removeOnPlayerPowerupListener(IOnPlayerPowerupListener listener)
+	{
+		onPlayerPowerupListeners.remove(listener);
 	}
 
 	public void tryShoot()
@@ -159,6 +182,22 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 				shootCooldown = Player.DEFAULT_SHOOT_COOLDOWN;
 				Shot.shotSpeed = Shot.DEFAULT_SPEED;
 			}
+		}
+	}
+
+	private void notifyOnPlayerPenaltyListeners()
+	{
+		for (IOnPlayerPenaltyListener listener : onPlayerPenaltyListeners)
+		{
+			listener.onPlayerPenalty();
+		}
+	}
+
+	private void notifyOnPlayerPowerupListeners(Powerup powerup)
+	{
+		for (IOnPlayerPowerupListener listener : onPlayerPowerupListeners)
+		{
+			listener.onPlayerPowerup(powerup);
 		}
 	}
 

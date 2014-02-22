@@ -44,8 +44,7 @@ public final class Wall extends ShapeBody implements ICollide
 	{
 		if ((other instanceof Enemy) && !(other instanceof PenaltyEnemy))
 		{
-			Model.player.health--;
-			Model.background.flash();
+			Model.player.collide(other);
 		}
 	}
 }

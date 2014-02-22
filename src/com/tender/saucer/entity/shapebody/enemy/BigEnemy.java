@@ -44,20 +44,19 @@ public class BigEnemy extends BasicEnemy
 		{
 			health = 0;
 		}
-		else
-			if (other instanceof Wall)
+		else if (other instanceof Wall)
+		{
+			health = 0;
+		}
+		else if (other instanceof Shot)
+		{
+			health -= ((Shot)other).damage;
+			notifyOnEnemyShotListeners(health);
+			if (health > 0)
 			{
-				health = 0;
+				shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));
 			}
-			else
-				if (other instanceof Shot)
-				{
-					health -= ((Shot)other).damage;
-					if (health > 0)
-					{
-						shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));
-					}
-				}
+		}
 	}
 
 	@Override

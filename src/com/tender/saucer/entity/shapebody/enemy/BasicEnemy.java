@@ -54,15 +54,14 @@ public class BasicEnemy extends Enemy
 		{
 			health = 0;
 		}
-		else
-			if (other instanceof Wall)
-			{
-				health = 0;
-			}
-			else
-				if (other instanceof Shot)
-				{
-					health -= ((Shot)other).damage;
-				}
+		else if (other instanceof Wall)
+		{
+			health = 0;
+		}
+		else if (other instanceof Shot)
+		{
+			health -= ((Shot)other).damage;
+			notifyOnEnemyShotListeners(health);
+		}
 	}
 }

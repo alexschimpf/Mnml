@@ -39,17 +39,16 @@ public class TextSequence
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
 				}
+				else if (ts.currFrame == ts.sequence.length)
+				{
+					Model.hud.detachChild(ts.text);
+				}
 				else
-					if (ts.currFrame == ts.sequence.length)
-					{
-						Model.hud.detachChild(ts.text);
-					}
-					else
-					{
-						ts.setAndAlignText(ts.sequence[ts.currFrame]);
-						timerHandler.setTimerSeconds(ts.durations[ts.currFrame] / 1000);
-						timerHandler.reset();
-					}
+				{
+					ts.setAndAlignText(ts.sequence[ts.currFrame]);
+					timerHandler.setTimerSeconds(ts.durations[ts.currFrame] / 1000);
+					timerHandler.reset();
+				}
 			}
 		});
 		Model.scene.registerUpdateHandler(timer);
