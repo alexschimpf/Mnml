@@ -28,6 +28,7 @@ public final class SideWall extends ShapeBody implements ICollide
 		float x = left ? -5 : Constants.CAMERA_WIDTH;
 		shape = new Rectangle(x, 0, 5, Constants.CAMERA_HEIGHT, Model.main.getVertexBufferObjectManager());
 		shape.setVisible(false);
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, .5f, 0);
 		fixDef.filter.categoryBits = Constants.SIDE_WALL_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SHOT_BITMASK;

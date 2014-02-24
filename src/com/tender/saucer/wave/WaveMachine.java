@@ -31,6 +31,7 @@ public final class WaveMachine implements IOnResumeGameListener
 	public static void beginNextWave()
 	{
 		ColorScheme.applyNewScheme();
+
 		instance.level++;
 		initCurrEnemyTypes();
 		instance.lastEnemyBuildTime = 0;
@@ -39,6 +40,7 @@ public final class WaveMachine implements IOnResumeGameListener
 		instance.enemyBuildCooldown = Math.max(700, DEFAULT_ENEMY_BUILD_COOLDOWN - (instance.level * 200));
 		instance.powerupBuildCooldown = Math.max(15000, DEFAULT_POWERUP_BUILD_COOLDOWN - (instance.level * 1000));
 		instance.lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
+
 		Model.state = GameState.WAVE_MACHINE_RUNNING;
 	}
 
@@ -62,6 +64,7 @@ public final class WaveMachine implements IOnResumeGameListener
 				enemy.attachToScene();
 				enemy.setInMotion();
 			}
+
 			Powerup powerup = tryBuildRandomPowerup();
 			if (powerup != null)
 			{
@@ -86,9 +89,12 @@ public final class WaveMachine implements IOnResumeGameListener
 				enemy = (Enemy)instance.enemyTypes.get(choice).newInstance();
 			}
 			enemy.body.setUserData(new BodyData(enemy));
+			Model.transients.add(enemy);
+
 			enemy.addOnEnemyShotListener(Achievements.instance);
 			enemy.addOnEnemyMissedListener(Achievements.instance);
-			Model.transients.add(enemy);
+			instance.notifyOnEnemyBuildListeners(enemy);
+
 			return enemy;
 		}
 		catch (Exception e)
@@ -104,7 +110,11 @@ public final class WaveMachine implements IOnResumeGameListener
 			int choice = (int)(Math.random() * Constants.POWERUP_CLASSES.length);
 			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
 			powerup.body.setUserData(new BodyData(powerup));
+			powerup.addOnPowerupMissedListener(Achievements.instance);
 			Model.transients.add(powerup);
+
+			instance.notifyOnPowerupBuildListeners(powerup);
+
 			return powerup;
 		}
 		catch (Exception e)
@@ -116,6 +126,7 @@ public final class WaveMachine implements IOnResumeGameListener
 	private static void initCurrEnemyTypes()
 	{
 		instance.enemyTypes.clear();
+
 		int numEnemyTypes = Constants.ENEMY_CLASSES.length;
 		for (int i = 0; i < numEnemyTypes; i++)
 		{
@@ -134,6 +145,7 @@ public final class WaveMachine implements IOnResumeGameListener
 			instance.lastEnemyBuildTime = currTime;
 			return buildRandomEnemy();
 		}
+
 		return null;
 	}
 
@@ -147,6 +159,7 @@ public final class WaveMachine implements IOnResumeGameListener
 			instance.lastPowerupBuildTime = currTime;
 			return buildRandomPowerup();
 		}
+
 		return null;
 	}
 
@@ -159,14 +172,52 @@ public final class WaveMachine implements IOnResumeGameListener
 	private long lastPowerupBuildTime = 0;
 	private int numEnemyBuildsLeft = 10;
 	private float powerupBuildCooldown = DEFAULT_POWERUP_BUILD_COOLDOWN;
+	private LinkedList<IOnEnemyBuildListener> onEnemyBuildListeners = new LinkedList<IOnEnemyBuildListener>();
+	private LinkedList<IOnPowerupBuildListener> onPowerupBuildListeners = new LinkedList<IOnPowerupBuildListener>();
 
 	private WaveMachine()
 	{
+	}
+
+	public void addOnEnemyBuildListener(IOnEnemyBuildListener listener)
+	{
+		onEnemyBuildListeners.add(listener);
+	}
+
+	public void addOnPowerupBuildListener(IOnPowerupBuildListener listener)
+	{
+		onPowerupBuildListeners.add(listener);
 	}
 
 	public void onResumeGame(long awayDuration)
 	{
 		lastEnemyBuildTime += awayDuration;
 		lastPowerupBuildTime += awayDuration;
+	}
+
+	public void removeOnEnemyBuildListener(IOnEnemyBuildListener listener)
+	{
+		onEnemyBuildListeners.remove(listener);
+	}
+
+	public void removeOnPowerupBuildListener(IOnPowerupBuildListener listener)
+	{
+		onPowerupBuildListeners.remove(listener);
+	}
+
+	private void notifyOnEnemyBuildListeners(Enemy enemy)
+	{
+		for (IOnEnemyBuildListener listener : onEnemyBuildListeners)
+		{
+			listener.onEnemyBuild(enemy);
+		}
+	}
+
+	private void notifyOnPowerupBuildListeners(Powerup powerup)
+	{
+		for (IOnPowerupBuildListener listener : onPowerupBuildListeners)
+		{
+			listener.onPowerupBuild(powerup);
+		}
 	}
 }

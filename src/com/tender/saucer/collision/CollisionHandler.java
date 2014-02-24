@@ -23,6 +23,7 @@ public final class CollisionHandler implements ContactListener
 		Fixture fixB = contact.getFixtureB();
 		Body bodyA = fixA.getBody();
 		Body bodyB = fixB.getBody();
+
 		try
 		{
 			ICollide ownerA = ((BodyData)bodyA.getUserData()).owner;
@@ -32,7 +33,7 @@ public final class CollisionHandler implements ContactListener
 		}
 		catch (NullPointerException e)
 		{
-			// TODO
+			// TODO: How could this ever happen? Figure it out.
 		}
 	}
 

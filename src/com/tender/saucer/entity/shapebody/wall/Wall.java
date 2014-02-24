@@ -31,6 +31,7 @@ public final class Wall extends ShapeBody implements ICollide
 		shape = new Rectangle(0, y, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT, Model.main
 				.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.WALL_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK;

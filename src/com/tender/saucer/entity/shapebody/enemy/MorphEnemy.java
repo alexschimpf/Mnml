@@ -19,6 +19,7 @@ public class MorphEnemy extends BasicEnemy
 	public MorphEnemy()
 	{
 		super();
+
 		origSize = shape.getWidth();
 		sineArg = 0;
 		dSize = origSize / 2;
@@ -28,6 +29,7 @@ public class MorphEnemy extends BasicEnemy
 	public boolean update()
 	{
 		sineArg += .05;
+
 		if (health <= 0)
 		{
 			return true;
@@ -37,6 +39,7 @@ public class MorphEnemy extends BasicEnemy
 			float size = origSize + (FloatMath.sin(sineArg) * dSize);
 			shape.setSize(size, size);
 		}
+
 		return false;
 	}
 }

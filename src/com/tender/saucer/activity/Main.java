@@ -96,6 +96,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Shot.init();
 		WaveMachine.init();
 		WaveRecess.init();
+
 		Model.main = this;
 		Model.camera = new ZoomCamera(0, 0, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
 		final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
@@ -103,7 +104,25 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 		engineOptions.getAudioOptions().setNeedsSound(true);
 		engineOptions.getAudioOptions().setNeedsMusic(true);
+
 		return engineOptions;
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+
+		awayStartTime = Calendar.getInstance().getTimeInMillis();
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+
+		long awayDuration = Calendar.getInstance().getTimeInMillis() - awayStartTime;
+		notifyOnResumeGameListeners(awayDuration);
 	}
 
 	public boolean onSceneTouchEvent(Scene scene, TouchEvent event)
@@ -112,6 +131,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{
 			return true;
 		}
+
 		float x = event.getX();
 		float y = event.getY();
 		if (y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT)
@@ -122,6 +142,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		{
 			Model.player.tryShoot();
 		}
+
 		return true;
 	}
 
@@ -138,22 +159,36 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		int foregroundColor = ColorScheme.background.getARGBPackedInt();
 		int textColor = ColorScheme.text.getARGBPackedInt() == Color.WHITE_ARGB_PACKED_INT ? Color.BLACK_ARGB_PACKED_INT
 				: Color.WHITE_ARGB_PACKED_INT;
+
 		Typeface typeface = Typeface.createFromAsset(getAssets(), "Pixel Berry.TTF");
 		LinearLayout menuLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.game_over_menu, null);
 		menuLayout.setBackgroundColor(backgroundColor);
-		TextView titleView = (TextView)menuLayout.getChildAt(0);
+
+		TextView titleView = (TextView)menuLayout.findViewById(R.id.game_over_menu_title);
 		titleView.setText(Constants.GAME_OVER_MESSAGES[(int)(Math.random() * Constants.GAME_OVER_MESSAGES.length)]);
 		titleView.setTextColor(foregroundColor);
 		titleView.setTypeface(typeface);
-		TextView currScoreView = (TextView)menuLayout.getChildAt(2);
+
+		for (int i = 0; i < menuLayout.getChildCount(); i++)
+		{
+			View childView = menuLayout.getChildAt(i);
+			if (childView.getTag() != null && childView.getTag().equals("game_over_menu_divider"))
+			{
+				childView.setBackgroundColor(textColor);
+			}
+		}
+
+		TextView currScoreView = (TextView)menuLayout.findViewById(R.id.game_over_menu_current_score);
 		currScoreView.setText("- " + currScore + " -");
 		currScoreView.setTextColor(textColor);
 		currScoreView.setTypeface(typeface);
-		TextView bestScoreView = (TextView)menuLayout.getChildAt(4);
+
+		TextView bestScoreView = (TextView)menuLayout.findViewById(R.id.game_over_menu_best_score);
 		bestScoreView.setText("PREVIOUS BEST:\n" + bestScore);
 		bestScoreView.setTextColor(textColor);
 		bestScoreView.setTypeface(typeface);
-		Button restartButton = (Button)menuLayout.getChildAt(6);
+
+		Button restartButton = (Button)menuLayout.findViewById(R.id.game_over_menu_restart_button);
 		restartButton.setTypeface(typeface);
 		restartButton.setTextColor(foregroundColor);
 		restartButton.setOnClickListener(new OnClickListener()
@@ -163,7 +198,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 				restart();
 			}
 		});
-		Button mainMenuButton = (Button)menuLayout.getChildAt(7);
+
+		Button mainMenuButton = (Button)menuLayout.findViewById(R.id.game_over_menu_main_menu_button);
 		mainMenuButton.setTypeface(typeface);
 		mainMenuButton.setTextColor(foregroundColor);
 		mainMenuButton.setOnClickListener(new OnClickListener()
@@ -173,6 +209,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 				Model.main.finish();
 			}
 		});
+
 		final AlertDialog.Builder alert = new AlertDialog.Builder(Model.main);
 		alert.setView(menuLayout);
 		alert.show();
@@ -182,14 +219,17 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	protected void onCreateResources()
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+
 		BitmapTextureAtlas fontTexture1 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		Model.hudFont = FontFactory.createFromAsset(getFontManager(), fontTexture1, getAssets(), "Pixel Berry.TTF",
 				Constants.HUD_FONT_SIZE, false, android.graphics.Color.BLACK);
 		Model.hudFont.load();
+
 		BitmapTextureAtlas fontTexture2 = new BitmapTextureAtlas(getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		Model.waveIntermissionFont = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(),
 				"Pixel Berry.TTF", Constants.WAVE_INTERMISSION_FONT_SIZE, false, android.graphics.Color.WHITE);
 		Model.waveIntermissionFont.load();
+
 		BuildableBitmapTextureAtlas mainAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 1024, 1024,
 				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		Textures.POWERUP_HEALTH = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this,
@@ -216,11 +256,14 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.scene = new Scene();
 		Model.scene.setOnSceneTouchListener(this);
 		Model.scene.registerUpdateHandler(new UpdateHandler());
+
 		Model.world = new PhysicsWorld(new Vector2(0, 0), false);
 		Model.world.setContactListener(new CollisionHandler());
 		Model.scene.registerUpdateHandler(Model.world);
+
 		Model.background = new Background();
 		Model.background.attachToScene();
+
 		Model.hud = new HUD();
 		Model.hudRect = new Rectangle(0, 0, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT,
 				getVertexBufferObjectManager());
@@ -237,6 +280,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		attachLifeBarBorder();
 		Model.hud.attachChild(Model.scoreText);
 		Model.hud.attachChild(Model.waveText);
+
 		Model.player = new Player();
 		Model.player.attachToScene();
 		Model.wall = new Wall();
@@ -246,7 +290,9 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.oobLeft.attachToScene();
 		Model.oobRight.attachToScene();
 		Model.camera.setHUD(Model.hud);
+
 		beginGame();
+
 		return Model.scene;
 	}
 
@@ -256,16 +302,21 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		float lifeBarY = Model.lifeBar.getY();
 		float lifeBarWidth = Model.lifeBar.getWidth();
 		float lifeBarHeight = Model.lifeBar.getHeight();
+
 		Rectangle top = new Rectangle(lifeBarX, lifeBarY - 2, lifeBarWidth, 2, getVertexBufferObjectManager());
 		top.setColor(Color.BLACK);
+
 		Rectangle bottom = new Rectangle(lifeBarX, lifeBarY + lifeBarHeight, lifeBarWidth, 2,
 				getVertexBufferObjectManager());
 		bottom.setColor(Color.BLACK);
+
 		Rectangle left = new Rectangle(lifeBarX - 2, lifeBarY, 2, lifeBarHeight, getVertexBufferObjectManager());
 		left.setColor(Color.BLACK);
+
 		Rectangle right = new Rectangle(lifeBarX + lifeBarWidth, lifeBarY, 2, lifeBarHeight,
 				getVertexBufferObjectManager());
 		right.setColor(Color.BLACK);
+
 		Model.hud.attachChild(top);
 		Model.hud.attachChild(bottom);
 		Model.hud.attachChild(left);
@@ -274,12 +325,15 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 	private void beginGame()
 	{
-		Model.state = GameState.WAVE_MACHINE_RUNNING;
 		addOnResumeGameListener(Model.player);
 		addOnResumeGameListener(WaveMachine.instance);
 		addOnResumeGameListener(WaveRecess.instance);
 		Model.player.addOnPlayerPenaltyListener(Achievements.instance);
 		Model.player.addOnPlayerPowerupListener(Achievements.instance);
+		WaveMachine.instance.addOnEnemyBuildListener(Achievements.instance);
+		WaveMachine.instance.addOnPowerupBuildListener(Achievements.instance);
+
+		Model.state = GameState.WAVE_MACHINE_RUNNING;
 		WaveMachine.beginNextWave();
 	}
 
@@ -295,6 +349,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	{
 		Model.scene.clearUpdateHandlers();
 		Model.world.clearPhysicsConnectors();
+
 		Intent intent = new Intent(Main.this, Main.class);
 		overridePendingTransition(0, 0);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -303,6 +358,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		startActivity(intent);
 	}
 
+	// TODO: This is crappy and buggy. Fix it.
 	private void showPausedDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);

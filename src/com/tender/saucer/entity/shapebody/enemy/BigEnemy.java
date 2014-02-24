@@ -51,7 +51,7 @@ public class BigEnemy extends BasicEnemy
 		else if (other instanceof Shot)
 		{
 			health -= ((Shot)other).damage;
-			notifyOnEnemyShotListeners(health);
+			notifyOnEnemyShotListeners(this);
 			if (health > 0)
 			{
 				shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));

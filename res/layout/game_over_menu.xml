@@ -11,20 +11,20 @@
         android:textSize="28dp" />
    	
     <View android:layout_width="match_parent"
-        android:layout_height="10dp" 
-        android:visibility="invisible"/>
+        android:layout_height="1dp"
+        android:tag="game_over_menu_divider"
+        android:paddingTop="5dp" 
+        android:paddingBottom="5dp" 
+        android:background="@android:color/black" />
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content" 
+        android:paddingBottom="10dp"
         android:id="@+id/game_over_menu_current_score"
         android:gravity="center"
         android:textSize="24dp" 
         android:textStyle="bold" />
-    
-    <View android:layout_width="match_parent"
-        android:layout_height="10dp" 
-        android:visibility="invisible"/>
-    
+        
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/game_over_menu_best_score"
@@ -32,15 +32,25 @@
         android:textSize="16dp" />
     
     <View android:layout_width="match_parent"
-        android:layout_height="10dp" 
-        android:visibility="invisible"/>
-
+        android:layout_height="1dp"
+        android:tag="game_over_menu_divider" 
+        android:paddingTop="5dp" 
+        android:paddingBottom="5dp" 
+        android:background="@android:color/black" />
+    
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/game_over_menu_restart_button"
         android:text="RESTART"
         android:background="@drawable/game_over_menu_button"
         android:textSize="16dp" />
+    
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:tag="game_over_menu_divider" 
+        android:paddingTop="5dp" 
+        android:paddingBottom="5dp" 
+        android:background="@android:color/black" />
     
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content" 

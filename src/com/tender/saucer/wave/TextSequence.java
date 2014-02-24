@@ -27,14 +27,17 @@ public class TextSequence
 		{
 			totalDuration += duration;
 		}
+
 		final TextSequence ts = new TextSequence(font, sequence, durations);
 		ts.setAndAlignText(sequence[ts.currFrame]);
 		Model.hud.attachChild(ts.text);
+
 		TimerHandler timer = new TimerHandler(durations[ts.currFrame] / 1000, new ITimerCallback()
 		{
 			public void onTimePassed(TimerHandler timerHandler)
 			{
 				ts.currFrame++;
+
 				if (ts.currFrame > ts.sequence.length)
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
@@ -52,6 +55,7 @@ public class TextSequence
 			}
 		});
 		Model.scene.registerUpdateHandler(timer);
+
 		return totalDuration;
 	}
 
@@ -69,6 +73,7 @@ public class TextSequence
 		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
 		text.setHorizontalAlign(HorizontalAlign.CENTER);
 		text.setColor(ColorScheme.text);
+
 		this.sequence = sequence;
 		this.durations = durations;
 	}

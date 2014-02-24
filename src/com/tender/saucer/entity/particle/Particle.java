@@ -38,17 +38,21 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
+
 		if (color == null)
 		{
 			color = shape.getColor();
 		}
+
 		rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main
 				.getVertexBufferObjectManager());
 		rect.setColor(color);
+
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
 		vx = dirx * (float)Math.max(1, Math.random() * 2);
 		vy = diry * (float)Math.max(1, Math.random() * 2);
+
 		duration = (float)Math.max(500, Math.random() * maxDuration);
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
@@ -75,10 +79,12 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 		IAreaShape shape = shapeBody.shape;
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
+
 		if (color == null)
 		{
 			color = shape.getColor();
 		}
+
 		if (rect == null)
 		{
 			rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main
@@ -90,12 +96,15 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 			rect.setY(y);
 		}
 		rect.setColor(color);
+
 		int dirx = Math.random() < .5 ? -1 : 1;
 		int diry = Math.random() < .5 ? -1 : 1;
 		vx = dirx * (float)Math.max(1, Math.random() * 2);
 		vy = diry * (float)Math.max(1, Math.random() * 2);
+
 		duration = (float)Math.max(500, Math.random() * maxDuration);
 		startTime = Calendar.getInstance().getTimeInMillis();
+
 		return this;
 	}
 
@@ -107,9 +116,11 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 		{
 			return true;
 		}
+
 		rect.setX(rect.getX() + vx);
 		rect.setY(rect.getY() + vy);
 		rect.setAlpha(Math.max(0, rect.getAlpha() - .009f));
+
 		return false;
 	}
 }

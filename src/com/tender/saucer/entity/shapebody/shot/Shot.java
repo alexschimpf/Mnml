@@ -37,6 +37,7 @@ public class Shot extends DynamicShapeBody
 		Shot shot = new Shot();
 		shot.body.setUserData(new BodyData(shot));
 		Model.transients.add(shot);
+
 		return shot;
 	}
 
@@ -52,12 +53,14 @@ public class Shot extends DynamicShapeBody
 
 	private Shot()
 	{
-		this.damage = Shot.shotDamage;
-		this.speed = Shot.shotSpeed;
+		damage = Shot.shotDamage;
+		speed = Shot.shotSpeed;
+
 		float x = Model.player.shape.getX() + (Player.DEFAULT_WIDTH / 2) - (Shot.shotSize / 2);
 		float y = Model.player.shape.getY() - Shot.shotSize;
 		shape = new Rectangle(x, y, Shot.shotSize, Shot.shotSize, Model.main.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0, true);
 		fixDef.filter.categoryBits = Constants.SHOT_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK | Constants.SIDE_WALL_BITMASK;
@@ -76,6 +79,7 @@ public class Shot extends DynamicShapeBody
 		{
 			Model.player.collide(other);
 		}
+
 		active = false;
 	}
 
@@ -91,6 +95,7 @@ public class Shot extends DynamicShapeBody
 		{
 			return true;
 		}
+
 		return false;
 	}
 }

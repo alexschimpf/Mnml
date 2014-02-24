@@ -84,11 +84,11 @@ public abstract class Enemy extends TargetShapeBody
 		}
 	}
 
-	protected void notifyOnEnemyShotListeners(float postHealth)
+	protected void notifyOnEnemyShotListeners(Enemy enemy)
 	{
 		for (IOnEnemyShotListener listener : onEnemyShotListeners)
 		{
-			listener.onEnemyShot(postHealth);
+			listener.onEnemyShot(enemy);
 		}
 	}
 }

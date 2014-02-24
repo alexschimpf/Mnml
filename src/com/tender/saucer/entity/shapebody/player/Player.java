@@ -56,6 +56,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		shape = new Rectangle(x, y, Player.DEFAULT_WIDTH, Player.DEFAULT_HEIGHT, Model.main
 				.getVertexBufferObjectManager());
 		shape.setColor(Color.WHITE);
+
 		FixtureDef fixDef = PhysicsFactory.createFixtureDef(0, 0, 0);
 		fixDef.filter.categoryBits = Constants.PLAYER_BITMASK;
 		fixDef.filter.maskBits = Constants.ENEMY_BITMASK | Constants.POWERUP_BITMASK;
@@ -94,10 +95,12 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 			powerup.apply();
 			return;
 		}
+
 		if (this.powerup != null)
 		{
 			this.powerup.remove();
 		}
+
 		powerup.apply();
 		this.powerup = powerup;
 		lastPowerupTime = Calendar.getInstance().getTimeInMillis();
@@ -161,6 +164,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		{
 			Model.state = GameState.GAME_OVER;
 		}
+
 		if (powerup != null)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
@@ -171,6 +175,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 				powerup = null;
 			}
 		}
+
 		if (penalty)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();

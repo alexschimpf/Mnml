@@ -22,6 +22,7 @@ public class SplitEnemy extends BasicEnemy
 	public SplitEnemy()
 	{
 		super();
+
 		float playAreaHeight = Constants.CAMERA_HEIGHT - (2 * Constants.TOP_BOT_HEIGHT);
 		splitY = (float)((Constants.TOP_BOT_HEIGHT + 20) + (Math.random() * (playAreaHeight / 5)));
 	}
@@ -33,6 +34,7 @@ public class SplitEnemy extends BasicEnemy
 		{
 			ParticleSystem.begin(this);
 		}
+
 		WaveMachine.instance.numEnemiesLeft--;
 		dispose();
 	}
@@ -43,15 +45,18 @@ public class SplitEnemy extends BasicEnemy
 		if (shape.getY() >= splitY)
 		{
 			split = true;
+
 			Enemy[] enemies = buildSplitEnemies(this);
 			for (Enemy enemy : enemies)
 			{
 				enemy.attachToScene();
 				enemy.setInMotion();
 			}
+
 			WaveMachine.instance.numEnemiesLeft += 2;
 			return true;
 		}
+
 		return health <= 0;
 	}
 
@@ -62,8 +67,10 @@ public class SplitEnemy extends BasicEnemy
 		enemies[1] = new BasicEnemy(splitEnemy, true);
 		enemies[0].body.setUserData(new BodyData(enemies[0]));
 		enemies[1].body.setUserData(new BodyData(enemies[1]));
+
 		Model.transients.add(enemies[0]);
 		Model.transients.add(enemies[1]);
+
 		return enemies;
 	}
 }

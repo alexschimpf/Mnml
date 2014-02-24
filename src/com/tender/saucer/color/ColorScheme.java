@@ -23,7 +23,9 @@ public final class ColorScheme
 	public static void applyNewScheme()
 	{
 		generateColors();
+
 		Model.background.setColor(background);
+
 		if (Model.player.penalty)
 		{
 			Model.player.shape.setColor(foreground);
@@ -35,6 +37,7 @@ public final class ColorScheme
 		LinkedList<Color> complColors = ColorUtilities.getComplementaryColors();
 		background = complColors.get(0);
 		foreground = complColors.get(1);
+
 		float backgroundBrightness = ColorUtilities.getBrightness(background);
 		text = backgroundBrightness > .5f ? Color.BLACK : Color.WHITE;
 	}
