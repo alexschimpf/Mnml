@@ -4,7 +4,7 @@ package com.tender.saucer.wave;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-import com.tender.saucer.achievements.Achievements;
+import com.tender.saucer.achievements.AchievementManager;
 import com.tender.saucer.activity.IOnResumeGameListener;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.color.ColorScheme;
@@ -91,8 +91,9 @@ public final class WaveMachine implements IOnResumeGameListener
 			enemy.body.setUserData(new BodyData(enemy));
 			Model.transients.add(enemy);
 
-			enemy.addOnEnemyShotListener(Achievements.instance);
-			enemy.addOnEnemyMissedListener(Achievements.instance);
+			enemy.addOnEnemyShotListener(AchievementManager.instance);
+			enemy.addOnEnemyShotDeadListener(AchievementManager.instance);
+			enemy.addOnEnemyMissedListener(AchievementManager.instance);
 			instance.notifyOnEnemyBuildListeners(enemy);
 
 			return enemy;
@@ -110,7 +111,7 @@ public final class WaveMachine implements IOnResumeGameListener
 			int choice = (int)(Math.random() * Constants.POWERUP_CLASSES.length);
 			Powerup powerup = (Powerup)Constants.POWERUP_CLASSES[choice].newInstance();
 			powerup.body.setUserData(new BodyData(powerup));
-			powerup.addOnPowerupMissedListener(Achievements.instance);
+			powerup.addOnPowerupMissedListener(AchievementManager.instance);
 			Model.transients.add(powerup);
 
 			instance.notifyOnPowerupBuildListeners(powerup);

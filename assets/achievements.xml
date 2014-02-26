@@ -1,0 +1,68 @@
+<!-- 
+	[preferenceKey]
+		- the key associated with the boolean shared preference entry
+	[description]
+		- the description of the achievement
+	[updateFunction]
+		[name] 
+			- the name of the static function in Achievements used to handle the updating of the achievement
+		[argument]
+			- an argument used by the update function
+			- top-to-bottom order in xml -> left-to-right order in function
+			- the update function's params are strings
+			- the update function can extract values from the strings as needed
+ -->
+
+<achievements>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak10</preferenceKey>
+        <description>Enemy hit streak of 10</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>10</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak20</preferenceKey>
+        <description>Enemy hit streak of 20</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>20</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak30</preferenceKey>
+        <description>Enemy hit streak of 30</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>30</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak40</preferenceKey>
+        <description>Enemy hit streak of 40</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>40</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak50</preferenceKey>
+        <description>Enemy hit streak of 50</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>50</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+</achievements>

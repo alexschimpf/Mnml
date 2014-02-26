@@ -48,6 +48,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	private Powerup powerup = null;
 	private LinkedList<IOnPlayerPenaltyListener> onPlayerPenaltyListeners = new LinkedList<IOnPlayerPenaltyListener>();
 	private LinkedList<IOnPlayerPowerupListener> onPlayerPowerupListeners = new LinkedList<IOnPlayerPowerupListener>();
+	private LinkedList<IOnPlayerShotListener> onPlayerShotListeners = new LinkedList<IOnPlayerShotListener>();
 
 	public Player()
 	{
@@ -74,6 +75,11 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	public void addOnPlayerPowerupListener(IOnPlayerPowerupListener listener)
 	{
 		onPlayerPowerupListeners.add(listener);
+	}
+
+	public void addOnPlayerShotListener(IOnPlayerShotListener listener)
+	{
+		onPlayerShotListeners.add(listener);
 	}
 
 	public void applyPenalty()
@@ -147,6 +153,11 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		onPlayerPowerupListeners.remove(listener);
 	}
 
+	public void removeOnPlayerShotListener(IOnPlayerShotListener listener)
+	{
+		onPlayerShotListeners.remove(listener);
+	}
+
 	public void tryShoot()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
@@ -206,10 +217,20 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		}
 	}
 
+	private void notifyOnPlayerShotListeners()
+	{
+		for (IOnPlayerShotListener listener : onPlayerShotListeners)
+		{
+			listener.onPlayerShot();
+		}
+	}
+
 	private void shoot()
 	{
 		Shot shot = Shot.buildShot();
 		shot.attachToScene();
 		shot.setInMotion();
+
+		notifyOnPlayerShotListeners();
 	}
 }

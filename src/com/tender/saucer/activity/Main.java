@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.badlogic.gdx.math.Vector2;
-import com.tender.saucer.achievements.Achievements;
+import com.tender.saucer.achievements.AchievementManager;
 import com.tender.saucer.collision.CollisionHandler;
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.color.ColorUtilities;
@@ -91,7 +91,6 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	public EngineOptions onCreateEngineOptions()
 	{
 		ColorScheme.generateColors();
-		Achievements.init();
 		Model.init();
 		Shot.init();
 		WaveMachine.init();
@@ -154,7 +153,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	public void showGameOverDialog()
 	{
 		long currScore = Model.player.score;
-		long bestScore = Achievements.updateBestScore(currScore);
+		long bestScore = AchievementManager.tryUpdateBestScore(currScore);
+		AchievementManager.tryUpdateAchievements();
 		int backgroundColor = ColorScheme.foreground.getARGBPackedInt();
 		int foregroundColor = ColorScheme.background.getARGBPackedInt();
 		int textColor = ColorScheme.text.getARGBPackedInt() == Color.WHITE_ARGB_PACKED_INT ? Color.BLACK_ARGB_PACKED_INT
@@ -325,13 +325,16 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 	private void beginGame()
 	{
+		AchievementManager.init();
+
 		addOnResumeGameListener(Model.player);
 		addOnResumeGameListener(WaveMachine.instance);
 		addOnResumeGameListener(WaveRecess.instance);
-		Model.player.addOnPlayerPenaltyListener(Achievements.instance);
-		Model.player.addOnPlayerPowerupListener(Achievements.instance);
-		WaveMachine.instance.addOnEnemyBuildListener(Achievements.instance);
-		WaveMachine.instance.addOnPowerupBuildListener(Achievements.instance);
+		Model.player.addOnPlayerPenaltyListener(AchievementManager.instance);
+		Model.player.addOnPlayerPowerupListener(AchievementManager.instance);
+		Model.player.addOnPlayerShotListener(AchievementManager.instance);
+		WaveMachine.instance.addOnEnemyBuildListener(AchievementManager.instance);
+		WaveMachine.instance.addOnPowerupBuildListener(AchievementManager.instance);
 
 		Model.state = GameState.WAVE_MACHINE_RUNNING;
 		WaveMachine.beginNextWave();

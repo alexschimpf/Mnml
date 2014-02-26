@@ -27,6 +27,7 @@ public abstract class Enemy extends TargetShapeBody
 	public float health = 1;
 	protected LinkedList<IOnEnemyShotListener> onEnemyShotListeners = new LinkedList<IOnEnemyShotListener>();
 	protected LinkedList<IOnEnemyMissedListener> onEnemyMissedListeners = new LinkedList<IOnEnemyMissedListener>();
+	protected LinkedList<IOnEnemyShotDeadListener> onEnemyShotDeadListeners = new LinkedList<IOnEnemyShotDeadListener>();
 
 	public Enemy()
 	{
@@ -35,6 +36,11 @@ public abstract class Enemy extends TargetShapeBody
 	public void addOnEnemyMissedListener(IOnEnemyMissedListener listener)
 	{
 		onEnemyMissedListeners.add(listener);
+	}
+
+	public void addOnEnemyShotDeadListener(IOnEnemyShotDeadListener listener)
+	{
+		onEnemyShotDeadListeners.add(listener);
 	}
 
 	public void addOnEnemyShotListener(IOnEnemyShotListener listener)
@@ -53,6 +59,11 @@ public abstract class Enemy extends TargetShapeBody
 	public void removeOnEnemyMissedListener(IOnEnemyMissedListener listener)
 	{
 		onEnemyMissedListeners.remove(listener);
+	}
+
+	public void removeOnEnemyShotDeadListener(IOnEnemyShotDeadListener listener)
+	{
+		onEnemyShotDeadListeners.remove(listener);
 	}
 
 	public void removeOnEnemyShotListener(IOnEnemyShotListener listener)
@@ -81,6 +92,14 @@ public abstract class Enemy extends TargetShapeBody
 		for (IOnEnemyMissedListener listener : onEnemyMissedListeners)
 		{
 			listener.onEnemyMissed(enemy);
+		}
+	}
+
+	protected void notifyOnEnemyShotDeadListeners(Enemy enemy)
+	{
+		for (IOnEnemyShotDeadListener listener : onEnemyShotDeadListeners)
+		{
+			listener.onEnemyShotDead(enemy);
 		}
 	}
 

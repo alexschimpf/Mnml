@@ -8,6 +8,11 @@ TODO Tuning/Bugs
 
 - better pause menu
 - optimize updateTransients() in UpdateHandler
+- should utilize new listeners
+	- e.g. Background can flash onEnemyMissed(...) instead of doing background.flash everywhere
+- need listeners: IOnShotMissedListener and IOnPlayerShootListener
+- need to attach frequencies to different enemy and powerup types
+	- because they may change depending on upgrades
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -19,8 +24,18 @@ TODO Features
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 - achievement system, receive tokens 
+	- PenaltyEnemy needs to not notify onEnemy... observers (since it's not really an enemy)
+		- Should probably make it a non-enemy entity
+	- Need to account for BombPowerup for achievement stuff
 	- unlock skins 
-	- upgrade powerup durations and frequency
+	- increase powerup durations and frequency
+	- decrease penalty durations and frequency
+	- Ideas:
+		- Enemy hit streak = 10, 20, 30, ..., 100
+		- Powerup hit streak = 5, 10, 15, ..., 50
+		- Enemies hit = ? AND Accuracy >= ?
+		- Types of enemies hit
+		- Types of powerups hit
 - bosses?
 - main menu
 - effects in background

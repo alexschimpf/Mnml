@@ -43,10 +43,12 @@ public class BigEnemy extends BasicEnemy
 		if (other instanceof Player)
 		{
 			health = 0;
+			notifyOnEnemyMissedListeners(this);
 		}
 		else if (other instanceof Wall)
 		{
 			health = 0;
+			notifyOnEnemyMissedListeners(this);
 		}
 		else if (other instanceof Shot)
 		{
@@ -55,6 +57,10 @@ public class BigEnemy extends BasicEnemy
 			if (health > 0)
 			{
 				shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));
+			}
+			else
+			{
+				notifyOnEnemyShotDeadListeners(this);
 			}
 		}
 	}

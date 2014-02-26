@@ -57,15 +57,22 @@ public class BasicEnemy extends Enemy
 		if (other instanceof Player)
 		{
 			health = 0;
+			notifyOnEnemyMissedListeners(this);
 		}
 		else if (other instanceof Wall)
 		{
 			health = 0;
+			notifyOnEnemyMissedListeners(this);
 		}
 		else if (other instanceof Shot)
 		{
 			health -= ((Shot)other).damage;
 			notifyOnEnemyShotListeners(this);
+
+			if (health <= 0)
+			{
+				notifyOnEnemyShotDeadListeners(this);
+			}
 		}
 	}
 }
