@@ -80,7 +80,7 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 
 	public boolean update()
 	{
-		if (particles.size() == 0)
+		if(particles.size() == 0)
 		{
 			return true;
 		}
@@ -88,7 +88,7 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 		while (it.hasNext())
 		{
 			Particle particle = it.next();
-			if (particle.update())
+			if(particle.update())
 			{
 				it.remove();
 				particle.done();

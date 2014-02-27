@@ -44,7 +44,7 @@ public class BombPowerup extends Powerup
 
 		for (ITransientUpdate t : Model.transients)
 		{
-			if (t instanceof Enemy)
+			if(t instanceof Enemy)
 			{
 				((Enemy)t).health = 0;
 			}

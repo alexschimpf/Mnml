@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.collision.ICollide;
 import com.tender.saucer.entity.shapebody.DynamicShapeBody;
-import com.tender.saucer.entity.shapebody.enemy.PenaltyEnemy;
+import com.tender.saucer.entity.shapebody.penalty.Penalty;
 import com.tender.saucer.entity.shapebody.player.Player;
 import com.tender.saucer.entity.shapebody.powerup.Powerup;
 import com.tender.saucer.stuff.Constants;
@@ -71,11 +71,7 @@ public class Shot extends DynamicShapeBody
 
 	public void collide(ICollide other)
 	{
-		if (other instanceof PenaltyEnemy)
-		{
-			Model.player.collide(other);
-		}
-		else if (other instanceof Powerup)
+		if(other instanceof Penalty || other instanceof Powerup)
 		{
 			Model.player.collide(other);
 		}
@@ -91,7 +87,7 @@ public class Shot extends DynamicShapeBody
 
 	public boolean update()
 	{
-		if (shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || !active)
+		if(shape.getY() + shape.getHeight() < Constants.TOP_BOT_HEIGHT || !active)
 		{
 			return true;
 		}

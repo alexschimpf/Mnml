@@ -26,7 +26,7 @@ public final class ColorScheme
 
 		Model.background.setColor(background);
 
-		if (Model.player.penalty)
+		if(Model.player.penalty)
 		{
 			Model.player.shape.setColor(foreground);
 		}

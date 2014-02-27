@@ -44,7 +44,7 @@ public final class Background extends Entity implements IPersistentUpdate
 	{
 		rect.setAlpha(1);
 
-		if (rect.getEntityModifierCount() > 0)
+		if(rect.getEntityModifierCount() > 0)
 		{
 			rect.clearEntityModifiers();
 		}

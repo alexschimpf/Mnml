@@ -36,7 +36,7 @@ public final class WaveRecess implements IOnResumeGameListener
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - instance.startTime;
-		if (timeElapsed > instance.duration)
+		if(timeElapsed > instance.duration)
 		{
 			Model.state = GameState.WAVE_MACHINE_RUNNING;
 			WaveMachine.beginNextWave();

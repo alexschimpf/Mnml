@@ -62,7 +62,7 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 
 		long oldBestScore = prefs.getLong("bestScore", 0);
 		SharedPreferences.Editor editor = prefs.edit();
-		if (score > oldBestScore)
+		if(score > oldBestScore)
 		{
 			editor.putLong("bestScore", score);
 		}
@@ -83,12 +83,12 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 	{
 		SharedPreferences prefs = Model.main.getSharedPreferences("com.tender.saucer.untitledgame",
 				Context.MODE_PRIVATE);
-		
+
 		boolean achieved = prefs.getBoolean(preferenceKey, false);
-		if (!achieved)
+		if(!achieved)
 		{
 			int goalInt = Integer.valueOf(args[0].toString());
-			if (instance.currBestEnemyHitStreak >= goalInt)
+			if(instance.currBestEnemyHitStreak >= goalInt)
 			{
 				SharedPreferences.Editor editor = prefs.edit();
 				editor.putBoolean(preferenceKey, true);
@@ -155,7 +155,7 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 
 	public void onEnemyMissed(Enemy enemy)
 	{
-		if (currEnemyHitStreak > currBestEnemyHitStreak)
+		if(currEnemyHitStreak > currBestEnemyHitStreak)
 		{
 			currBestEnemyHitStreak = currEnemyHitStreak;
 		}

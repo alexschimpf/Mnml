@@ -38,7 +38,7 @@ public final class UpdateHandler implements IUpdateHandler
 			case GAME_PAUSED:
 				return;
 			case GAME_OVER:
-				if (!skip)
+				if(!skip)
 				{
 					skip = true;
 					Model.main.runOnUiThread(new Runnable()
@@ -81,7 +81,7 @@ public final class UpdateHandler implements IUpdateHandler
 		LinkedList<ITransientUpdate> transientsClone = (LinkedList<ITransientUpdate>)Model.transients.clone();
 		for (ITransientUpdate transientClone : transientsClone)
 		{
-			if (transientClone.update())
+			if(transientClone.update())
 			{
 				transientClone.done();
 				Model.transients.remove(transientClone);

@@ -17,7 +17,7 @@ import com.tender.saucer.collision.ICollide;
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.entity.shapebody.ShapeBody;
 import com.tender.saucer.entity.shapebody.enemy.Enemy;
-import com.tender.saucer.entity.shapebody.enemy.PenaltyEnemy;
+import com.tender.saucer.entity.shapebody.penalty.Penalty;
 import com.tender.saucer.entity.shapebody.powerup.Powerup;
 import com.tender.saucer.entity.shapebody.shot.Shot;
 import com.tender.saucer.stuff.Constants;
@@ -38,6 +38,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	public static final float DEFAULT_HEIGHT = 25;
 	public static final float DEFAULT_SHOOT_COOLDOWN = 350;
 	public static final float DEFAULT_WIDTH = 50;
+
 	public float health = Player.DEFAULT_HEALTH;
 	public boolean penalty = false;
 	public long score = 0;
@@ -85,24 +86,24 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	public void applyPenalty()
 	{
 		lastPenaltyTime = Calendar.getInstance().getTimeInMillis();
-		if (!penalty)
+		if(!penalty)
 		{
 			penalty = true;
 			shape.setColor(ColorScheme.foreground);
-			shootCooldown /= PenaltyEnemy.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
-			Shot.shotSpeed = Shot.DEFAULT_SPEED * PenaltyEnemy.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
+			shootCooldown /= Penalty.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
+			Shot.shotSpeed = Shot.DEFAULT_SPEED * Penalty.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
 		}
 	}
 
 	public void applyPowerup(Powerup powerup)
 	{
-		if (!powerup.overrides)
+		if(!powerup.overrides)
 		{
 			powerup.apply();
 			return;
 		}
 
-		if (this.powerup != null)
+		if(this.powerup != null)
 		{
 			this.powerup.remove();
 		}
@@ -114,17 +115,17 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 
 	public void collide(ICollide other)
 	{
-		if (other instanceof PenaltyEnemy)
+		if(other instanceof Penalty)
 		{
 			applyPenalty();
 			notifyOnPlayerPenaltyListeners();
 		}
-		else if (other instanceof Enemy)
+		else if(other instanceof Enemy)
 		{
 			health--;
 			Model.background.flash();
 		}
-		else if (other instanceof Powerup)
+		else if(other instanceof Powerup)
 		{
 			applyPowerup((Powerup)other);
 			notifyOnPlayerPowerupListeners((Powerup)other);
@@ -162,7 +163,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - lastShotTime;
-		if (timeElapsed > shootCooldown)
+		if(timeElapsed > shootCooldown)
 		{
 			lastShotTime = currTime;
 			shoot();
@@ -171,27 +172,27 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 
 	public void update()
 	{
-		if (health <= 0)
+		if(health <= 0)
 		{
 			Model.state = GameState.GAME_OVER;
 		}
 
-		if (powerup != null)
+		if(powerup != null)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
 			long elapsedTime = currTime - lastPowerupTime;
-			if (elapsedTime > Powerup.DEFAULT_DURATION)
+			if(elapsedTime > Powerup.DEFAULT_DURATION)
 			{
 				powerup.remove();
 				powerup = null;
 			}
 		}
 
-		if (penalty)
+		if(penalty)
 		{
 			long currTime = Calendar.getInstance().getTimeInMillis();
 			long elapsedTime = currTime - lastPenaltyTime;
-			if (elapsedTime > PenaltyEnemy.DEFAULT_PENALTY_DURATION)
+			if(elapsedTime > Penalty.DEFAULT_PENALTY_DURATION)
 			{
 				penalty = false;
 				shape.setColor(Color.WHITE);

@@ -30,7 +30,7 @@ public class MorphEnemy extends BasicEnemy
 	{
 		sineArg += .05;
 
-		if (health <= 0)
+		if(health <= 0)
 		{
 			return true;
 		}

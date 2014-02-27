@@ -40,21 +40,21 @@ public class BigEnemy extends BasicEnemy
 	@Override
 	public void collide(ICollide other)
 	{
-		if (other instanceof Player)
+		if(other instanceof Player)
 		{
 			health = 0;
 			notifyOnEnemyMissedListeners(this);
 		}
-		else if (other instanceof Wall)
+		else if(other instanceof Wall)
 		{
 			health = 0;
 			notifyOnEnemyMissedListeners(this);
 		}
-		else if (other instanceof Shot)
+		else if(other instanceof Shot)
 		{
 			health -= ((Shot)other).damage;
 			notifyOnEnemyShotListeners(this);
-			if (health > 0)
+			if(health > 0)
 			{
 				shape.setColor(ColorUtilities.brighten(shape.getColor(), .1f));
 			}

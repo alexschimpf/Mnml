@@ -19,8 +19,7 @@ public class Achievement
 	public String updateFunctionName;
 	public Object[] updateFunctionArgs;
 
-	public Achievement(String preferenceKey, String description, String updateFunctionName,
-			Object[] updateFunctionArgs)
+	public Achievement(String preferenceKey, String description, String updateFunctionName, Object[] updateFunctionArgs)
 	{
 		this.preferenceKey = preferenceKey;
 		this.description = description;
@@ -32,7 +31,7 @@ public class Achievement
 	{
 		for (Method achievementManagerFunction : AchievementManager.class.getDeclaredMethods())
 		{
-			if (achievementManagerFunction.getName().equals(updateFunctionName)
+			if(achievementManagerFunction.getName().equals(updateFunctionName)
 					&& achievementManagerFunction.getParameterTypes().length == (updateFunctionArgs.length + 1))
 			{
 				try

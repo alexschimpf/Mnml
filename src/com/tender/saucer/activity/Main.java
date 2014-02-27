@@ -74,7 +74,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	@Override
 	public void onBackPressed()
 	{
-		if (mEngine.isRunning())
+		if(mEngine.isRunning())
 		{
 			awayStartTime = Calendar.getInstance().getTimeInMillis();
 			showPausedDialog();
@@ -126,14 +126,14 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 
 	public boolean onSceneTouchEvent(Scene scene, TouchEvent event)
 	{
-		if (Model.state == GameState.GAME_OVER || Model.state == GameState.GAME_PAUSED)
+		if(Model.state == GameState.GAME_OVER || Model.state == GameState.GAME_PAUSED)
 		{
 			return true;
 		}
 
 		float x = event.getX();
 		float y = event.getY();
-		if (y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT)
+		if(y > Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT - Player.DEFAULT_HEIGHT)
 		{
 			Model.player.move(x);
 		}
@@ -172,7 +172,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		for (int i = 0; i < menuLayout.getChildCount(); i++)
 		{
 			View childView = menuLayout.getChildAt(i);
-			if (childView.getTag() != null && childView.getTag().equals("game_over_menu_divider"))
+			if(childView.getTag() != null && childView.getTag().equals("game_over_menu_divider"))
 			{
 				childView.setBackgroundColor(textColor);
 			}

@@ -49,12 +49,12 @@ public abstract class Powerup extends TargetShapeBody
 
 	public void collide(ICollide other)
 	{
-		if (other instanceof Wall)
+		if(other instanceof Wall)
 		{
 			notifyOnPowerupMissedListeners(this);
 		}
 
-		if (!(other instanceof SideWall))
+		if(!(other instanceof SideWall))
 		{
 			active = false;
 		}

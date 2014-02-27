@@ -1,6 +1,7 @@
 
 package com.tender.saucer.entity.shapebody.enemy;
 
+import com.tender.saucer.achievements.AchievementManager;
 import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.entity.particle.ParticleSystem;
 import com.tender.saucer.stuff.Constants;
@@ -30,7 +31,7 @@ public class SplitEnemy extends BasicEnemy
 	@Override
 	public void done()
 	{
-		if (!split)
+		if(!split)
 		{
 			ParticleSystem.begin(this);
 		}
@@ -42,7 +43,7 @@ public class SplitEnemy extends BasicEnemy
 	@Override
 	public boolean update()
 	{
-		if (shape.getY() >= splitY)
+		if(shape.getY() >= splitY)
 		{
 			split = true;
 
@@ -60,6 +61,13 @@ public class SplitEnemy extends BasicEnemy
 		return health <= 0;
 	}
 
+	protected void addEnemyListeners(Enemy enemy)
+	{
+		enemy.addOnEnemyShotListener(AchievementManager.instance);
+		enemy.addOnEnemyShotDeadListener(AchievementManager.instance);
+		enemy.addOnEnemyMissedListener(AchievementManager.instance);
+	}
+
 	protected Enemy[] buildSplitEnemies(SplitEnemy splitEnemy)
 	{
 		Enemy[] enemies = new Enemy[2];
@@ -67,6 +75,8 @@ public class SplitEnemy extends BasicEnemy
 		enemies[1] = new BasicEnemy(splitEnemy, true);
 		enemies[0].body.setUserData(new BodyData(enemies[0]));
 		enemies[1].body.setUserData(new BodyData(enemies[1]));
+		addEnemyListeners(enemies[0]);
+		addEnemyListeners(enemies[1]);
 
 		Model.transients.add(enemies[0]);
 		Model.transients.add(enemies[1]);

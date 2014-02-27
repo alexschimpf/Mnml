@@ -24,7 +24,7 @@ public abstract class TargetShapeBody extends DynamicShapeBody
 	public void setInMotion()
 	{
 		float dx = tx - shape.getX();
-		if (dx < 0)
+		if(dx < 0)
 		{
 			speed = 0 - speed;
 		}

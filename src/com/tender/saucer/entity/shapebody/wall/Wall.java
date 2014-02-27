@@ -12,7 +12,7 @@ import com.tender.saucer.collision.BodyData;
 import com.tender.saucer.collision.ICollide;
 import com.tender.saucer.entity.shapebody.ShapeBody;
 import com.tender.saucer.entity.shapebody.enemy.Enemy;
-import com.tender.saucer.entity.shapebody.enemy.PenaltyEnemy;
+import com.tender.saucer.entity.shapebody.penalty.Penalty;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 
@@ -43,7 +43,7 @@ public final class Wall extends ShapeBody implements ICollide
 
 	public void collide(ICollide other)
 	{
-		if ((other instanceof Enemy) && !(other instanceof PenaltyEnemy))
+		if((other instanceof Enemy) && !(other instanceof Penalty))
 		{
 			Model.player.collide(other);
 		}

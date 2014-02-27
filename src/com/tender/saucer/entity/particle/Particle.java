@@ -24,6 +24,7 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 {
 	public static final int DEFAULT_MAX_DURATION = 2000;
 	public static final float DEFAULT_SIZE = 5;
+
 	private float duration;
 	private Rectangle rect;
 	private long startTime;
@@ -39,7 +40,7 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
 
-		if (color == null)
+		if(color == null)
 		{
 			color = shape.getColor();
 		}
@@ -80,12 +81,12 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 		float x = shape.getX() + (shape.getWidth() / 2);
 		float y = shape.getY() + (shape.getHeight() / 2);
 
-		if (color == null)
+		if(color == null)
 		{
 			color = shape.getColor();
 		}
 
-		if (rect == null)
+		if(rect == null)
 		{
 			rect = new Rectangle(x, y, Particle.DEFAULT_SIZE, Particle.DEFAULT_SIZE, Model.main
 					.getVertexBufferObjectManager());
@@ -112,7 +113,7 @@ public class Particle extends Entity implements ITransientUpdate, IOnResumeGameL
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		long timeElapsed = currTime - startTime;
-		if (timeElapsed > duration)
+		if(timeElapsed > duration)
 		{
 			return true;
 		}

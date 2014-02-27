@@ -38,11 +38,11 @@ public class TextSequence
 			{
 				ts.currFrame++;
 
-				if (ts.currFrame > ts.sequence.length)
+				if(ts.currFrame > ts.sequence.length)
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
 				}
-				else if (ts.currFrame == ts.sequence.length)
+				else if(ts.currFrame == ts.sequence.length)
 				{
 					Model.hud.detachChild(ts.text);
 				}
