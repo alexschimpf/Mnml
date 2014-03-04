@@ -97,9 +97,31 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 		}
 	}
 
-	public static void tryUpdatePowerupHitStreakAchievement(String preferenceKey, Object goal)
+	/**
+	 * Described in achievements.xml
+	 * 
+	 * @param preferenceKey
+	 * @param goal
+	 *            Only contains a single element - the hit streak goal. It was
+	 *            initially a String but should be treated as an int.
+	 */
+	public static void tryUpdatePowerupHitStreakAchievement(String preferenceKey, Object[] args)
 	{
+		SharedPreferences prefs = Model.main.getSharedPreferences("com.tender.saucer.untitledgame",
+				Context.MODE_PRIVATE);
 
+		boolean achieved = prefs.getBoolean(preferenceKey, false);
+		if(!achieved)
+		{
+			int goalInt = Integer.valueOf(args[0].toString());
+			int bestPowerupHitStreak = Math.max(instance.currPowerupHitStreak, instance.currBestPowerupHitStreak);
+			if(bestPowerupHitStreak >= goalInt)
+			{
+				SharedPreferences.Editor editor = prefs.edit();
+				editor.putBoolean(preferenceKey, true);
+				editor.commit();
+			}
+		}
 	}
 
 	private static void loadAchievementsFromXML()
@@ -143,6 +165,8 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 
 	public int currEnemyHitStreak = 0;
 	public int currBestEnemyHitStreak = 0;
+	public int currPowerupHitStreak = 0;
+	public int currBestPowerupHitStreak = 0;
 
 	private AchievementManager()
 	{
@@ -179,7 +203,7 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 
 	public void onPlayerPowerup(Powerup powerup)
 	{
-
+		currPowerupHitStreak++;
 	}
 
 	public void onPlayerShot()
@@ -194,6 +218,10 @@ public class AchievementManager implements IOnPlayerPenaltyListener, IOnPlayerPo
 
 	public void onPowerupMissed(Powerup powerup)
 	{
-
+		if(currPowerupHitStreak > currBestPowerupHitStreak)
+		{
+			currBestPowerupHitStreak = currPowerupHitStreak;
+		}
+		currPowerupHitStreak = 0;
 	}
 }

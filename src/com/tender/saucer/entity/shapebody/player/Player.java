@@ -67,6 +67,12 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		body.setUserData(new BodyData(this));
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
+	
+	@Override
+	public void show()
+	{
+		Model.hud.attachChild(shape);
+	}
 
 	public void addOnPlayerPenaltyListener(IOnPlayerPenaltyListener listener)
 	{
@@ -229,7 +235,7 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	private void shoot()
 	{
 		Shot shot = Shot.buildShot();
-		shot.attachToScene();
+		shot.show();
 		shot.setInMotion();
 
 		notifyOnPlayerShotListeners();

@@ -40,13 +40,20 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 	public static void begin(ShapeBody shapeBody, Color color, int numParticles, float maxDuration)
 	{
 		ParticleSystem ps = new ParticleSystem(shapeBody, color, numParticles, maxDuration);
-		ps.attachToScene();
+		ps.show();
 		Model.transients.add(ps);
 	}
 
 	public static void begin(ShapeBody shapeBody, int numParticles)
 	{
 		begin(shapeBody, null, numParticles, Particle.DEFAULT_MAX_DURATION);
+	}
+	
+	public static void begin(float x, float y, Color color, int numParticles, float maxDuration)
+	{
+		ParticleSystem ps = new ParticleSystem(x, y, color, numParticles, maxDuration);
+		ps.show();
+		Model.transients.add(ps);
 	}
 
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
@@ -64,13 +71,23 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 			particles.add(particle);
 		}
 	}
+	
+	private ParticleSystem(float x, float y, Color color, int numParticles, float maxDuration)
+	{
+		for (int i = 0; i < numParticles; i++)
+		{
+			Particle particle = ParticlePool.obtain(x, y, color, maxDuration);
+			Model.main.addOnResumeGameListener(particle);
+			particles.add(particle);
+		}
+	}
 
 	@Override
-	public void attachToScene()
+	public void show()
 	{
 		for (Particle particle : particles)
 		{
-			particle.attachToScene();
+			particle.show();
 		}
 	}
 

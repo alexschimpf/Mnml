@@ -14,5 +14,5 @@ public abstract class Entity
 	{
 	}
 
-	public abstract void attachToScene();
+	public abstract void show();
 }

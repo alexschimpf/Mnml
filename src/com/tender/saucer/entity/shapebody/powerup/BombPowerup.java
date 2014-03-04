@@ -6,6 +6,7 @@ import org.andengine.entity.sprite.Sprite;
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.entity.particle.ParticleSystem;
 import com.tender.saucer.entity.shapebody.enemy.Enemy;
+import com.tender.saucer.entity.shapebody.penalty.Penalty;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
@@ -47,6 +48,10 @@ public class BombPowerup extends Powerup
 			if(t instanceof Enemy)
 			{
 				((Enemy)t).health = 0;
+			}
+			else if(t instanceof Penalty)
+			{
+				((Penalty)t).active = false;
 			}
 		}
 	}

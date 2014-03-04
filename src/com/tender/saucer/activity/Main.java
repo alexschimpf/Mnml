@@ -49,7 +49,7 @@ import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
-import com.tender.saucer.untitledgame.R;
+import com.tender.saucer.mnml.R;
 import com.tender.saucer.update.UpdateHandler;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveRecess;
@@ -262,7 +262,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.scene.registerUpdateHandler(Model.world);
 
 		Model.background = new Background();
-		Model.background.attachToScene();
+		Model.background.show();
 
 		Model.hud = new HUD();
 		Model.hudRect = new Rectangle(0, 0, Constants.CAMERA_WIDTH, Constants.TOP_BOT_HEIGHT,
@@ -282,13 +282,13 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Model.hud.attachChild(Model.waveText);
 
 		Model.player = new Player();
-		Model.player.attachToScene();
+		Model.player.show();
 		Model.wall = new Wall();
 		Model.oobLeft = new SideWall(true);
 		Model.oobRight = new SideWall(false);
 		Model.hud.attachChild(Model.wall.shape);
-		Model.oobLeft.attachToScene();
-		Model.oobRight.attachToScene();
+		Model.oobLeft.show();
+		Model.oobRight.show();
 		Model.camera.setHUD(Model.hud);
 
 		beginGame();

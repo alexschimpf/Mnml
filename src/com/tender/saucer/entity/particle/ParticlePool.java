@@ -29,6 +29,11 @@ public class ParticlePool
 	{
 		return POOL.obtainPoolItem().set(shapeBody, color, maxDuration);
 	}
+	
+	public static Particle obtain(float x, float y, Color color, float maxDuration)
+	{
+		return POOL.obtainPoolItem().set(x, y, color, maxDuration);
+	}
 
 	public static void recycle(Particle particle)
 	{

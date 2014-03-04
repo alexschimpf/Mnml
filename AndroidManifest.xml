@@ -1,17 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tender.saucer.untitledgame"
+    package="com.tender.saucer.mnml"
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
 
     <application android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:debuggable="true" 
+        android:allowBackup="true" >
         
         <activity
             android:name="com.tender.saucer.activity.Main"
-            android:label="Untitled Game" 
+            android:label="Mnml" 
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
         	<intent-filter> 

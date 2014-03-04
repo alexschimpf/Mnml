@@ -24,7 +24,7 @@ public class ShapeBody extends Entity implements IDispose
 	}
 
 	@Override
-	public void attachToScene()
+	public void show()
 	{
 		Model.scene.attachChild(shape);
 	}

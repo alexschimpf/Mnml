@@ -64,21 +64,21 @@ public final class WaveMachine implements IOnResumeGameListener
 			Enemy enemy = tryBuildRandomEnemy();
 			if(enemy != null)
 			{
-				enemy.attachToScene();
+				enemy.show();
 				enemy.setInMotion();
 			}
 
 			Powerup powerup = tryBuildRandomPowerup();
 			if(powerup != null)
 			{
-				powerup.attachToScene();
+				powerup.show();
 				powerup.setInMotion();
 			}
 
 			Penalty penalty = tryBuildPenalty();
 			if(penalty != null)
 			{
-				penalty.attachToScene();
+				penalty.show();
 				penalty.setInMotion();
 			}
 		}

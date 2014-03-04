@@ -1,6 +1,8 @@
 
 package com.tender.saucer.entity.background;
 
+import java.util.Calendar;
+
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.primitive.Rectangle;
@@ -9,7 +11,9 @@ import org.andengine.util.modifier.IModifier;
 import org.andengine.util.modifier.IModifier.IModifierListener;
 
 import com.tender.saucer.color.ColorScheme;
+import com.tender.saucer.color.ColorUtilities;
 import com.tender.saucer.entity.Entity;
+import com.tender.saucer.entity.particle.ParticleSystem;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.update.IPersistentUpdate;
@@ -23,9 +27,12 @@ import com.tender.saucer.update.IPersistentUpdate;
  */
 public final class Background extends Entity implements IPersistentUpdate
 {
+	private final static float PARTICLE_SYSTEM_COOLDOWN = 500;
+	
 	private AlphaModifier alphaDecrease;
 	private AlphaModifier alphaIncrease;
 	private Rectangle rect;
+	private long lastParticleSystemTime = 0;
 
 	public Background()
 	{
@@ -35,7 +42,7 @@ public final class Background extends Entity implements IPersistentUpdate
 	}
 
 	@Override
-	public void attachToScene()
+	public void show()
 	{
 		Model.scene.attachChild(rect);
 	}
@@ -76,5 +83,17 @@ public final class Background extends Entity implements IPersistentUpdate
 
 	public void update()
 	{
+		long currTime = Calendar.getInstance().getTimeInMillis();
+		if(currTime - lastParticleSystemTime > PARTICLE_SYSTEM_COOLDOWN)
+		{
+			lastParticleSystemTime = currTime;
+			
+			float x = (float)(10 + (Math.random() * Constants.CAMERA_WIDTH) - 20);
+			float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT + 5;
+			Color color = ColorUtilities.darken(ColorScheme.background, .09f);
+			int numParticles = (int)(10 + (Math.random() * 10));
+			float maxDuration = (float)(4000 + (Math.random() * 2000));
+			ParticleSystem.begin(x, y, color, numParticles, maxDuration);
+		}
 	}
 }

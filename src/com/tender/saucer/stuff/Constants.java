@@ -43,7 +43,7 @@ public final class Constants
 			BounceEnemy.class, MorphEnemy.class, SplitEnemy.class };
 	public static final Class<?>[] POWERUP_CLASSES = new Class<?>[] { HealthPowerup.class, BigShotPowerup.class,
 			BombPowerup.class };
-	public static final String[] WAVE_INTERMISSION_MESSAGES = new String[] { "COOL.", "DUDE...", "GET\nA\nJOB",
+	public static final String[] WAVE_RECESS_MESSAGES = new String[] { "COOL.", "DUDE...", "GET\nA\nJOB",
 			"WAVE\nCOMPLETE", "WAVE\nDONE", "DONE\nYET?", "YOU'RE\nAMAZING!", "YOU'RE\nPRETTY\nGOOD", "GREAT\nJOB!",
 			"GREAT\nJOB?", "YOU'RE\nTRASH", "NOT\nDONE\nYET", "WAVE'S\nFINISHED", "THERE'S\nMORE...",
 			"YOU'RE\nLIKE\nSO\nGOOD", "YOU'RE\nLITERALLY\nAMAZING", "VERY\nGOOD", "AWESOME\nBRO",

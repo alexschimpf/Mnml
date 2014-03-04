@@ -50,7 +50,7 @@ public class SplitEnemy extends BasicEnemy
 			Enemy[] enemies = buildSplitEnemies(this);
 			for (Enemy enemy : enemies)
 			{
-				enemy.attachToScene();
+				enemy.show();
 				enemy.setInMotion();
 			}
 

@@ -21,13 +21,21 @@ import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 import com.tender.saucer.wave.WaveMachine;
 
+/**
+ * 
+ * Copyright 2014
+ * 
+ * @author Alex Schimpf
+ * 
+ */
 public class Penalty extends TargetShapeBody
 {
 	public static final float DEFAULT_PENALTY_DURATION = 8000;
 	public static final float DEFAULT_PENALTY_SLOWDOWN_FACTOR = .5f;
+	
 	private float flashCooldown = 150;
 	private long lastFlashTime = 0;
-	private boolean active = true;
+	public boolean active = true;
 
 	public Penalty()
 	{

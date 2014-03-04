@@ -65,4 +65,154 @@
         </updateFunction>
     </achievement>
     
+        <achievement>
+        <preferenceKey>enemyHitStreak60</preferenceKey>
+        <description>Enemy hit streak of 60</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>60</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak70</preferenceKey>
+        <description>Enemy hit streak of 70</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>70</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak80</preferenceKey>
+        <description>Enemy hit streak of 80</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>80</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak90</preferenceKey>
+        <description>Enemy hit streak of 90</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>90</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>enemyHitStreak100</preferenceKey>
+        <description>Enemy hit streak of 100</description>
+        <updateFunction name="tryUpdateEnemyHitStreakAchievement">
+	        <arguments>
+	            <argument>100</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak1</preferenceKey>
+        <description>Powerup hit streak of 1</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>1</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak10</preferenceKey>
+        <description>Powerup hit streak of 10</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>10</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak15</preferenceKey>
+        <description>Powerup hit streak of 15</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>15</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak20</preferenceKey>
+        <description>Powerup hit streak of 20</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>20</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak25</preferenceKey>
+        <description>Powerup hit streak of 25</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>25</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+        <achievement>
+        <preferenceKey>powerupHitStreak30</preferenceKey>
+        <description>Powerup hit streak of 30</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>30</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak35</preferenceKey>
+        <description>Powerup hit streak of 35</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>35</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak40</preferenceKey>
+        <description>Powerup hit streak of 40</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>40</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak45</preferenceKey>
+        <description>Powerup hit streak of 45</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>45</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
+    <achievement>
+        <preferenceKey>powerupHitStreak50</preferenceKey>
+        <description>Powerup hit streak of 50</description>
+        <updateFunction name="tryUpdatePowerupHitStreakAchievement">
+	        <arguments>
+	            <argument>50</argument>
+	        </arguments>
+        </updateFunction>
+    </achievement>
+    
 </achievements>
