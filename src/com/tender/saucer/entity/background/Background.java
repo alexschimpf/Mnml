@@ -28,7 +28,7 @@ import com.tender.saucer.update.IPersistentUpdate;
 public final class Background extends Entity implements IPersistentUpdate
 {
 	private final static float PARTICLE_SYSTEM_COOLDOWN = 500;
-	
+
 	private AlphaModifier alphaDecrease;
 	private AlphaModifier alphaIncrease;
 	private Rectangle rect;
@@ -41,12 +41,6 @@ public final class Background extends Entity implements IPersistentUpdate
 		rect.setColor(ColorScheme.background);
 	}
 
-	@Override
-	public void show()
-	{
-		Model.scene.attachChild(rect);
-	}
-
 	public void flash()
 	{
 		rect.setAlpha(1);
@@ -56,7 +50,7 @@ public final class Background extends Entity implements IPersistentUpdate
 			rect.clearEntityModifiers();
 		}
 
-		alphaDecrease = new AlphaModifier(.5f, 1, 0);
+		alphaDecrease = new AlphaModifier(.6f, 1, .2f);
 		alphaDecrease.setAutoUnregisterWhenFinished(true);
 		alphaDecrease.addModifierListener(new IModifierListener<IEntity>()
 		{
@@ -64,7 +58,7 @@ public final class Background extends Entity implements IPersistentUpdate
 			{
 				alphaDecrease = null;
 
-				alphaIncrease = new AlphaModifier(.5f, 0, 1);
+				alphaIncrease = new AlphaModifier(.6f, .2f, 1);
 				alphaIncrease.setAutoUnregisterWhenFinished(true);
 				rect.registerEntityModifier(alphaIncrease);
 			}
@@ -81,19 +75,26 @@ public final class Background extends Entity implements IPersistentUpdate
 		rect.setColor(color);
 	}
 
+	@Override
+	public void show()
+	{
+		Model.scene.attachChild(rect);
+	}
+
 	public void update()
 	{
 		long currTime = Calendar.getInstance().getTimeInMillis();
 		if(currTime - lastParticleSystemTime > PARTICLE_SYSTEM_COOLDOWN)
 		{
 			lastParticleSystemTime = currTime;
-			
+
 			float x = (float)(10 + (Math.random() * Constants.CAMERA_WIDTH) - 20);
 			float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT + 5;
-			Color color = ColorUtilities.darken(ColorScheme.background, .09f);
+			Color color = ColorUtilities.darken(ColorScheme.background, .11f);
 			int numParticles = (int)(10 + (Math.random() * 10));
 			float maxDuration = (float)(4000 + (Math.random() * 2000));
-			ParticleSystem.begin(x, y, color, numParticles, maxDuration);
+			ParticleSystem.begin(x, y, color, numParticles, maxDuration, true);
+			ParticleSystem.begin(x, 0, color, numParticles, maxDuration, false);
 		}
 	}
 }

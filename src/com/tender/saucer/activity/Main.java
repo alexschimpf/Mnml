@@ -27,6 +27,7 @@ import org.andengine.util.color.Color;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
@@ -45,11 +46,11 @@ import com.tender.saucer.entity.shapebody.player.Player;
 import com.tender.saucer.entity.shapebody.shot.Shot;
 import com.tender.saucer.entity.shapebody.wall.SideWall;
 import com.tender.saucer.entity.shapebody.wall.Wall;
+import com.tender.saucer.mnml.R;
 import com.tender.saucer.stuff.Constants;
 import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
-import com.tender.saucer.mnml.R;
 import com.tender.saucer.update.UpdateHandler;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveRecess;
@@ -77,14 +78,8 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		if(mEngine.isRunning())
 		{
 			awayStartTime = Calendar.getInstance().getTimeInMillis();
-			showPausedDialog();
+			showPauseDialog();
 			mEngine.stop();
-		}
-		else
-		{
-			long awayDuration = Calendar.getInstance().getTimeInMillis() - awayStartTime;
-			notifyOnResumeGameListeners(awayDuration);
-			mEngine.start();
 		}
 	}
 
@@ -211,6 +206,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		});
 
 		final AlertDialog.Builder alert = new AlertDialog.Builder(Model.main);
+		alert.setCancelable(false);
 		alert.setView(menuLayout);
 		alert.show();
 	}
@@ -361,14 +357,25 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		startActivity(intent);
 	}
 
-	// TODO: This is crappy and buggy. Fix it.
-	private void showPausedDialog()
+	private void showPauseDialog()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Paused");
-		alert.setPositiveButton("Resume", new DialogInterface.OnClickListener()
+		int backgroundColor = ColorScheme.foreground.getARGBPackedInt();
+		int foregroundColor = ColorScheme.background.getARGBPackedInt();
+
+		Typeface typeface = Typeface.createFromAsset(getAssets(), "Pixel Berry.TTF");
+		LinearLayout menuLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.pause_menu, null);
+		menuLayout.setBackgroundColor(backgroundColor);
+
+		TextView titleView = (TextView)menuLayout.findViewById(R.id.pause_menu_message);
+		titleView.setText("PAUSED");
+		titleView.setTextColor(foregroundColor);
+		titleView.setTypeface(typeface);
+
+		alert.setView(menuLayout);
+		alert.setOnCancelListener(new OnCancelListener()
 		{
-			public void onClick(DialogInterface dialog, int button)
+			public void onCancel(DialogInterface dialog)
 			{
 				long awayDuration = Calendar.getInstance().getTimeInMillis() - awayStartTime;
 				notifyOnResumeGameListeners(awayDuration);

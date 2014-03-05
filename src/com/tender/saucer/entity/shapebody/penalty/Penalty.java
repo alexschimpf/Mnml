@@ -32,7 +32,7 @@ public class Penalty extends TargetShapeBody
 {
 	public static final float DEFAULT_PENALTY_DURATION = 8000;
 	public static final float DEFAULT_PENALTY_SLOWDOWN_FACTOR = .5f;
-	
+
 	private float flashCooldown = 150;
 	private long lastFlashTime = 0;
 	public boolean active = true;

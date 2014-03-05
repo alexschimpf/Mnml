@@ -4,6 +4,7 @@ package com.tender.saucer.entity.shapebody.player;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+import org.andengine.entity.modifier.ColorModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -67,12 +68,6 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		body.setUserData(new BodyData(this));
 		Model.world.registerPhysicsConnector(new PhysicsConnector(shape, body, true, true));
 	}
-	
-	@Override
-	public void show()
-	{
-		Model.hud.attachChild(shape);
-	}
 
 	public void addOnPlayerPenaltyListener(IOnPlayerPenaltyListener listener)
 	{
@@ -95,9 +90,14 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 		if(!penalty)
 		{
 			penalty = true;
-			shape.setColor(ColorScheme.foreground);
 			shootCooldown /= Penalty.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
 			Shot.shotSpeed = Shot.DEFAULT_SPEED * Penalty.DEFAULT_PENALTY_SLOWDOWN_FACTOR;
+
+			shape.setColor(ColorScheme.foreground);
+			ColorModifier foregroundToWhite = new ColorModifier(Penalty.DEFAULT_PENALTY_DURATION / 1000,
+					ColorScheme.foreground, Color.WHITE);
+			foregroundToWhite.setAutoUnregisterWhenFinished(true);
+			shape.registerEntityModifier(foregroundToWhite);
 		}
 	}
 
@@ -163,6 +163,12 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 	public void removeOnPlayerShotListener(IOnPlayerShotListener listener)
 	{
 		onPlayerShotListeners.remove(listener);
+	}
+
+	@Override
+	public void show()
+	{
+		Model.hud.attachChild(shape);
 	}
 
 	public void tryShoot()

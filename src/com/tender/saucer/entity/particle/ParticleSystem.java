@@ -22,6 +22,13 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 {
 	public static final int DEFAULT_NUM_PARTICLES = 20;
 
+	public static void begin(float x, float y, Color color, int numParticles, float maxDuration, boolean up)
+	{
+		ParticleSystem ps = new ParticleSystem(x, y, color, numParticles, maxDuration, up);
+		ps.show();
+		Model.transients.add(ps);
+	}
+
 	public static void begin(ShapeBody shapeBody)
 	{
 		begin(shapeBody, null, ParticleSystem.DEFAULT_NUM_PARTICLES, Particle.DEFAULT_MAX_DURATION);
@@ -48,18 +55,21 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 	{
 		begin(shapeBody, null, numParticles, Particle.DEFAULT_MAX_DURATION);
 	}
-	
-	public static void begin(float x, float y, Color color, int numParticles, float maxDuration)
-	{
-		ParticleSystem ps = new ParticleSystem(x, y, color, numParticles, maxDuration);
-		ps.show();
-		Model.transients.add(ps);
-	}
 
 	private LinkedList<Particle> particles = new LinkedList<Particle>();
 
 	private ParticleSystem()
 	{
+	}
+
+	private ParticleSystem(float x, float y, Color color, int numParticles, float maxDuration, boolean up)
+	{
+		for (int i = 0; i < numParticles; i++)
+		{
+			Particle particle = ParticlePool.obtain(x, y, color, maxDuration, up);
+			Model.main.addOnResumeGameListener(particle);
+			particles.add(particle);
+		}
 	}
 
 	private ParticleSystem(ShapeBody shapeBody, Color color, int numParticles, float maxDuration)
@@ -71,15 +81,9 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 			particles.add(particle);
 		}
 	}
-	
-	private ParticleSystem(float x, float y, Color color, int numParticles, float maxDuration)
+
+	public void done()
 	{
-		for (int i = 0; i < numParticles; i++)
-		{
-			Particle particle = ParticlePool.obtain(x, y, color, maxDuration);
-			Model.main.addOnResumeGameListener(particle);
-			particles.add(particle);
-		}
 	}
 
 	@Override
@@ -89,10 +93,6 @@ public class ParticleSystem extends Entity implements ITransientUpdate
 		{
 			particle.show();
 		}
-	}
-
-	public void done()
-	{
 	}
 
 	public boolean update()

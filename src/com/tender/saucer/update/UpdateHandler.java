@@ -22,7 +22,7 @@ import com.tender.saucer.wave.WaveRecess;
  */
 public final class UpdateHandler implements IUpdateHandler
 {
-	private boolean skip = false;
+	private boolean isGameOverDialogActive = false;
 
 	public void onUpdate(float secondsElapsed)
 	{
@@ -38,9 +38,9 @@ public final class UpdateHandler implements IUpdateHandler
 			case GAME_PAUSED:
 				return;
 			case GAME_OVER:
-				if(!skip)
+				if(!isGameOverDialogActive)
 				{
-					skip = true;
+					isGameOverDialogActive = true;
 					Model.main.runOnUiThread(new Runnable()
 					{
 						public void run()

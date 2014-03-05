@@ -23,17 +23,17 @@ public class ShapeBody extends Entity implements IDispose
 	{
 	}
 
-	@Override
-	public void show()
-	{
-		Model.scene.attachChild(shape);
-	}
-
 	public void dispose()
 	{
 		Model.world.unregisterPhysicsConnector(Model.world.getPhysicsConnectorManager().findPhysicsConnectorByShape(
 				shape));
 		Model.scene.detachChild(shape);
 		Model.world.destroyBody(body);
+	}
+
+	@Override
+	public void show()
+	{
+		Model.scene.attachChild(shape);
 	}
 }

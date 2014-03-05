@@ -24,8 +24,6 @@ TODO Features
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 - achievement system, receive tokens 
-	- PenaltyEnemy needs to not notify onEnemy... observers (since it's not really an enemy)
-		- Should probably make it a non-enemy entity
 	- Need to account for BombPowerup for achievement stuff
 	- unlock skins 
 	- increase powerup durations and frequency
