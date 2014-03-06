@@ -89,6 +89,8 @@ public abstract class Enemy extends TargetShapeBody
 
 	protected void notifyOnEnemyMissedListeners(Enemy enemy)
 	{
+		Model.enemyMissedSound.play();
+
 		for (IOnEnemyMissedListener listener : onEnemyMissedListeners)
 		{
 			listener.onEnemyMissed(enemy);
@@ -97,6 +99,8 @@ public abstract class Enemy extends TargetShapeBody
 
 	protected void notifyOnEnemyShotDeadListeners(Enemy enemy)
 	{
+		Model.enemyHitSound.play();
+
 		for (IOnEnemyShotDeadListener listener : onEnemyShotDeadListeners)
 		{
 			listener.onEnemyShotDead(enemy);

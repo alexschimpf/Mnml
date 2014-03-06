@@ -3,6 +3,7 @@ package com.tender.saucer.stuff;
 
 import java.util.LinkedList;
 
+import org.andengine.audio.sound.Sound;
 import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.primitive.Rectangle;
@@ -45,6 +46,12 @@ public final class Model
 	public static Font waveIntermissionFont;
 	public static Text waveText;
 	public static PhysicsWorld world;
+	public static Sound deadSound;
+	public static Sound enemyHitSound;
+	public static Sound enemyMissedSound;
+	public static Sound powerupSound;
+	public static Sound penaltySound;
+	public static Sound shotSound;
 
 	public static void init()
 	{

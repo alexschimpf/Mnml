@@ -41,6 +41,8 @@ public final class UpdateHandler implements IUpdateHandler
 				if(!isGameOverDialogActive)
 				{
 					isGameOverDialogActive = true;
+					muteBackgroundSounds();
+					Model.deadSound.play();
 					Model.main.runOnUiThread(new Runnable()
 					{
 						public void run()
@@ -59,6 +61,15 @@ public final class UpdateHandler implements IUpdateHandler
 
 	public void reset()
 	{
+	}
+
+	private void muteBackgroundSounds()
+	{
+		Model.enemyHitSound.setVolume(0);
+		Model.enemyMissedSound.setVolume(0);
+		Model.powerupSound.setVolume(0);
+		Model.penaltySound.setVolume(0);
+		Model.shotSound.setVolume(0);
 	}
 
 	private void updateHUDText()

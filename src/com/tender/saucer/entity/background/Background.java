@@ -27,7 +27,7 @@ import com.tender.saucer.update.IPersistentUpdate;
  */
 public final class Background extends Entity implements IPersistentUpdate
 {
-	private final static float PARTICLE_SYSTEM_COOLDOWN = 500;
+	private final static float PARTICLE_SYSTEM_COOLDOWN = 50;
 
 	private AlphaModifier alphaDecrease;
 	private AlphaModifier alphaIncrease;
@@ -91,7 +91,7 @@ public final class Background extends Entity implements IPersistentUpdate
 			float x = (float)(10 + (Math.random() * Constants.CAMERA_WIDTH) - 20);
 			float y = Constants.CAMERA_HEIGHT - Constants.TOP_BOT_HEIGHT + 5;
 			Color color = ColorUtilities.darken(ColorScheme.background, .11f);
-			int numParticles = (int)(10 + (Math.random() * 10));
+			int numParticles = 1;
 			float maxDuration = (float)(4000 + (Math.random() * 2000));
 			ParticleSystem.begin(x, y, color, numParticles, maxDuration, true);
 			ParticleSystem.begin(x, 0, color, numParticles, maxDuration, false);

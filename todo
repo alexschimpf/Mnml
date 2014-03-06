@@ -36,9 +36,6 @@ TODO Features
 		- Types of powerups hit
 - bosses?
 - main menu
-- effects in background
-- indicate when powerup is active
-	- and when it is about to run out
 	
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -51,5 +48,6 @@ TODO Architecture/Code
 
 [General] 
 	- go through all member variables and evaluate access levels
+	- evaluate variable names (prepend with m, p, etc. ??)
 	
 	

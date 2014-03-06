@@ -86,6 +86,8 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 
 	public void applyPenalty()
 	{
+		Model.penaltySound.play();
+
 		lastPenaltyTime = Calendar.getInstance().getTimeInMillis();
 		if(!penalty)
 		{
@@ -103,6 +105,8 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 
 	public void applyPowerup(Powerup powerup)
 	{
+		Model.powerupSound.play();
+
 		if(!powerup.overrides)
 		{
 			powerup.apply();
@@ -240,6 +244,8 @@ public final class Player extends ShapeBody implements ICollide, IPersistentUpda
 
 	private void shoot()
 	{
+		Model.shotSound.play();
+
 		Shot shot = Shot.buildShot();
 		shot.show();
 		shot.setInMotion();

@@ -4,6 +4,7 @@ package com.tender.saucer.activity;
 import java.util.Calendar;
 import java.util.LinkedList;
 
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.options.EngineOptions;
@@ -30,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -52,6 +54,7 @@ import com.tender.saucer.stuff.GameState;
 import com.tender.saucer.stuff.Model;
 import com.tender.saucer.stuff.Textures;
 import com.tender.saucer.update.UpdateHandler;
+import com.tender.saucer.wave.TextSequence;
 import com.tender.saucer.wave.WaveMachine;
 import com.tender.saucer.wave.WaveRecess;
 
@@ -235,15 +238,24 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 		Textures.POWERUP_BOMB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this,
 				"powerup_bomb.png");
 		Textures.PENALTY_ENEMY = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mainAtlas, this, "penalty.png");
+
 		try
 		{
 			mainAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+			mainAtlas.load();
+
+			Model.deadSound = SoundFactory.createSoundFromAsset(getSoundManager(), this, "sounds/dead.wav");
+			Model.enemyHitSound = SoundFactory.createSoundFromAsset(getSoundManager(), this, "sounds/enemy_hit.wav");
+			Model.enemyMissedSound = SoundFactory.createSoundFromAsset(getSoundManager(), this,
+					"sounds/enemy_missed.wav");
+			Model.powerupSound = SoundFactory.createSoundFromAsset(getSoundManager(), this, "sounds/powerup.wav");
+			Model.shotSound = SoundFactory.createSoundFromAsset(getSoundManager(), this, "sounds/shot.wav");
+			Model.penaltySound = SoundFactory.createSoundFromAsset(getSoundManager(), this, "sounds/penalty.wav");
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			Log.e("test", e.toString());
 		}
-		mainAtlas.load();
 	}
 
 	@Override
@@ -322,6 +334,7 @@ public class Main extends SimpleBaseGameActivity implements IOnSceneTouchListene
 	private void beginGame()
 	{
 		AchievementManager.init();
+		TextSequence.init();
 
 		addOnResumeGameListener(Model.player);
 		addOnResumeGameListener(WaveMachine.instance);

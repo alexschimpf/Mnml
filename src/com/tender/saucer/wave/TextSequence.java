@@ -1,11 +1,17 @@
 
 package com.tender.saucer.wave;
 
+import java.util.Locale;
+
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.Font;
 import org.andengine.util.HorizontalAlign;
+
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 
 import com.tender.saucer.color.ColorScheme;
 import com.tender.saucer.stuff.Constants;
@@ -20,7 +26,28 @@ import com.tender.saucer.stuff.Model;
  */
 public class TextSequence
 {
-	public static float play(Font font, String[] sequence, float[] durations)
+	private static TextToSpeech textSpeaker;
+
+	public static void init()
+	{
+		textSpeaker = new TextToSpeech(Model.main, new OnInitListener()
+		{
+			public void onInit(int status)
+			{
+				if(status == TextToSpeech.SUCCESS)
+				{
+					textSpeaker.setLanguage(Locale.US);
+					textSpeaker.setPitch(.2f);
+				}
+				else
+				{
+					Log.e("test", "textToSpeech unsuccessful");
+				}
+			}
+		});
+	}
+
+	public static float play(final Font font, final String[] sequence, final float[] durations, final boolean speak)
 	{
 		float totalDuration = 0;
 		for (float duration : durations)
@@ -28,28 +55,33 @@ public class TextSequence
 			totalDuration += duration;
 		}
 
-		final TextSequence ts = new TextSequence(font, sequence, durations);
-		ts.setAndAlignText(sequence[ts.currFrame]);
-		Model.hud.attachChild(ts.text);
+		final TextSequence textSequence = new TextSequence(font);
+		textSequence.setAndAlignText(sequence[textSequence.currFrame]);
+		if(speak)
+		{
+			speakText(sequence[textSequence.currFrame], durations[textSequence.currFrame]);
+		}
 
-		TimerHandler timer = new TimerHandler(durations[ts.currFrame] / 1000, new ITimerCallback()
+		Model.hud.attachChild(textSequence.text);
+
+		TimerHandler timer = new TimerHandler(durations[textSequence.currFrame] / 1000, new ITimerCallback()
 		{
 			public void onTimePassed(TimerHandler timerHandler)
 			{
-				ts.currFrame++;
+				textSequence.currFrame++;
 
-				if(ts.currFrame > ts.sequence.length)
+				if(textSequence.currFrame > sequence.length)
 				{
 					Model.scene.unregisterUpdateHandler(timerHandler);
 				}
-				else if(ts.currFrame == ts.sequence.length)
+				else if(textSequence.currFrame == sequence.length)
 				{
-					Model.hud.detachChild(ts.text);
+					Model.hud.detachChild(textSequence.text);
 				}
 				else
 				{
-					ts.setAndAlignText(ts.sequence[ts.currFrame]);
-					timerHandler.setTimerSeconds(ts.durations[ts.currFrame] / 1000);
+					textSequence.setAndAlignText(sequence[textSequence.currFrame]);				
+					timerHandler.setTimerSeconds(durations[textSequence.currFrame] / 1000);
 					timerHandler.reset();
 				}
 			}
@@ -59,23 +91,36 @@ public class TextSequence
 		return totalDuration;
 	}
 
+	private static void speakText(String text, float duration)
+	{
+		text = text.replace("\n", " ").toLowerCase(Locale.US);
+		
+		// This totally shouldn't work, but works perfectly.
+		int wordCount = 1;
+		for(int i = 0; i < text.length(); i++)
+		{
+			if(text.charAt(i) == ' ')
+			{
+				wordCount++;
+			}				
+		}
+		textSpeaker.setSpeechRate((wordCount / duration) * 2);
+		
+		textSpeaker.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	}
+	
 	private int currFrame = 0;
-	private float[] durations;
-	private String[] sequence;
 	private Text text;
 
 	private TextSequence()
 	{
 	}
 
-	private TextSequence(Font font, String[] sequence, float[] durations)
+	private TextSequence(Font font)
 	{
 		text = new Text(0, 0, font, "", 100, Model.main.getVertexBufferObjectManager());
 		text.setHorizontalAlign(HorizontalAlign.CENTER);
 		text.setColor(ColorScheme.text);
-
-		this.sequence = sequence;
-		this.durations = durations;
 	}
 
 	private void setAndAlignText(String str)

@@ -30,6 +30,16 @@
         android:layout_marginLeft="10dp"
         android:gravity="left"
         android:textSize="26sp"
+        android:text="Achievements"
+        android:background="@drawable/game_over_menu_button" />
+    
+    <Button 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:textSize="26sp"
         android:text="Settings"
         android:background="@drawable/game_over_menu_button" />
     

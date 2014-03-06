@@ -39,7 +39,7 @@ public final class WaveMachine implements IOnResumeGameListener
 		instance.lastEnemyBuildTime = 0;
 		instance.lastPowerupBuildTime = Calendar.getInstance().getTimeInMillis();
 		instance.lastPenaltyBuildTime = Calendar.getInstance().getTimeInMillis();
-		instance.numEnemiesLeft = instance.level * 10;
+		instance.numEnemiesLeft = instance.level * 1;
 		instance.numEnemyBuildsLeft = instance.numEnemiesLeft;
 		instance.enemyBuildCooldown = Math.max(700, DEFAULT_ENEMY_BUILD_COOLDOWN - (instance.level * 200));
 		instance.powerupBuildCooldown = Math.max(15000, DEFAULT_POWERUP_BUILD_COOLDOWN - (instance.level * 1000));

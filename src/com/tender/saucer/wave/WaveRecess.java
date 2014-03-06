@@ -23,7 +23,7 @@ public final class WaveRecess implements IOnResumeGameListener
 	{
 		String message = Constants.WAVE_RECESS_MESSAGES[(int)(Math.random() * Constants.WAVE_RECESS_MESSAGES.length)];
 		instance.duration = TextSequence.play(Model.waveIntermissionFont, new String[] { message, "", "Three", "Two",
-				"One" }, new float[] { 2500, 500, 750, 750, 750 });
+				"One" }, new float[] { 2500, 500, 750, 750, 750 }, true);
 		instance.startTime = Calendar.getInstance().getTimeInMillis();
 	}
 
