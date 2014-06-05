@@ -23,6 +23,10 @@ Incomplete features:
 * Achievements
 * Menu screen
 
+----------------------------
+
+Using the game engine, AndEngine.
+
 
 
 
