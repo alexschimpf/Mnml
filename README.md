@@ -1,11 +1,6 @@
 Mnml
 ====
 
-I have currently stopped working on this projcet due to a lack of interest.
-However, the game is quite functional.
-
----------------------------
-
 Game description:
 * The player controls a rectangle at the bottom of the screen which shoot
 * The goal is to shoot all the falling "enemies", which vary in behavior/size/speed.
@@ -19,13 +14,7 @@ Game description:
 
 ----------------------------
 
-Incomplete features:
-* Achievements
-* Menu screen
-
-----------------------------
-
-Using the game engine, AndEngine.
+This game is dependent on the game engine, AndEngine.
 
 
 
